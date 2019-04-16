@@ -1,66 +1,82 @@
 <mat-toolbar color="accent">
-    <mat-toolbar-row>
-      <button type="button" mat-icon-button aria-label="Toggle sidenav"
-       color="warn"
-        [matMenuTriggerFor]="menuAcademia">
-        <mat-icon><!--more_vert-->menu</mat-icon>
-      </button>
-      <span>Admin Jimmy</span>
-      <span class="toolbar-spacer"></span>
-      <span><img src="assets/images/logo_negro.png" class="img-fluid toolbar-img-logo" /></span>
-    </mat-toolbar-row>
-  </mat-toolbar>
-  <mat-menu #menuAcademia="matMenu">
-    <button mat-menu-item>
-      <mat-icon>home</mat-icon>
-      &nbsp;
-      Home  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <span style="color:#424242;">_</span>
+  <mat-toolbar-row>
+    <button type="button" mat-icon-button aria-label="Toggle sidenav"
+      color="warn" [matMenuTriggerFor]="menuAdmin">
+      <mat-icon><!--more_vert-->menu</mat-icon>
     </button>
-    <button mat-menu-item>
-      <mat-icon>account_balance</mat-icon>
-      &nbsp;
-      Cuentas: Ver 
-    </button>
-    <button mat-menu-item>
-      <mat-icon>note_add</mat-icon>
-      &nbsp;
-      Cuentas: Crear nueva
-    </button>
-    <button mat-menu-item>
-      <mat-icon>receipt</mat-icon>
-      &nbsp;
-      Movimientos: Ver
-    </button>
-    <button mat-menu-item>
-      <mat-icon>monetization_on</mat-icon>
-      &nbsp;
-      Movimientos: Crear nuevo
-    </button>
-    <button mat-menu-item>
-      <mat-icon>people</mat-icon>
-      &nbsp;
-      Contratos: Ver 
-    </button>
-    <button mat-menu-item>
-      <mat-icon>group_add</mat-icon>
-      &nbsp;
-      Contratos: Crear nuevo
-    </button>
-    <button mat-menu-item>
-      <mat-icon>format_list_numbered</mat-icon>
-      &nbsp;
-      Reportes
-    </button>
-    <button mat-menu-item>
-      <mat-icon>person_add</mat-icon>
-      &nbsp;
-      Crear Asociado/en Academia
-    </button>
-    <button mat-menu-item>
-      <mat-icon>perm_identity</mat-icon>
-      &nbsp;
-      Ver mi Perfil
-    </button>
-  </mat-menu>
+    <span>Admin Jimmy</span>
+    <span class="toolbar-spacer"></span>
+    <span><img src="assets/images/logo_negro.png" class="img-fluid toolbar-img-logo" /></span>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-menu #menuAdmin="matMenu">
+  <button mat-menu-item>
+    <mat-icon>home</mat-icon>
+    &nbsp;
+    Home  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <span style="color:#424242;">_</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>account_balance</mat-icon>
+    &nbsp;
+    Cuentas: Ver 
+  </button>
+  <button mat-menu-item>
+    <mat-icon>note_add</mat-icon>
+    &nbsp;
+    Cuentas: Crear nueva
+  </button>
+  <button mat-menu-item>
+    <mat-icon>receipt</mat-icon>
+    &nbsp;
+    Movimientos: Ver
+  </button>
+  <button mat-menu-item>
+    <mat-icon>exposure</mat-icon>
+    &nbsp;
+    Movimientos: Crear nuevo
+  </button>
+  <button mat-menu-item>
+    <mat-icon>people</mat-icon>
+    &nbsp;
+    Contratos: Ver 
+  </button>
+  <button mat-menu-item>
+    <mat-icon>group_add</mat-icon>
+    &nbsp;
+    Contratos: Crear nuevo
+  </button>
+  <button mat-menu-item [matMenuTriggerFor]="reportTypes">
+    <mat-icon>format_list_numbered</mat-icon>
+    &nbsp;
+    Reportes
+  </button>
+  <button mat-menu-item>
+    <mat-icon>person_add</mat-icon>
+    &nbsp;
+    Crear Asociado/en Academia
+  </button>
+  <button mat-menu-item>
+    <mat-icon>perm_identity</mat-icon>
+    &nbsp;
+    Ver mi Perfil
+  </button>
+  <button mat-menu-item>
+    <mat-icon>directions_run</mat-icon>
+    &nbsp;
+    Cerrar sesión
+  </button>
+</mat-menu>
+
+<mat-menu #reportTypes="matMenu">
+  <button mat-menu-item>Por Persona</button>
+  <button mat-menu-item>Por Cuenta</button>
+  <button mat-menu-item>Por Contrato</button>
+  <button mat-menu-item [matMenuTriggerFor]="menuAdminPagos">Pagos Academia</button>
+</mat-menu>
+
+<mat-menu #menuAdminPagos="matMenu">
+  <button mat-menu-item>Por Persona</button>
+  <button mat-menu-item>Por Cuenta</button>
+</mat-menu>

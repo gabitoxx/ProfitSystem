@@ -15,6 +15,83 @@
   text-align: center;
 }
 
+.rights {
+  text-align: right;
+}
+
 .mat-app-background {
   background-color: #e4e3e352;
+}
+
+.mat-fab-bottom-right {
+  position: fixed !important;
+  right: 15px;
+}
+
+.container-academics {
+  color: black;
+  font-family: arial,sans-serif;
+  font-size: small;
+}
+
+.img-home-persone {
+  max-width: 300px;
+}
+
+/************************************
+ * Estilos de Cards
+ */
+mat-card {
+  border-radius: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: #424242d9;
+}
+
+mat-card.card-person-actions {
+  background: #fff;
+  color: #424242;
+}
+
+mat-card-subtitle.subtitle-actions {
+  color: #000;
+}
+
+.card-person-actions mat-card-actions button {
+  background-color: #33dc17cc;
+}
+
+/*************************
+ * Estilos generales del encabezado
+ */
+.filler-top {
+  margin-top: 60px;
+}
+
+mat-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 998;
+}
+
+.mat-toolbar.mat-accent {
+  background: #428d39;
+  color: rgba(0,0,0,.87);
+}
+
+.mat-toolbar.mat-warn {
+  color: #c3292c;
+}
+
+.mat-menu-panel {
+  background: #428d39;
+}
+
+/*********************
+ * Pie de página
+ */
+.footerApp {
+  font-size: smaller;
 }
