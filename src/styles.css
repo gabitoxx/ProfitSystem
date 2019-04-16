@@ -23,12 +23,27 @@
   background-color: #e4e3e352;
 }
 
+/****************************************
+ *  FAB buttons
+ */
 .mat-fab-bottom-right {
   position: fixed !important;
   right: 15px;
+  bottom: 20px;
+}
+.mat-fab.mat-accent, .mat-flat-button.mat-accent, .mat-mini-fab.mat-accent, .mat-raised-button.mat-accent {
+  background-color: #428d39;
 }
 
+/****************************************
+ *  Contenedores de cada tipo de usuario
+ */
 .container-academics {
+  color: black;
+  font-family: arial,sans-serif;
+  font-size: small;
+}
+.container-admin {
   color: black;
   font-family: arial,sans-serif;
   font-size: small;

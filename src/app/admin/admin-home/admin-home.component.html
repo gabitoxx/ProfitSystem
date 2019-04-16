@@ -1,7 +1,179 @@
 <app-toolbar-admin></app-toolbar-admin>
-<p>
-  admin-home works!
-</p>
-<button mat-fab class="md-fab mat-fab-bottom-right" aria-label="Add a category">
-  <mat-icon>exposure</mat-icon>
+
+<!-- Para dejar un espacio superior para el toolbar -->
+<div class="filler-top"></div>
+
+<div class="container-admin">
+
+  <mat-card class="card-person">
+    
+    <mat-card-header>
+      <div mat-card-avatar><mat-icon>person_pin</mat-icon></div>
+      <mat-card-title>Admin Jimmy</mat-card-title>
+      <mat-card-subtitle>Administrador</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content class="center">
+      <img mat-card-image class="img-home-persone" src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Persona foto de Perfil">
+      <p>
+        <b>Info:</b> Alguna info útil que mostrar aqui o a sus alumnos de Academia
+      </p>
+    </mat-card-content>
+
+    <mat-card-actions class="center">
+      <button mat-button>
+        <mat-icon>edit</mat-icon>
+        &nbsp; 
+        Editar Perfil
+      </button>
+    </mat-card-actions>
+
+  </mat-card>
+
+  <mat-card class="card-person-actions">
+
+    <mat-card-header>
+      <mat-card-title>Cuentas</mat-card-title>
+      <mat-card-subtitle class="subtitle-actions">
+        Cuentas.....
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-actions class="center">
+      <button mat-button>
+        <mat-icon>account_balance</mat-icon>
+        &nbsp; 
+        Ver Cuentas
+      </button>
+      <button mat-button>
+        <mat-icon>note_add</mat-icon>
+        &nbsp; 
+        Crear Cuenta nueva
+      </button>
+    </mat-card-actions>
+
+  </mat-card>
+
+  <mat-card class="card-person-actions">
+
+    <mat-card-header>
+      <mat-card-title>Movimientos</mat-card-title>
+      <mat-card-subtitle class="subtitle-actions">
+        Movimientos.....
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-actions class="center">
+      <button mat-button>
+        <mat-icon>receipt</mat-icon>
+        &nbsp; 
+        Ver Movimientos
+      </button>
+      <button mat-button>
+        <mat-icon>trending_up</mat-icon>
+        &nbsp; 
+        Crear Movimiento
+      </button>
+    </mat-card-actions>
+
+  </mat-card>
+
+  <mat-card class="card-person-actions">
+
+    <mat-card-header>
+      <mat-card-title>Contratos</mat-card-title>
+      <mat-card-subtitle class="subtitle-actions">
+        Contratos.....
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-actions class="center">
+      <button mat-button>
+        <mat-icon>people</mat-icon>
+        &nbsp; 
+        Ver Contratos
+      </button>
+      <button mat-button>
+        <mat-icon>group_add</mat-icon>
+        &nbsp; 
+        Crear Contrato
+      </button>
+    </mat-card-actions>
+  
+  </mat-card>
+
+  <mat-card class="card-person-actions">
+
+    <mat-card-header>
+      <mat-card-title>Personas</mat-card-title>
+      <mat-card-subtitle class="subtitle-actions">
+        Personas.....
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-actions class="center">
+      <button mat-button>
+        <mat-icon>streetview</mat-icon>
+        &nbsp; 
+        Ver Personas
+      </button>
+      <button mat-button>
+        <mat-icon>person_add</mat-icon>
+        &nbsp; 
+        Crear Persona
+      </button>
+    </mat-card-actions>
+
+  </mat-card>
+
+  <mat-card class="card-person-actions">
+
+    <mat-card-header>
+      <mat-card-title>Reportes</mat-card-title>
+      <mat-card-subtitle class="subtitle-actions">
+          Reportes.....
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-actions class="center">
+      <button mat-button>
+        <mat-icon>toc</mat-icon>
+        &nbsp; 
+        por Personas
+      </button>
+      <button mat-button>
+        <mat-icon>vertical_split</mat-icon>
+        &nbsp; 
+        por Cuentas
+      </button>
+      <br/><br/>
+      <button mat-button>
+        <mat-icon>view_list</mat-icon>
+        &nbsp; 
+        por Contrato
+      </button>
+      <button mat-button>
+        <mat-icon>attach_money</mat-icon>
+        &nbsp; 
+        Pagos en Academia
+      </button>
+    </mat-card-actions>
+
+  </mat-card>
+
+
+  <footer class="rights footerApp">
+      Profit Takers LLC
+      <br/>
+      Bogotá - Colombia - 2019
+      <br/>
+      All rights reserved.
+  </footer>
+
+</div>
+
+<button mat-fab class="mat-fab mat-fab-bottom-right" aria-label="Add a category">
+  <mat-icon>trending_up</mat-icon>
 </button>
+
+<br/><br/><br/><br/><br/>
