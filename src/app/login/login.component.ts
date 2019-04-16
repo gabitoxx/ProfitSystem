@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent extends LoginValidacion implements OnInit {
   
-  public username: string;
+  public email: string;
   public password: string;
 
   constructor(private router: Router) {
@@ -19,11 +19,15 @@ export class LoginComponent extends LoginValidacion implements OnInit {
   ngOnInit() {
     this.getGroupValidator();
   }
-  
+
   login() : void {
-    if(this.username == 'admin' && this.password == 'admin'){
-     this.router.navigate(["user"]);
-    }else {
+    if ( this.email == 'academia' && this.password == 'academia' ){
+      this.router.navigate(["academia/home"]);
+
+    } else if ( this.email == 'admin' && this.password == 'admin' ){
+      this.router.navigate(["admin/home"]);
+
+    } else {
       alert("Invalid credentials");
     }
   }

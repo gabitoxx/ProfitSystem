@@ -14,3 +14,7 @@
 .center {
   text-align: center;
 }
+
+.mat-app-background {
+  background-color: #e4e3e352;
+}

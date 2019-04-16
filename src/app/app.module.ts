@@ -15,11 +15,22 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormControl, FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { CustomMaterialModule } from './core/material.module';
+import { HomeComponent } from './academia/home/home.component';
+import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
+import { ToolbarComponent } from './academia/toolbar/toolbar.component';
+import { SidenavComponent } from './academia/sidenav/sidenav.component';
+import { ToolbarAdminComponent } from './admin/toolbar-admin/toolbar-admin.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent,
+    AdminHomeComponent,
+    ToolbarComponent,
+    SidenavComponent,
+    ToolbarAdminComponent
   ],
   imports: [
     BrowserModule,

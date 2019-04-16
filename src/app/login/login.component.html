@@ -39,20 +39,24 @@
   
   <mat-card class="example-card">
     <mat-card-header>
-      <mat-card-title class="center">Ingreso de usuarios</mat-card-title>
+      <div class="row justify-content-md-center">
+        <div class="col-md-12 center">
+          <mat-card-title class="center"><i>Ingreso de usuarios</i></mat-card-title>
+        </div>
+      </div>
     </mat-card-header>
     <mat-card-content>
       <form class="full-form">
         <div class="row justify-content-md-center">
           <div class="col-md-12 center">
             <mat-form-field class="full-width" color="accent">
-              <mat-label>Ingrese su correo electr&oacute;nico</mat-label>
-              <input matInput [(ngModel)]="username" name="username" required>
+              <mat-label id="email">Ingrese su correo electr&oacute;nico</mat-label>
+              <input matInput [(ngModel)]="email" name="username" required>
             </mat-form-field>
           </div>
           <div class="col-md-12 center">
             <mat-form-field class="full-width" color="accent">
-              <mat-label>Ingrese su contrase&ntilde;a</mat-label>
+              <mat-label id="pass">Ingrese su contrase&ntilde;a</mat-label>
               <input matInput  [(ngModel)]="password" type="password" name="password" required>
             </mat-form-field>
           </div>
@@ -63,13 +67,13 @@
     <div class="row justify-content-md-center">
       <div class="col-md-12 center">
         <mat-card-actions>
-          <button mat-raised-button (click)="login()" color="primary">Ingresar</button>
+          <button mat-raised-button (click)="login()" color="accent"><b>Ingresar</b></button>
         </mat-card-actions>
       </div>
-      <div class="col-md-12 center">
-          ¿No tienes cuenta en la Academia Profit?
-          <br/>
-          <a href="#">Solicita una nueva</a>
+      <div class="col-md-12 center loginFont">
+        ¿ No tienes cuenta en la Academia Profit ?
+        <br/>
+        <a href="#">Solicita una nueva aquí</a>
       </div>
     </div>
   </mat-card>
