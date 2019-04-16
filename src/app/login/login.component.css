@@ -1,0 +1,19 @@
+.login-img {
+  width: 50%;
+  height: 50%;
+}
+
+.loginContainer {
+  background: rgb(0,0,0);
+  background: linear-gradient(148deg, rgba(0,0,0,1) 2%, rgba(142,4,20,1) 13%, rgba(0,0,0,1) 22%, rgba(76,162,61,0.908000700280112) 72%);
+}
+
+.example-card {
+  background-color: #d3d3d300;
+}
+
+mat-label {
+  color: #ffffffb3;
+  font-size: 20px;
+  font-weight: 800;
+}

@@ -1,0 +1,79 @@
+<!--mat-toolbar color="primary">
+  <mat-toolbar-row>
+  <span>My First App</span>
+      <span class="example-fill-remaining-space"></span>
+      <span class="align-center"></span>
+      <span class="example-spacer"></span>
+      <button mat-button>About</button>
+      <button mat-button>Contact</button>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>dialpad</mat-icon>
+      <span>Redial</span>
+    </button>
+    <button mat-menu-item disabled>
+      <mat-icon>voicemail</mat-icon>
+      <span>Check voicemail</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>notifications_off</mat-icon>
+      <span>Disable alerts</span>
+    </button>
+  </mat-menu>
+</mat-toolbar-row -->
+
+<div class="container loginContainer">
+    
+  <div class="row justify-content-md-center">
+    <div class="col-md-12 center">
+      <div class="avatarFrameOffline">
+        <img src="assets/images/logo_negro.png" class="img-fluid login-img" />
+      </div>
+    </div>
+  </div>
+  
+  <br/>
+  
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title class="center">Ingreso de usuarios</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form class="full-form">
+        <div class="row justify-content-md-center">
+          <div class="col-md-12 center">
+            <mat-form-field class="full-width" color="accent">
+              <mat-label>Ingrese su correo electr&oacute;nico</mat-label>
+              <input matInput [(ngModel)]="username" name="username" required>
+            </mat-form-field>
+          </div>
+          <div class="col-md-12 center">
+            <mat-form-field class="full-width" color="accent">
+              <mat-label>Ingrese su contrase&ntilde;a</mat-label>
+              <input matInput  [(ngModel)]="password" type="password" name="password" required>
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+      <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+    </mat-card-content>
+    <div class="row justify-content-md-center">
+      <div class="col-md-12 center">
+        <mat-card-actions>
+          <button mat-raised-button (click)="login()" color="primary">Ingresar</button>
+        </mat-card-actions>
+      </div>
+      <div class="col-md-12 center">
+          ¿No tienes cuenta en la Academia Profit?
+          <br/>
+          <a href="#">Solicita una nueva</a>
+      </div>
+    </div>
+  </mat-card>
+
+</div>
+
+
