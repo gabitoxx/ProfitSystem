@@ -20,6 +20,8 @@ import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { ToolbarComponent } from './academia/toolbar/toolbar.component';
 import { SidenavComponent } from './academia/sidenav/sidenav.component';
 import { ToolbarAdminComponent } from './admin/toolbar-admin/toolbar-admin.component';
+import { PerfilComponent } from './academia/perfil/perfil.component';
+import { ProfileComponent } from './admin/profile/profile.component';
 
 
 @NgModule({
@@ -30,7 +32,9 @@ import { ToolbarAdminComponent } from './admin/toolbar-admin/toolbar-admin.compo
     AdminHomeComponent,
     ToolbarComponent,
     SidenavComponent,
-    ToolbarAdminComponent
+    ToolbarAdminComponent,
+    PerfilComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

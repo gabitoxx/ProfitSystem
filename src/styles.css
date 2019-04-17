@@ -57,9 +57,9 @@
  * Estilos de Cards
  */
 mat-card {
-  border-radius: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  border-radius: 15px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   background: #424242d9;
 }
 
@@ -109,4 +109,35 @@ mat-toolbar {
  */
 .footerApp {
   font-size: smaller;
+}
+
+/*********************
+ * Formularios
+ */
+.profile-form mat-label {
+  color: #428d39;
+}
+
+/* <hr/> */
+.form-divisor {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border-color: #428d39;
+  height: 1px;
+}
+
+
+/********************
+ * Letras
+ */
+ .titulo {
+  font-size: 20px;
+  font-weight: 600;
+  font-style: italic;
+  text-decoration: underline solid #428d39;
+}
+ .subtitulo {
+  font-size: 17px;
+  font-weight: 500;
+  font-style: italic;
 }

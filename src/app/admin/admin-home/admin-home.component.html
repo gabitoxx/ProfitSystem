@@ -21,7 +21,7 @@
     </mat-card-content>
 
     <mat-card-actions class="center">
-      <button mat-button>
+      <button mat-button (click)="actualizarProfile()">
         <mat-icon>edit</mat-icon>
         &nbsp; 
         Editar Perfil
@@ -33,9 +33,35 @@
   <mat-card class="card-person-actions">
 
     <mat-card-header>
+      <mat-card-title>Contratos</mat-card-title>
+      <mat-card-subtitle class="subtitle-actions">
+        un Contrato va atado a una Cuenta. 
+        Un Contrato puede tener uno o más Inversionistas pero un solo Responsable (y los prcentajes de participación de cada uno). 
+        En un Contrato se definen también Porcentaje de rentabilidad y Día de corte.
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-actions class="center">
+      <button mat-button>
+        <mat-icon>people</mat-icon>
+        &nbsp; 
+        Ver Contratos
+      </button>
+      <button mat-button>
+        <mat-icon>group_add</mat-icon>
+        &nbsp; 
+        Crear Contrato
+      </button>
+    </mat-card-actions>
+  
+  </mat-card>
+
+  <mat-card class="card-person-actions">
+
+    <mat-card-header>
       <mat-card-title>Cuentas</mat-card-title>
       <mat-card-subtitle class="subtitle-actions">
-        Cuentas.....
+        una Cuenta tiene asignación (ingresos/egresos) de capital (en dólares).
       </mat-card-subtitle>
     </mat-card-header>
 
@@ -59,7 +85,10 @@
     <mat-card-header>
       <mat-card-title>Movimientos</mat-card-title>
       <mat-card-subtitle class="subtitle-actions">
-        Movimientos.....
+        los Movimientos se realizan sobre una Cuenta. 
+        Se debe especificar fecha del movimiento, aporte de capital, 
+        si dicho aporte fue negativo (-) o positivo (+) los cuales afectan directamente 
+        el capital disponible en dicha Cuenta.
       </mat-card-subtitle>
     </mat-card-header>
 
@@ -81,33 +110,10 @@
   <mat-card class="card-person-actions">
 
     <mat-card-header>
-      <mat-card-title>Contratos</mat-card-title>
-      <mat-card-subtitle class="subtitle-actions">
-        Contratos.....
-      </mat-card-subtitle>
-    </mat-card-header>
-
-    <mat-card-actions class="center">
-      <button mat-button>
-        <mat-icon>people</mat-icon>
-        &nbsp; 
-        Ver Contratos
-      </button>
-      <button mat-button>
-        <mat-icon>group_add</mat-icon>
-        &nbsp; 
-        Crear Contrato
-      </button>
-    </mat-card-actions>
-  
-  </mat-card>
-
-  <mat-card class="card-person-actions">
-
-    <mat-card-header>
       <mat-card-title>Personas</mat-card-title>
       <mat-card-subtitle class="subtitle-actions">
-        Personas.....
+        Administradores, Inversionistas y personas afiliadas a la Academia. 
+        Puedes gestionar personas nuevas en esta opción.
       </mat-card-subtitle>
     </mat-card-header>
 
@@ -131,7 +137,10 @@
     <mat-card-header>
       <mat-card-title>Reportes</mat-card-title>
       <mat-card-subtitle class="subtitle-actions">
-          Reportes.....
+        Existen diversas opciones de Reportes, una por cada Entidad en el Sistema. 
+        Las Entidades son: Contratos, Cuentas, Movimientos, Personas.
+        Adicionalmente, podrás ver Reportes sobre los pagos de los estudiantes de la Academia 
+        y en general los concernientes al pago de Mensualidades y Aportes Trading.
       </mat-card-subtitle>
     </mat-card-header>
 

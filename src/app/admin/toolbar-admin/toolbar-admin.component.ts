@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-toolbar-admin',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToolbarAdminComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router){
+    
+  }
 
   ngOnInit() {
   }
 
+  actualizarProfile(){
+    this.router.navigate(["admin/profile"]);
+  }
+  
+  goHome(){
+    this.router.navigate(["admin/home"]);
+  }
 }

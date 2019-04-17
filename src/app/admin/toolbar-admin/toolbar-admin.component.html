@@ -10,7 +10,7 @@
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-menu #menuAdmin="matMenu">
-  <button mat-menu-item>
+  <button mat-menu-item (click)="goHome()">
     <mat-icon>home</mat-icon>
     &nbsp;
     Home  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -54,9 +54,9 @@
   <button mat-menu-item>
     <mat-icon>person_add</mat-icon>
     &nbsp;
-    Crear Asociado/en Academia
+    Crear Asociado/Inversionita
   </button>
-  <button mat-menu-item>
+  <button mat-menu-item (click)="actualizarProfile()">
     <mat-icon>perm_identity</mat-icon>
     &nbsp;
     Ver mi Perfil

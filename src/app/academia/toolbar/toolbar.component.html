@@ -11,7 +11,7 @@
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-menu #menuAcademia="matMenu">
-  <button mat-menu-item>
+  <button mat-menu-item (click)="goHome()">
     <mat-icon>home</mat-icon>
     &nbsp;
     Home  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -37,7 +37,7 @@
     &nbsp;
     Renovar suscripción
   </button>
-  <button mat-menu-item>
+  <button mat-menu-item (click)="actualizarPerfil()">
     <mat-icon>persone</mat-icon>
     &nbsp;
     Actualizar perfil

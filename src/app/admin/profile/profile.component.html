@@ -1,0 +1,123 @@
+<app-toolbar-admin></app-toolbar-admin>
+
+<!-- Para dejar un espacio superior para el toolbar -->
+<div class="filler-top"></div>
+
+<div class="container-academics">
+  
+  <form class="full-form profile-form">
+
+    <div class="row justify-content-md-center">
+      <div class="col-md-12 center">
+        <br/><br/>
+        <span class="titulo">Tu Perfil (<span style="color: red;">Administrador</span>)</span>
+        <br/>
+        <span class="subtitulo">Puedes establecer cambios y pulsar 'Actualizar'.</span>
+        <br/><br/>
+      </div>
+    </div>
+
+    <div class="row justify-content-md-center">
+      <div class="col-md-12 center">
+        <mat-form-field class="full-width" color="accent">
+          <mat-label id="nombre">Nombre</mat-label>
+          <input matInput [(ngModel)]="nombre" name="nombre" type="text" required>
+          <mat-icon matSuffix>person_outline</mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="col-md-12 center">
+        <mat-form-field class="full-width" color="accent">
+          <mat-label id="apellido">Apellido</mat-label>
+          <input matInput [(ngModel)]="apellido" name="apellido" type="text" required>
+          <mat-icon matSuffix>spellcheck</mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="col-md-12 center">
+        <mat-form-field class="full-width" color="accent">
+          <mat-label id="email">Email (correo electrónico)</mat-label>
+          <input matInput [(ngModel)]="email" name="email" type="text" disabled ng-readonly="true" style="color: black;">
+          <mat-icon matSuffix>email</mat-icon>
+          <mat-hint style="color: red;">El email no puede ser modificado. Es tu identificador único en nuestro Sistema.</mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="col-md-12 center">
+        <mat-form-field class="full-width" color="accent">
+          <mat-label id="ciudad">Ciudad</mat-label>
+          <input matInput [(ngModel)]="ciudad" name="ciudad" type="text">
+          <mat-icon matSuffix>public</mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="col-md-12 center">
+        <mat-form-field class="full-width" color="accent">
+          <mat-label id="direccion">Dirección</mat-label>
+          <input matInput [(ngModel)]="direccion" name="direccion" type="text">
+          <mat-icon matSuffix>edit_location</mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="col-md-12 center">
+        <mat-form-field class="full-width" color="accent">
+          <mat-label id="telefono">Teléfono de contacto (preferiblemente celular)</mat-label>
+          <input matInput [(ngModel)]="telefono" name="telefono" type="text" required>
+          <mat-icon matSuffix>contact_phone</mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="col-md-12 center">
+        <mat-form-field class="full-width" color="accent">
+          <mat-label id="info">Info extra sobre tí (grado, cargo, intereses, etc.)</mat-label>
+          <textarea matInput rows="2" [(ngModel)]="info"></textarea>
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="col-md-12 center">
+        <button mat-raised-button (click)="updatePerfil()" color="accent"><b>Actualizar mis datos</b></button>
+      </div>
+    </div>
+  </form>
+  
+  <hr class="form-divisor" />
+
+  <form class="full-form profile-form">
+
+    <div class="row justify-content-md-center">
+      
+      <div class="col-md-12 center">
+        <mat-form-field class="full-width" color="accent">
+          <mat-label id="passw">Contraseña</mat-label>
+          <input matInput [(ngModel)]="passw" name="passw" [type]="typePassw" required>
+          <mat-icon matSuffix (click)="tooglePassword()">{{ iconPassw }}</mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="col-md-12 center">
+        <mat-form-field class="full-width" color="accent">
+          <mat-label id="rep_passw">Repetir Contraseña</mat-label>
+          <input matInput [(ngModel)]="rep_passw" name="rep_passw" [type]="typePassw" required>
+          <mat-icon matSuffix (click)="tooglePassword()">{{ iconPassw }}</mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="col-md-12 center">
+        <button mat-raised-button (click)="updatePassword()" color="accent"><b>Actualizar contraseña</b></button>
+      </div>
+    </div>
+  </form>
+      
+  <hr class="form-divisor" />
+
+  <form class="full-form profile-form">
+
+    <div class="row justify-content-md-center">
+      <div class="col-md-12 center">
+        <span class="subtitulo">Tu Foto de Perfil</span>
+        <br/><br/>
+      </div>
+      <div class="col-md-12 center">
+        <img mat-card-image class="img-home-persone" src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Persona foto de Perfil">
+        <br/><br/>
+      </div>
+      <div class="col-md-12 center">
+        <button mat-raised-button (click)="updateProfilePicture()" color="accent"><b>Cambiar mi foto de Perfil</b></button>
+        <br/><br/>
+      </div>
+    </div>
+  </form>
+
+</div>
