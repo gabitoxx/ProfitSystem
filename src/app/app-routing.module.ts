@@ -11,6 +11,7 @@ import { CreateTradingComponent } from './admin/create-trading/create-trading.co
 import { CreateContractComponent } from './admin/create-contract/create-contract.component';
 import { RequestCredentialsComponent } from './request-credentials/request-credentials.component';
 import { PaymentsComponent } from './admin/payments/payments.component';
+import { PagoComponent } from './academia/pago/pago.component';
 
 const appRoutes: Routes = [
   /*  { path: 'home', component: HomeComponent, canActivate: [AuthenticationGuard] }, */
@@ -23,6 +24,7 @@ const appRoutes: Routes = [
      */
     { path: 'academia/home', component: HomeComponent },
     { path: 'academia/perfil', component: PerfilComponent },
+    { path: 'academia/pago/registrar', component: PagoComponent },
 
     /*
      * Administradores

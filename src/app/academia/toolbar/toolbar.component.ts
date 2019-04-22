@@ -23,6 +23,10 @@ export class ToolbarComponent implements OnInit {
     this.router.navigate(["academia/home"]);
   }
 
+  nuevoPago(){
+    this.router.navigate(["academia/pago/registrar"]);
+  }
+
   logout(){
     this.router.navigate(["login"]);
   }

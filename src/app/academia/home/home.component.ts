@@ -18,4 +18,8 @@ export class HomeComponent implements OnInit {
   actualizarPerfil(){
     this.router.navigate(["academia/perfil"]);
   }
+  
+  nuevoPago(){
+    this.router.navigate(["academia/pago/registrar"]);
+  }
 }

@@ -1,0 +1,106 @@
+<app-sidenav></app-sidenav>
+
+<!-- Para dejar un espacio superior para el toolbar -->
+<div class="filler-top"></div>
+
+<div class="container-academics">
+
+  <mat-card class="card-person">
+  
+    <mat-card-header>
+      <div mat-card-avatar><mat-icon>add_a_photo</mat-icon></div>
+      <mat-card-title>Registrar Pago</mat-card-title>
+      <mat-card-subtitle>Notificar de la realizaci&oacute;n de un nuevo pago.</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      Una vez que usted haya realizado un dep&oacute;sito para Profit Takers 
+      (ya sea para Inversi&oacute;n o para la Academia)
+      podrá registrarlo por ésta v&iacute;a. Recuerde nuestras v&iacute;as 
+      previamente dispuestas para este fin (ver abajo). 
+      Una vez hayamos validado su transacci&oacute;n nos pondremos
+      en contacto con ud. a la brevedad posible.
+    </mat-card-content>
+
+  </mat-card>
+
+  <mat-card class="card-person-actions">
+  
+    <mat-card-content>
+      <form class="full-form profile-form">
+        <div class="row justify-content-md-center">
+          
+          <div class="col-md-12 center">
+            <mat-form-field class="full-width" color="accent">
+              <mat-label id="banco">Banco en el que realizó la consignación</mat-label>
+              <input matInput [(ngModel)]="banco" name="banco" type="text" required>
+              <mat-icon matSuffix>account_balance</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-xs-12">
+            <mat-form-field class="full-width" color="accent">
+              <mat-label>Fecha en que realizó la consignación</mat-label>
+              <input matInput [matDatepicker]="picker" name="fecha" [(ngModel)]="fecha" class="inputRight">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="col-xs-12">
+            <mat-form-field class="full-width" color="accent">
+              <mat-label id="monto">Monto depositado</mat-label>
+              <input matInput [(ngModel)]="monto" name="monto" type="number" class="inputRight">
+              <mat-icon matSuffix>attach_money</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-xs-12">
+            <mat-form-field class="full-width" color="accent">
+              <mat-label id="concepto">Concepto</mat-label>
+              <input matInput [(ngModel)]="concepto" name="concepto" type="text" required>
+              <mat-icon matSuffix>developer_board</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-xs-12">
+            iconj boton
+          </div>
+
+        </div>
+      </form>
+    </mat-card-content>
+  
+  </mat-card>
+
+  <div class="row justify-content-md-center">
+    <div class="col-md-12 center">
+      <u>Nota</u>: 
+      *Es necesario adjuntar una imagen (Captura de pantalla, pantallazo, Print screen o screenshot) que evidencie su Pago.
+      Posterior a adjuntar su archivo, puede proceder a pulsar el siguiente boton.
+      <br/><br/>
+      <button mat-raised-button (click)="updateProfilePicture()" color="accent"><b>Registrar Pago nuevo</b></button>
+      <br/><br/>
+    </div>
+    <div class="col-xs-12 center">
+      <br/>
+      <a href (click)="$event.preventDefault();goHome();" class="href-red">Cancelar</a>
+    </div>
+  </div>
+  
+  <br/><br/><br/>
+
+  <mat-card class="card-person">
+    <mat-card-content>
+      Cuentas avaladas para registrar sus Pagos:
+      <br/><br/>
+      <ol>
+        <li>Bancolombia, Nº de cuenta Ahorros: blablablah</li>
+        <li>Banco de Bogotá, Nº de cuenta Corriente: blablablah</li>
+      </ol>
+      <br/><br/>
+    </mat-card-content>
+
+  </mat-card>
+  <br/><br/><br/>
+</div>

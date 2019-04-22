@@ -28,6 +28,7 @@ import { CreateTradingComponent } from './admin/create-trading/create-trading.co
 import { CreateContractComponent, AddInvestorModalDialog } from './admin/create-contract/create-contract.component';
 import { RequestCredentialsComponent } from './request-credentials/request-credentials.component';
 import { PaymentsComponent, PaymentPictureModalDialog } from './admin/payments/payments.component';
+import { PagoComponent } from './academia/pago/pago.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { PaymentsComponent, PaymentPictureModalDialog } from './admin/payments/p
     CreateContractComponent,
     RequestCredentialsComponent,
     AddInvestorModalDialog, PaymentPictureModalDialog,
-    PaymentsComponent
+    PaymentsComponent,
+    PagoComponent
   ],
   imports: [
     BrowserModule,

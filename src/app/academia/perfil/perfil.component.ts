@@ -1,4 +1,5 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-perfil',
@@ -31,8 +32,7 @@ export class PerfilComponent implements OnInit {
    */
   typePassw: string = "password";
 
-  constructor(private element: ElementRef){
-    
+  constructor(private element: ElementRef, private router: Router){  
   }
 
   ngOnInit() {
@@ -54,6 +54,10 @@ export class PerfilComponent implements OnInit {
     this.tooglePassw = !this.tooglePassw;
     this.iconPassw = ( this.tooglePassw == true ) ? 'lock_open' : 'lock';
     this.typePassw = ( this.tooglePassw == true ) ? 'text'      : 'password';
+  }
+
+  goHome(){
+    this.router.navigate(["academia/home"]);
   }
 
 }
