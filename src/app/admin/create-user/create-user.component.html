@@ -1,0 +1,135 @@
+<app-toolbar-admin></app-toolbar-admin>
+
+<!-- Para dejar un espacio superior para el toolbar -->
+<div class="filler-top"></div>
+
+<div class="container-admin">
+
+  <mat-card class="example-card">
+    <mat-card-header>
+      <div class="row">
+        <div class="col-md-12 center centrado">
+          <span class="titulo">Crear Usuario en el Sistema</span>
+          <br/><br/>
+        </div>
+        <div class="col-md-12">
+          <span class="pExplain lBlanca">
+            Como Administrador del Sistema Profit Takers podr&aacute;
+            crear un Usuario en el Sistema, ya sea otro <b>Administrador</b>, 
+            un <b>Inversionista</b> o un <b>estudiante de la Academia</b>.
+            El estatus <b>Ambos</b> significa que este usuario ser&aacute; 
+            un estudiante de la Academia y un Inversionista a la vez.
+          </span>
+          <br/><br/>
+        </div>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <form class="full-form profile-form">
+
+        <div class="row">
+          <div class="col-xs-12">
+            <mat-label id="nombre">Elija un tipo de Usuario</mat-label><br/>
+            <mat-radio-group aria-label="Elija un tipo de Usuario">
+              <mat-radio-button value="i">Inversionista</mat-radio-button>
+              <mat-radio-button value="e">Estudiante</mat-radio-button>
+              <mat-radio-button value="a">Ambos</mat-radio-button>
+              <br/>
+              <mat-radio-button value="x" style="margin-left: 0px;">
+                Administrador (tendr&aacute; los mismos privilegios que ud.)
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+
+        <div class="row justify-content-xs-center">
+          <div class="col-xs-12 center">
+            <mat-form-field class="full-width" color="accent">
+              <mat-label id="nombre">Nombre</mat-label>
+              <input matInput [(ngModel)]="nombre" name="nombre" type="text" required>
+              <mat-icon matSuffix>person_outline</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row justify-content-xs-center">
+          <div class="col-xs-12 center">
+            <mat-form-field class="full-width" color="accent">
+              <mat-label id="apellido">Apellido</mat-label>
+              <input matInput [(ngModel)]="apellido" name="apellido" type="text" required>
+              <mat-icon matSuffix>spellcheck</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row justify-content-xs-center">
+          <div class="col-xs-12 center">
+            <mat-form-field class="full-width" color="accent">
+              <mat-label id="email">Email (correo electr&oacute;nico)</mat-label>
+              <input matInput [(ngModel)]="email" name="email" type="text" required>
+              <mat-icon matSuffix>email</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-xs-12 center">
+          <mat-form-field class="full-width" color="accent">
+            <mat-label id="telefono">Tel&eacute;fono de contacto (preferiblemente celular)</mat-label>
+            <input matInput [(ngModel)]="telefono" name="telefono" type="text" required>
+            <mat-icon matSuffix>call</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="row justify-content-xs-center">
+          <div class="col-xs-12 center">
+            <mat-form-field class="full-width" color="accent">
+              <mat-label id="ciudad">Ciudad</mat-label>
+              <input matInput [(ngModel)]="ciudad" name="ciudad" type="text">
+              <mat-icon matSuffix>public</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-xs-12 center">
+            <mat-form-field class="full-width" color="accent">
+              <mat-label id="direccion">Direcci&oacute;n</mat-label>
+              <input matInput [(ngModel)]="direccion" name="direccion" type="text">
+              <mat-icon matSuffix>edit_location</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-xs-12 center">
+            <mat-form-field class="full-width" color="accent">
+              <mat-label id="info">Info extra (grado, cargo, intereses, etc.)</mat-label>
+              <textarea matInput rows="2" [(ngModel)]="info"></textarea>
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-xs-12">
+            <u>Nota:</u> 
+            Debido a sus privilegios Administrativos, &eacute;ste nuevo usuario se crear&aacute;
+            de una vez con ESTATUS = 'ACTIVO'; a diferencia de la Solicitud de 
+            nueva cuenta Profit Takers (en la p&aacute;gina de Login) la cual debe
+            ser Activada por alg&uacute;n Administrador (si no dichos usuarios permanecer&aacute;n en 
+            estatus 'Inactivo' 
+            y no podr&aacute;n ingresar al Sistema).
+            <br/><br/>
+          </div>
+
+          <div class="col-xs-12 center">
+            <button mat-raised-button (click)="createNewUser()" color="accent"><b>Crear Usuario</b></button>
+          </div>
+
+          <div class="col-xs-12 center">
+            <br/>
+            <a href (click)="$event.preventDefault();goHome();" class="href-red">Cancelar</a>
+          </div>
+          
+        </div>
+      </form>
+      <br/><br/><br/>
+    </mat-card-content>
+  </mat-card>
+
+
+</div>

@@ -1,0 +1,35 @@
+<style>
+  ::ng-deep mat-dialog-container, .mat-dialog-container {
+    transform: none;
+    background-color: forestgreen !important;
+  }
+
+  ::ng-deep .mat-dialog-content {
+    height: 500px !important;
+    max-height: 700px !important;;
+  }
+
+  ::ng-deep mat-label {
+    font-size: 13px;
+  }
+  ::ng-deep mat-slide-toggle {
+    font-size: 13px;
+  }
+</style>
+
+<div style="transform: none;background-color: forestgreen;">
+  <p mat-dialog-title class="subtitulo">
+    Detalle del Pago (id {{ data.id }})
+  </p>
+  <div mat-dialog-content>
+    <div class="row justify-content-xs-center">
+      <div class="col-xs-12 center">
+        <img mat-card-image class="img-home-persone" src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+         alt="Screenshot o pantallazo o capture del pago">
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-button (click)="onNoClick()">Cerrar</button>
+  </div>
+</div>

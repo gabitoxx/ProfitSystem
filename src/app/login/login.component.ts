@@ -12,6 +12,17 @@ export class LoginComponent extends LoginValidacion implements OnInit {
   public email: string;
   public password: string;
 
+  tooglePassw:boolean = false;
+  /*
+   * {'lock', 'lock_open'}
+   */
+  iconPassw: string = "lock";
+  /*
+   * {'text', 'password'}
+   */
+  typePassw: string = "password";
+
+
   constructor(private router: Router) {
     super();
   }
@@ -31,4 +42,15 @@ export class LoginComponent extends LoginValidacion implements OnInit {
       alert("Invalid credentials");
     }
   }
+
+  tooglePassword(){
+    this.tooglePassw = !this.tooglePassw;
+    this.iconPassw = ( this.tooglePassw == true ) ? 'lock_open' : 'lock';
+    this.typePassw = ( this.tooglePassw == true ) ? 'text'      : 'password';
+  }
+
+  applyForNewUseraccount(){
+    this.router.navigate(["nueva/cuenta"]);
+  }
+
 }

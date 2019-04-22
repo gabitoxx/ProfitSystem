@@ -19,4 +19,23 @@ export class AdminHomeComponent implements OnInit {
     this.router.navigate(["admin/profile"]);
   }
 
+  createUser(){
+    this.router.navigate(["admin/createUser"]);
+  }
+
+  createAccount(){
+    this.router.navigate(["admin/createAccount"]);
+  }
+
+  createTrading(){
+    this.router.navigate(["admin/createTrading"]);
+  }
+  
+  createContract(){
+    this.router.navigate(["admin/createContract"]);
+  }
+
+  payments(){
+    this.router.navigate(["admin/payments"]);
+  }
 }

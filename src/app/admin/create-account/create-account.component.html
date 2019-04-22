@@ -1,0 +1,94 @@
+<app-toolbar-admin></app-toolbar-admin>
+
+<!-- Para dejar un espacio superior para el toolbar -->
+<div class="filler-top"></div>
+
+<div class="container-admin">
+    
+  <mat-card class="card-person-actions">
+    <mat-card-header>
+      <div class="row">
+        <div class="col-md-12 center centrado lNegra">
+          <span class="titulo">Crear Cuenta en el Sistema</span>
+          <br/><br/>
+        </div>
+        <div class="col-md-12">
+          <span class="pExplain">
+            Como Administrador del Sistema Profit Takers podr&aacute;
+            crear una <b>Cuenta</b> en el Sistema.
+            Sobre las Cuentas ser&aacute;n registradas el balance
+             y los subsiguientes movimientos de dinero de la misma.
+            Los movimientos de dinero se establecer&aacute;n en la secci&oacute;n de 
+            <b>Movimientos</b>. Las Cuentas estar&aacute;n asociadas a <b>Contratos</b>.
+          </span>
+          <br/><br/>
+        </div>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <form class="full-form profile-form">
+
+        <div class="row justify-content-xs-center">
+
+          <div class="col-xs-12 center">
+            <mat-form-field class="full-width" color="accent">
+              <mat-label id="nombre">Nombre de la Cuenta</mat-label>
+              <input matInput [(ngModel)]="nombre" name="nombre" type="text" required>
+              <mat-icon matSuffix>account_balance</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-xs-12 center">
+            <mat-form-field class="full-width" color="accent">
+              <mat-label id="info">Descripción y/o Observaciones</mat-label>
+              <textarea matInput rows="2" [(ngModel)]="info"></textarea>
+              <mat-icon matSuffix>import_contacts</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-xs-12 center">
+            <br/>
+            <mat-form-field class="full-width" color="accent">
+              <mat-label>Currency</mat-label>
+              <mat-select><!-- el color de letra lo da la calse .mat-select-value -->
+                <mat-option value="USD" selected>USD ($ - Dólares)</mat-option>
+                <mat-option value="EUR">EUR (€ - Euros)</mat-option>
+                <mat-option value="COP">COP ($ - Pesos Colombianos)</mat-option>
+              </mat-select>
+              <mat-icon matSuffix>money</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-xs-12 center">
+            <mat-form-field class="full-width" color="accent">
+              <mat-label id="money">Monto inicial</mat-label>
+              <input matInput [(ngModel)]="money" name="money" type="number" placeholder="0.00" required>
+              <mat-icon matSuffix>attach_money</mat-icon>
+              <mat-hint style="color: red;">Este ser&aacute; el capital inicial con el que inicie esta Cuenta. Puede ser cero (0)</mat-hint>
+            </mat-form-field>
+          </div>
+
+        </div>
+
+        <br/><br/>
+
+        <div class="row justify-content-xs-center">
+
+          <div class="col-xs-12 center">
+            <button mat-raised-button (click)="createNewAccount()" color="accent"><b>Crear nueva Cuenta</b></button>
+          </div>
+
+          <div class="col-xs-12 center">
+            <br/>
+            <a href (click)="$event.preventDefault();goHome();" class="href-red">Cancelar</a>
+          </div>
+
+        </div>
+
+      </form>
+
+      <br/><br/><br/>
+
+    </mat-card-content>
+  </mat-card>
+</div>

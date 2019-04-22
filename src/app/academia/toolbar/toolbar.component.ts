@@ -22,4 +22,8 @@ export class ToolbarComponent implements OnInit {
   goHome(){
     this.router.navigate(["academia/home"]);
   }
+
+  logout(){
+    this.router.navigate(["login"]);
+  }
 }

@@ -17,11 +17,21 @@
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   </button>
   <button mat-menu-item>
+    <mat-icon>people</mat-icon>
+    &nbsp;
+    Contratos: Ver 
+  </button>
+  <button mat-menu-item (click)="createContract()">
+    <mat-icon>group_add</mat-icon>
+    &nbsp;
+    Contratos: Crear nuevo
+  </button>
+  <button mat-menu-item>
     <mat-icon>account_balance</mat-icon>
     &nbsp;
     Cuentas: Ver 
   </button>
-  <button mat-menu-item>
+  <button mat-menu-item (click)="createAccount()">
     <mat-icon>note_add</mat-icon>
     &nbsp;
     Cuentas: Crear nueva
@@ -31,37 +41,27 @@
     &nbsp;
     Movimientos: Ver
   </button>
-  <button mat-menu-item>
+  <button mat-menu-item (click)="createTrading()">
     <mat-icon>trending_up</mat-icon>
     &nbsp;
     Movimientos: Crear nuevo
-  </button>
-  <button mat-menu-item>
-    <mat-icon>people</mat-icon>
-    &nbsp;
-    Contratos: Ver 
-  </button>
-  <button mat-menu-item>
-    <mat-icon>group_add</mat-icon>
-    &nbsp;
-    Contratos: Crear nuevo
   </button>
   <button mat-menu-item [matMenuTriggerFor]="reportTypes">
     <mat-icon>format_list_numbered</mat-icon>
     &nbsp;
     Reportes
   </button>
-  <button mat-menu-item>
+  <button mat-menu-item (click)="createUser()">
     <mat-icon>person_add</mat-icon>
     &nbsp;
-    Crear Asociado/Inversionita
+    Crear Usuario
   </button>
   <button mat-menu-item (click)="actualizarProfile()">
     <mat-icon>perm_identity</mat-icon>
     &nbsp;
     Ver mi Perfil
   </button>
-  <button mat-menu-item>
+  <button mat-menu-item (click)="logout()">
     <mat-icon>directions_run</mat-icon>
     &nbsp;
     Cerrar sesión
@@ -72,7 +72,9 @@
   <button mat-menu-item>Por Persona</button>
   <button mat-menu-item>Por Cuenta</button>
   <button mat-menu-item>Por Contrato</button>
-  <button mat-menu-item [matMenuTriggerFor]="menuAdminPagos">Pagos Academia</button>
+  <button mat-menu-item (click)="payments()"><!-- [matMenuTriggerFor]="menuAdminPagos" -->
+    Pagos Academia
+  </button>
 </mat-menu>
 
 <mat-menu #menuAdminPagos="matMenu">

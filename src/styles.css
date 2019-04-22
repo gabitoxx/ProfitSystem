@@ -126,6 +126,24 @@ mat-toolbar {
   height: 1px;
 }
 
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+
+.infoPanelGris {
+  background-color: #d3d3d3bf;
+  border-left-width: 10px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.inputRight {
+  text-align: right !important;
+}
+
+.pointer {
+  cursor: pointer;
+}
 
 /********************
  * Letras
@@ -136,8 +154,45 @@ mat-toolbar {
   font-style: italic;
   text-decoration: underline solid #428d39;
 }
- .subtitulo {
+.subtitulo {
   font-size: 17px;
   font-weight: 500;
   font-style: italic;
+}
+
+.titulo2 {
+  font-size: 20px;
+  font-weight: 600;
+  font-style: italic;
+  text-decoration: underline solid #428d39;
+  color: #bbb;
+}
+.subtitulo2 {
+  font-size: 17px;
+  font-weight: 500;
+  font-style: italic;
+  color: #bbb;
+}
+
+.href-red {
+  color: #e84c4c;
+  font-size: 17px;
+}
+
+.pExplain {
+  font-size: 15px;
+  text-decoration: none;
+  font-family: arial,sans-serif;
+}
+
+.lNegra {
+  color: black;
+}
+
+.lBlanca {
+  color: #bbb;
+}
+
+.mat-select-value {
+  color: black;
 }

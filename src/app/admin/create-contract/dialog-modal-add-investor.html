@@ -1,0 +1,67 @@
+<style>
+  ::ng-deep mat-dialog-container, .mat-dialog-container {
+    transform: none;
+    background-color: forestgreen !important;
+  }
+
+  ::ng-deep .mat-dialog-content {
+    height: 220px !important;
+  }
+
+  ::ng-deep mat-label {
+    font-size: 13px;
+  }
+  ::ng-deep mat-slide-toggle {
+    font-size: 13px;
+  }
+</style>
+
+<div style="transform: none;background-color: forestgreen;">
+  <p mat-dialog-title class="subtitulo">
+    Agregar Inversionista a este Contrato
+  </p>
+  <div mat-dialog-content>
+    <!-- <mat-form-field>
+      <input matInput [(ngModel)]="data.animal">
+    </mat-form-field> -->
+    <div class="row justify-content-xs-center">
+
+      <div class="col-xs-12 center">
+        <mat-form-field class="full-width" color="accent">
+          <mat-label>Elegir un Inversionista</mat-label>
+          <mat-select [(ngModel)]="inv_person" (selectionChange)="selectedInvestor(investor)" required [ngModelOptions]="{standalone: true}"><!-- el color de letra lo da la calse .mat-select-value -->
+            <mat-option value="A001">Doctor Strange</mat-option>
+            <mat-option value="A002">Iron man</mat-option>
+            <mat-option value="A003">Thor son of Odin</mat-option>
+          </mat-select>
+          <mat-icon matSuffix>person_add</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="col-xs-12">
+        Correo: xxx {{ name2 }}
+        <br/>
+        Tel&eacute;fono: {{ animal2 }}
+      </div>
+
+      <div class="col-xs-12 center">
+        <mat-form-field class="full-width" color="accent">
+          <mat-label id="prpm">Porcentaje Rentabilidad pactado mensual</mat-label>
+          <input matInput [(ngModel)]="inv_prpm" name="expense" type="number" class="inputRight">
+          <mat-icon matSuffix>pie_chart</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="col-xs-12 rights">
+        <mat-slide-toggle color="warn" labelPosition="before">Marcar como Responsable del Contrato: </mat-slide-toggle>
+      </div>
+
+    </div>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial style="background-color: darkgreen;">
+      Agregar Inversionista
+    </button>
+  </div>
+</div>

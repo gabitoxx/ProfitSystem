@@ -1,0 +1,101 @@
+<app-toolbar-admin></app-toolbar-admin>
+
+<!-- Para dejar un espacio superior para el toolbar -->
+<div class="filler-top"></div>
+
+<div class="container-admin">
+
+  <mat-card class="card-person">
+    <mat-card-header style="font-size: 18px;">
+      Reporte: Pagos a la Academia
+    </mat-card-header>
+    <mat-card-content class="center">
+      <br/>
+      Ver los Pagos realizados para la Academia. Podr&aacute; filtrar 
+      la tabla por las siguientes opciones:
+      <br/><br/>
+      <mat-radio-group aria-label="Elija un movimiento" color="warn">
+        <mat-radio-button value="menos" checked="checked">&Uacute;ltima semana</mat-radio-button>
+        <mat-radio-button value="mas">Mes actual</mat-radio-button>
+        <mat-radio-button value="fecha">Filtrar por Fechas</mat-radio-button>
+      </mat-radio-group>
+      
+      <br/><br/>
+
+      <mat-form-field class="full-width" color="accent">
+        <mat-label>Desde</mat-label>
+        <input matInput [matDatepicker]="picker" placeholder="Desde" name="from" [(ngModel)]="from" class="inputRight">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="full-width" color="accent">
+          <mat-label>Hasta</mat-label>
+          <input matInput [matDatepicker]="picker2" placeholder="Hasta" name="until" [(ngModel)]="until" class="inputRight">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="card-person-actions">
+    <mat-card-header>
+      <div class="row justify-content-xs-center">
+        <div class="col-xs-12 center">
+          <span class="subtitulo">Resultado:</span>
+        </div>
+        <div class="col-xs-12 center"><br/></div>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%;">
+
+        <ng-container matColumnDef="fecha">
+          <th mat-header-cell *matHeaderCellDef class="center"> Fecha </th>
+          <td mat-cell *matCellDef="let element" class="center"> {{element.fecha}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Usuario </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="monto">
+          <th mat-header-cell *matHeaderCellDef class="center"> Monto/Pago </th>
+          <td mat-cell *matCellDef="let element" class="center"> {{element.monto}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="link">
+            <th mat-header-cell *matHeaderCellDef class="center"> Imagen </th>
+            <td mat-cell *matCellDef="let element" class="center pointer" (click)="seePayment(element.id);">
+              <mat-icon>fullscreen</mat-icon>
+            </td>
+          </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+                      
+    </mat-card-content>
+    <mat-card-actions class="center">
+      <button mat-button (click)="excel()">
+        <mat-icon>cloud_download</mat-icon>
+        &nbsp; 
+        Descargar en Excel
+      </button>
+      <br/>
+    </mat-card-actions>
+  </mat-card>
+
+  <div class="row justify-content-md-center">
+    <div class="col-xs-12">
+      *resultados según el filtro de la parte superior.
+    </div>
+    <div class="col-xs-12 center">
+      <br/>
+      <a href (click)="$event.preventDefault();goHome();" class="href-red">Volver</a>
+    </div>
+    <br/><br/><br/>
+  </div>
+</div>

@@ -1,0 +1,114 @@
+<app-toolbar-admin></app-toolbar-admin>
+
+<!-- Para dejar un espacio superior para el toolbar -->
+<div class="filler-top"></div>
+
+<div class="container-admin">
+    
+  <mat-card class="card-person-actions">
+    <mat-card-header>
+      <div class="row">
+        <div class="col-md-12 center centrado lNegra">
+          <span class="titulo">Crear Movimiento</span>
+          <br/><br/>
+        </div>
+        <div class="col-md-12">
+          <span class="pExplain">
+            Como Administrador del Sistema Profit Takers podr&aacute;
+            crear una <b>Movimientos</b>.
+            Un Movimiento afectar&aacute; el balance de una <b>Cuenta</b> 
+            la cual est&aacute; en un &uacute;nico <b>Contrato</b>.
+          </span>
+          <br/><br/>
+        </div>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <form class="full-form profile-form">
+
+        <div class="row justify-content-xs-center">
+
+          <div class="col-xs-12 center">
+            <mat-form-field class="full-width" color="accent">
+              <!-- 
+              <mat-label id="fecha">Fecha del Movimiento</mat-label>
+              <input matInput [(ngModel)]="fecha" name="fecha" type="date" required [max]="fechaFinal">
+              <mat-icon matSuffix>today</mat-icon>
+             -->
+              <mat-label>Fecha del Movimiento</mat-label>
+              <input matInput [matDatepicker]="picker" placeholder="Fecha del Movimiento" name="fecha" [(ngModel)]="fecha" class="inputRight">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <hr/>
+
+          <div class="col-xs-12 center">
+            <br/>
+            <mat-form-field class="full-width" color="accent">
+              <mat-label>Contrato: Elegir uno</mat-label>
+              <mat-select [(ngModel)]="contrato" (selectionChange)="selectedContract(contrato)" required><!-- el color de letra lo da la calse .mat-select-value -->
+                <mat-option value="A">Contrato C001 - descripcion</mat-option>
+                <mat-option value="B">Contrato C002 - descripcion</mat-option>
+                <mat-option value="C">Contrato C003 - descripcion</mat-option>
+              </mat-select>
+              <mat-icon matSuffix>people</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-xs-12 infoPanelGris">
+            <b>Cuenta:</b> {{ this.account }}
+            <br/><br/>
+            <b>Cr&eacute;dito disponible:</b> $ {{ this.available }}
+          </div>
+
+          <hr/>
+
+          <div class="col-xs-12 center">
+            <mat-form-field class="full-width" color="accent">
+              <mat-label id="expense">D&eacute;bito</mat-label>
+              <input matInput [(ngModel)]="expense" name="expense" type="number">
+              <mat-icon matSuffix>monetization_on</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12">
+              <mat-radio-group aria-label="Elija un movimiento" color="warn">
+                <mat-radio-button value="menos">Negativo (-)</mat-radio-button>
+                <mat-radio-button value="mas" checked="checked">Positivo (+)</mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+          
+          <br/>
+
+          <div class="col-xs-12 infoPanelGris">
+            <b>Resultado de la Operaci&oacute;n:</b> {{ this.account }}
+          </div>
+
+          <hr/>
+          
+          <div class="col-xs-12">
+            <br/>
+            <u>Nota:</u> Este Movimiento tomar&aacute; efecto inmediatamente sobre el Contrato y sus Inversionistas seg&uacute;n sus Porcentajes asignados.
+            <br/><br/>
+          </div>
+          
+          <div class="col-xs-12 center">
+            <button mat-raised-button (click)="newTrading()" color="accent"><b>Registrar Movimiento</b></button>
+          </div>
+
+          <div class="col-xs-12 center">
+            <br/>
+            <a href (click)="$event.preventDefault();goHome();" class="href-red">Cancelar</a>
+          </div>
+
+          <br/><br/><br/>
+
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

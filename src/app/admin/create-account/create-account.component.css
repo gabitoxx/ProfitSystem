@@ -1,0 +1,5 @@
+/* Border */
+.mat-form-field-type-mat-input, .mat-select {
+  border-bottom: 1px #428d39;
+  border-bottom-style: solid;
+}

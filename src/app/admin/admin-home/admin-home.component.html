@@ -35,8 +35,8 @@
     <mat-card-header>
       <mat-card-title>Contratos</mat-card-title>
       <mat-card-subtitle class="subtitle-actions">
-        un Contrato va atado a una Cuenta. 
-        Un Contrato puede tener uno o más Inversionistas pero un solo Responsable (y los prcentajes de participación de cada uno). 
+        un <b>Contrato</b> va atado a una <b>Cuenta</b>. 
+        Un Contrato puede tener uno o más <b>Inversionistas</b> pero un solo <b>Responsable</b> (y los porcentajes de participación de cada uno). 
         En un Contrato se definen también Porcentaje de rentabilidad y Día de corte.
       </mat-card-subtitle>
     </mat-card-header>
@@ -47,7 +47,7 @@
         &nbsp; 
         Ver Contratos
       </button>
-      <button mat-button>
+      <button mat-button (click)="createContract()">
         <mat-icon>group_add</mat-icon>
         &nbsp; 
         Crear Contrato
@@ -61,7 +61,7 @@
     <mat-card-header>
       <mat-card-title>Cuentas</mat-card-title>
       <mat-card-subtitle class="subtitle-actions">
-        una Cuenta tiene asignación (ingresos/egresos) de capital (en dólares).
+        una <b>Cuenta</b> tiene asignación (ingresos/egresos) de capital (en dólares).
       </mat-card-subtitle>
     </mat-card-header>
 
@@ -71,10 +71,10 @@
         &nbsp; 
         Ver Cuentas
       </button>
-      <button mat-button>
+      <button mat-button (click)="createAccount()">
         <mat-icon>note_add</mat-icon>
         &nbsp; 
-        Crear Cuenta nueva
+        Crear Cuenta
       </button>
     </mat-card-actions>
 
@@ -85,7 +85,7 @@
     <mat-card-header>
       <mat-card-title>Movimientos</mat-card-title>
       <mat-card-subtitle class="subtitle-actions">
-        los Movimientos se realizan sobre una Cuenta. 
+        los <b>Movimientos</b> se realizan sobre una <b>Cuenta</b>. 
         Se debe especificar fecha del movimiento, aporte de capital, 
         si dicho aporte fue negativo (-) o positivo (+) los cuales afectan directamente 
         el capital disponible en dicha Cuenta.
@@ -98,7 +98,7 @@
         &nbsp; 
         Ver Movimientos
       </button>
-      <button mat-button>
+      <button mat-button (click)="createTrading()">
         <mat-icon>trending_up</mat-icon>
         &nbsp; 
         Crear Movimiento
@@ -121,12 +121,12 @@
       <button mat-button>
         <mat-icon>streetview</mat-icon>
         &nbsp; 
-        Ver Personas
+        Ver Usuarios
       </button>
-      <button mat-button>
+      <button mat-button (click)="createUser()">
         <mat-icon>person_add</mat-icon>
         &nbsp; 
-        Crear Persona
+        Crear Usuario
       </button>
     </mat-card-actions>
 
@@ -138,7 +138,7 @@
       <mat-card-title>Reportes</mat-card-title>
       <mat-card-subtitle class="subtitle-actions">
         Existen diversas opciones de Reportes, una por cada Entidad en el Sistema. 
-        Las Entidades son: Contratos, Cuentas, Movimientos, Personas.
+        Las Entidades son: <b>Contratos, Cuentas, Movimientos</b> y <b>Personas</b>.
         Adicionalmente, podrás ver Reportes sobre los pagos de los estudiantes de la Academia 
         y en general los concernientes al pago de Mensualidades y Aportes Trading.
       </mat-card-subtitle>
@@ -148,20 +148,20 @@
       <button mat-button>
         <mat-icon>toc</mat-icon>
         &nbsp; 
-        por Personas
+        por Contrato
       </button>
       <button mat-button>
         <mat-icon>vertical_split</mat-icon>
         &nbsp; 
-        por Cuentas
+        por Cuenta (Mov.'s)
       </button>
       <br/><br/>
       <button mat-button>
         <mat-icon>view_list</mat-icon>
         &nbsp; 
-        por Contrato
+        por Persona
       </button>
-      <button mat-button>
+      <button mat-button (click)="payments()">
         <mat-icon>attach_money</mat-icon>
         &nbsp; 
         Pagos en Academia
@@ -181,7 +181,7 @@
 
 </div>
 
-<button mat-fab class="mat-fab mat-fab-bottom-right" aria-label="Add a category">
+<button mat-fab class="mat-fab mat-fab-bottom-right" aria-label="Nuevo Movimiento Trading" (click)="createTrading()">
   <mat-icon>trending_up</mat-icon>
 </button>
 

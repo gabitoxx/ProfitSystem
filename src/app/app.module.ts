@@ -22,6 +22,12 @@ import { SidenavComponent } from './academia/sidenav/sidenav.component';
 import { ToolbarAdminComponent } from './admin/toolbar-admin/toolbar-admin.component';
 import { PerfilComponent } from './academia/perfil/perfil.component';
 import { ProfileComponent } from './admin/profile/profile.component';
+import { CreateUserComponent } from './admin/create-user/create-user.component';
+import { CreateAccountComponent } from './admin/create-account/create-account.component';
+import { CreateTradingComponent } from './admin/create-trading/create-trading.component';
+import { CreateContractComponent, AddInvestorModalDialog } from './admin/create-contract/create-contract.component';
+import { RequestCredentialsComponent } from './request-credentials/request-credentials.component';
+import { PaymentsComponent, PaymentPictureModalDialog } from './admin/payments/payments.component';
 
 
 @NgModule({
@@ -34,7 +40,14 @@ import { ProfileComponent } from './admin/profile/profile.component';
     SidenavComponent,
     ToolbarAdminComponent,
     PerfilComponent,
-    ProfileComponent
+    ProfileComponent,
+    CreateUserComponent,
+    CreateAccountComponent,
+    CreateTradingComponent,
+    CreateContractComponent,
+    RequestCredentialsComponent,
+    AddInvestorModalDialog, PaymentPictureModalDialog,
+    PaymentsComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +61,12 @@ import { ProfileComponent } from './admin/profile/profile.component';
     LoginComponent,
     CustomMaterialModule
   ],
-  providers: [],
+  entryComponents: [
+    AddInvestorModalDialog, PaymentPictureModalDialog
+  ],
+  providers: [
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

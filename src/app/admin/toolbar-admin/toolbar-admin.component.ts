@@ -22,4 +22,28 @@ export class ToolbarAdminComponent implements OnInit {
   goHome(){
     this.router.navigate(["admin/home"]);
   }
+
+  logout(){
+    this.router.navigate(["login"]);
+  }
+
+  createUser(){
+    this.router.navigate(["admin/createUser"]);
+  }
+  
+  createAccount(){
+    this.router.navigate(["admin/createAccount"]);
+  }
+
+  createTrading(){
+    this.router.navigate(["admin/createTrading"]);
+  }
+  
+  createContract(){
+    this.router.navigate(["admin/createContract"]);
+  }
+
+  payments(){
+    this.router.navigate(["admin/payments"]);
+  }
 }
