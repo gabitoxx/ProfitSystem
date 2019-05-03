@@ -69,7 +69,7 @@
 </mat-menu>
 
 <mat-menu #reportTypes="matMenu">
-  <button mat-menu-item>Por Persona</button>
+  <button mat-menu-item (click)="seeUser()">Ver Usuarios</button>
   <button mat-menu-item>Por Cuenta</button>
   <button mat-menu-item>Por Contrato</button>
   <button mat-menu-item (click)="payments()"><!-- [matMenuTriggerFor]="menuAdminPagos" -->

@@ -1,0 +1,229 @@
+<app-toolbar-admin></app-toolbar-admin>
+
+<!-- Para dejar un espacio superior para el toolbar -->
+<div class="filler-top"></div>
+
+<div class="container container-admin">
+
+  <mat-card class="card-person-actions">
+    <mat-card-header>
+      <div class="row">
+        <div class="col-md-12 center centrado lNegra">
+          <span class="titulo">Ver Usuarios</span>
+        </div>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-md-12">
+          <br/>
+          <span class="pExplain">
+            Aquí puede ver todos los Usuarios registrados en el Sistema.
+            Puede ACTIVARLOS o DESACTIVARLOS con el <b>switch de la derecha</b> 
+            (los Usuarios No se eliminan del Sistema por razones administrativas y de Reportes).
+          </span>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <b class="subtitulo">Inversionistas Inactivos:</b>
+  <ng-container *ngFor="let user of arrayUsers; let i = index">
+    <mat-card *ngIf="user.status == this.STATUS_INACTIVO && user.rol == this.INV" class="card-table-results">
+      <mat-card-content>
+        <div class="row">
+          <div class="col col-lg-11 col-md-9">
+            {{ i + 1 }} | {{ user.nombres }} {{ user.apellidos }} | {{ user.telefono }}
+            <br/>
+            {{ user.email }}
+          </div>
+          <div class="col-6 col-lg-1 col-md-3 offset-md-3 rights">
+            <mat-slide-toggle aria-labelledby="label" [id]="user.id" color="accent" [disabled]="false"
+             (change)="toogleActivation(user.id, 'activate', 'Inversionista', $event)"
+             [checked]="user.status == this.STATUS_ACTIVO">
+             {{ (user.status == this.STATUS_INACTIVO ) ? 'Inactivo' : 'Activado' }}
+            </mat-slide-toggle>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+  <ng-container *ngIf="this.iInvInactivos == 0">
+    <mat-card class="card-table-results">
+      <mat-card-content>
+        <div class="row">
+          <div class="col col-lg-11 col-md-9">
+            No hay Inversionistas con estatus Inactivo.
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+
+  <br/><br/>
+
+  <b class="subtitulo">Inversionistas Activos:</b>
+  <ng-container *ngFor="let user of arrayUsers; let i = index">
+    <mat-card *ngIf="user.status == this.STATUS_ACTIVO && user.rol == this.INV" class="card-table-results">
+      <mat-card-content>
+        <div class="row">
+          <div class="col col-lg-11 col-md-9">
+            {{ i + 1 }} | {{ user.nombres }} {{ user.apellidos }} | {{ user.telefono }}
+            <br/>
+            {{ user.email }}
+          </div>
+          <div class="col-6 col-lg-1 col-md-3 offset-md-3 rights">
+
+            <mat-slide-toggle aria-labelledby="label" [id]="user.id" color="accent" [disabled]="false"
+             (change)="toogleActivation(user.id, 'deactivate', 'Inversionista', $event)"
+             [checked]="user.status == this.STATUS_ACTIVO">
+              {{ (user.status == this.STATUS_INACTIVO ) ? 'Inactivo' : 'Activado' }}
+            </mat-slide-toggle>
+
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+  <ng-container *ngIf="this.iInvActivos == 0">
+    <mat-card class="card-table-results">
+      <mat-card-content>
+        <div class="row">
+          <div class="col col-lg-11 col-md-9">
+            No hay Inversionistas con estatus Activo.
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+
+  <hr/>
+
+  <b class="subtitulo">Estudiantes Inactivos:</b>
+  <ng-container *ngFor="let user of arrayUsers; let i = index">
+    <mat-card *ngIf="user.status == this.STATUS_INACTIVO && user.rol == this.EST" class="card-table-results">
+      <mat-card-content>
+        <div class="row">
+          <div class="col col-lg-11 col-md-9">
+            {{ i + 1 }} | {{ user.nombres }} {{ user.apellidos }} | {{ user.telefono }}
+            <br/>
+            {{ user.email }}
+          </div>
+          <div class="col-6 col-lg-1 col-md-3 offset-md-3 rights">
+            <mat-slide-toggle aria-labelledby="label" [id]="user.id" color="primary" [disabled]="false"
+             (change)="toogleActivation(user.id, 'activate', 'Estudiante', $event)"
+             [checked]="user.status == this.STATUS_ACTIVO">
+             {{ (user.status == this.STATUS_INACTIVO ) ? 'Inactivo' : 'Activado' }}
+            </mat-slide-toggle>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+  <ng-container *ngIf="this.iEstInactivos == 0">
+    <mat-card class="card-table-results">
+      <mat-card-content>
+        <div class="row">
+          <div class="col col-lg-11 col-md-9">
+            No hay Estudiantes con estatus Inactivo.
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+
+  <br/><br/>
+
+  <b class="subtitulo">Estudiantes Activos:</b>
+  <ng-container *ngFor="let user of arrayUsers; let i = index">
+    <mat-card *ngIf="user.status == this.STATUS_ACTIVO && user.rol == this.EST" class="card-table-results">
+      <mat-card-content>
+        <div class="row">
+          <div class="col col-lg-11 col-md-9">
+            {{ i + 1 }} | {{ user.nombres }} {{ user.apellidos }} | {{ user.telefono }}
+            <br/>
+            {{ user.email }}
+          </div>
+          <div class="col-6 col-lg-1 col-md-3 offset-md-3 rights">
+            <mat-slide-toggle aria-labelledby="label" [id]="user.id" color="primary" [disabled]="false"
+             (change)="toogleActivation(user.id, 'deactivate', 'Estudiante', $event)"
+             [checked]="user.status == this.STATUS_ACTIVO">
+             {{ (user.status == this.STATUS_INACTIVO ) ? 'Inactivo' : 'Activado' }}
+            </mat-slide-toggle>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+  <ng-container *ngIf="this.iEstActivos == 0">
+    <mat-card class="card-table-results">
+      <mat-card-content>
+        <div class="row">
+          <div class="col col-lg-11 col-md-9">
+            No hay Estudiantes con estatus Activo.
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+
+  <hr/>
+
+  <b class="subtitulo">Administradores:</b>
+  <ng-container *ngFor="let user of arrayUsers; let i = index">
+    <mat-card *ngIf="user.rol == this.ADM;" class="card-table-results">
+      <mat-card-content>
+        <div class="row">
+          <div class="col col-lg-11 col-md-9">
+            {{ i + 1 }} | {{ user.nombres }} {{ user.apellidos }} | {{ user.telefono }}
+            <br/>
+            {{ user.email }}
+          </div>
+          <div class="col-6 col-lg-1 col-md-3 offset-md-3 rights">
+            <mat-slide-toggle aria-labelledby="label" [id]="user.id" color="warn" [disabled]="false"
+             (change)="toogleActivation(user.id, user.status, this.ADM, $event)"
+             [checked]="user.status == this.STATUS_ACTIVO">
+             {{ (user.status == this.STATUS_INACTIVO ) ? 'Inactivo' : 'Activo' }}
+            </mat-slide-toggle>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <!--
+      <mat-card *ngIf="user.rol == this.ADM;else no_admins" class="card-table-results">
+        ...
+      <mat-card #no_admins class="card-table-results">
+        <mat-card-content>
+          <div class="row">
+            <div class="col-md-12">
+              No hay Administradores registrados en el Sistema.
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    -->
+  </ng-container>
+  <ng-container *ngIf="this.iAdmins == 0">
+    <mat-card class="card-table-results">
+      <mat-card-content>
+        <div class="row">
+          <div class="col col-lg-11 col-md-9">
+            No hay Administradores registrados en el Sistema.
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+
+  <br/><br/>
+  
+  <div class="row">
+    <div class="col-sm-12 center">
+      <br/>
+      <a href (click)="$event.preventDefault();goHome();" class="href-red">Volver</a>
+    </div>
+  </div>
+
+  <br/><br/>
+
+</div>

@@ -56,5 +56,7 @@ export class ProfileComponent implements OnInit {
     this.typePassw = ( this.tooglePassw == true ) ? 'text'      : 'password';
   }
 
+  updatePassword(){}
 
+  updateProfilePicture(){}
 }

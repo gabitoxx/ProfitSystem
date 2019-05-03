@@ -22,6 +22,10 @@ export class AdminHomeComponent implements OnInit {
   createUser(){
     this.router.navigate(["admin/createUser"]);
   }
+  
+  seeUser(){
+    this.router.navigate(["admin/users"]);
+  }
 
   createAccount(){
     this.router.navigate(["admin/createAccount"]);

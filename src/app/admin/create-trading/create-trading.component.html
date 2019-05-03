@@ -47,20 +47,20 @@
           <div class="col-xs-12 center">
             <br/>
             <mat-form-field class="full-width" color="accent">
-              <mat-label>Contrato: Elegir uno</mat-label>
-              <mat-select [(ngModel)]="contrato" (selectionChange)="selectedContract(contrato)" required><!-- el color de letra lo da la calse .mat-select-value -->
-                <mat-option value="A">Contrato C001 - descripcion</mat-option>
-                <mat-option value="B">Contrato C002 - descripcion</mat-option>
-                <mat-option value="C">Contrato C003 - descripcion</mat-option>
+              <mat-label>Cuenta: Elegir una</mat-label>
+              <mat-select [(ngModel)]="Cuenta" (selectionChange)="selectedContract(Cuenta)" required><!-- el color de letra lo da la calse .mat-select-value -->
+                <mat-option value="A">Cuenta C001 - descripcion</mat-option>
+                <mat-option value="B">Cuenta C002 - descripcion</mat-option>
+                <mat-option value="C">Cuenta C003 - descripcion</mat-option>
               </mat-select>
-              <mat-icon matSuffix>people</mat-icon>
+              <mat-icon matSuffix>account_balance</mat-icon>
             </mat-form-field>
           </div>
 
           <div class="col-xs-12 infoPanelGris">
-            <b>Cuenta:</b> {{ this.account }}
-            <br/><br/>
             <b>Cr&eacute;dito disponible:</b> $ {{ this.available }}
+            <br/><br/>
+            <b>Contratos vinculados a esta Cuenta:</b> {{ this.account }}
           </div>
 
           <hr/>
@@ -85,7 +85,24 @@
           <br/>
 
           <div class="col-xs-12 infoPanelGris">
-            <b>Resultado de la Operaci&oacute;n:</b> {{ this.account }}
+            <b>Resultado de la Operaci&oacute;n:</b> {{ this.available - this.expense }}
+          </div>
+
+          <div class="col-xs-12">
+            <br/>
+            <mat-form-field class="full-width" color="accent">
+              <mat-label id="nombre">Clientes</mat-label>
+              <input matInput [(ngModel)]="clientes" name="clientes" type="text">
+              <mat-icon matSuffix>local_atm</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-xs-12">
+            <mat-form-field class="full-width" color="accent">
+              <mat-label id="nombre">Profit Takers</mat-label>
+              <input matInput [(ngModel)]="clientes" name="clientes" type="text" placeholder="Total del Movimiento">
+              <mat-icon matSuffix>exposure</mat-icon>
+            </mat-form-field>
           </div>
 
           <hr/>

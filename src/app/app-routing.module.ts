@@ -12,6 +12,7 @@ import { CreateContractComponent } from './admin/create-contract/create-contract
 import { RequestCredentialsComponent } from './request-credentials/request-credentials.component';
 import { PaymentsComponent } from './admin/payments/payments.component';
 import { PagoComponent } from './academia/pago/pago.component';
+import { UsersComponent } from './admin/users/users.component';
 
 const appRoutes: Routes = [
   /*  { path: 'home', component: HomeComponent, canActivate: [AuthenticationGuard] }, */
@@ -36,6 +37,7 @@ const appRoutes: Routes = [
     { path: 'admin/createTrading', component: CreateTradingComponent },
     { path: 'admin/createContract', component: CreateContractComponent },
     { path: 'admin/payments', component: PaymentsComponent },
+    { path: 'admin/users', component: UsersComponent },
   ];
 
 @NgModule({

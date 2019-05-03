@@ -1,5 +1,10 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { UsersService } from 'src/app/services/users.service';
+import { IUser } from 'src/app/interfaces/IUser';
+import { CONSTANTES_UTIL } from 'src/app/shared/_utils/constantes-util';
+import { ValidatorUtils } from 'src/app/shared/_utils/validator-utils';
 
 @Component({
   selector: 'app-perfil',
@@ -11,13 +16,8 @@ export class PerfilComponent implements OnInit {
   /*
    * Datos del usuario logueado
    */
-  nombre:string = "";
-  apellido:string = "";
-  email:string = "";
-  ciudad:string = "";
-  direccion:string = "";
-  telefono:string = "";
-  info:string = "";
+  user: IUser;
+
   //
   passw:string = "";
   rep_passw:string = "";
@@ -32,22 +32,56 @@ export class PerfilComponent implements OnInit {
    */
   typePassw: string = "password";
 
-  constructor(private element: ElementRef, private router: Router){  
+  /** snackbar styles */
+  configError:   MatSnackBarConfig;
+  configSuccess: MatSnackBarConfig;
+
+  
+  constructor(
+      private element: ElementRef,
+      private router: Router,
+      private userService: UsersService,
+      private snackBar: MatSnackBar){
+
+    this.configError = {
+      panelClass: ['snackbar-accion-failure'],
+      duration: CONSTANTES_UTIL.SNACKBAR_DURATION_ERROR,
+    };
+    
+    this.configSuccess = {
+      panelClass: ['snackbar-accion-succes'],
+      duration: CONSTANTES_UTIL.SNACKBAR_DURATION_SUCCESS,
+    };
   }
 
   ngOnInit() {
-    this.nombre = "Pepito";
-    this.apellido = "Peérez";
-    this.email = "algo@domin.io";
-    this.direccion = "Kr. 28 Cll 123 - 56";
-    this.telefono = "3001234567";
+    console.log("XXX.1!")
+    /** XXX id quemado */
+    var userId = 'U_1556752233379';
+    this.userService.getUserById(userId).valueChanges().subscribe(
+        (userFirebase: IUser) => {
+          this.user = userFirebase; console.log("XXX.2 userFirebase:" , userFirebase);
+        }
+    );
   }
 
   /**
-   * 
+   * Actualiza el primer formulario
    */
   updatePerfil(){
 
+    this.user.nombres   = ValidatorUtils.titleCase( this.user.nombres );
+    this.user.apellidos = ValidatorUtils.titleCase( this.user.apellidos );
+    this.user.ciudad    = ValidatorUtils.titleCase( this.user.ciudad );
+
+    this.userService.editUser( this.user ).then( 
+        () => {
+          this.snackBar.open(CONSTANTES_UTIL.SUCCESS_CAMBIOS_GUARDADOS, 'Ok', this.configSuccess);
+        },
+        (error) => {
+          this.snackBar.open(CONSTANTES_UTIL.ERROR_CAMBIOS_NO_GUARDADOS, 'X', this.configError);
+        }
+    );
   }
 
   tooglePassword(){
@@ -60,4 +94,8 @@ export class PerfilComponent implements OnInit {
     this.router.navigate(["academia/home"]);
   }
 
+  updatePassword(){}
+
+  updateProfilePicture(){}
+  
 }

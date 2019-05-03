@@ -71,6 +71,11 @@ export class PaymentsComponent implements OnInit {
       this.id = result;
     });
   }
+
+  excel(){
+
+  }
+  
 }
 
 

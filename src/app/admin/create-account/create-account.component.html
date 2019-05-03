@@ -62,9 +62,21 @@
           <div class="col-xs-12 center">
             <mat-form-field class="full-width" color="accent">
               <mat-label id="money">Monto inicial</mat-label>
-              <input matInput [(ngModel)]="money" name="money" type="number" placeholder="0.00" required>
+              <input matInput [(ngModel)]="money" name="money" type="number" placeholder="Monto inicial" class="inputRight" required>
               <mat-icon matSuffix>attach_money</mat-icon>
               <mat-hint style="color: red;">Este ser&aacute; el capital inicial con el que inicie esta Cuenta. Puede ser cero (0)</mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div class="col-xs-12 center">
+            <br/>
+            <mat-form-field class="full-width" color="accent">
+              <mat-label>Gestor: Elegir un Administrador</mat-label>
+              <mat-select [(ngModel)]="gestor" required><!-- el color de letra lo da la calse .mat-select-value -->
+                <mat-option value="A">Cesar</mat-option>
+                <mat-option value="B">Fernando</mat-option>
+              </mat-select>
+              <mat-icon matSuffix>person_add</mat-icon>
             </mat-form-field>
           </div>
 

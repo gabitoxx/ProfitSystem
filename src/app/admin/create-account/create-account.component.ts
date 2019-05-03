@@ -9,6 +9,10 @@ import { Router } from '@angular/router';
 })
 export class CreateAccountComponent implements OnInit {
 
+  nombre:string = "";
+  info:string = "";
+  money:number = 0.0;
+
   constructor(private router: Router){
   }
 

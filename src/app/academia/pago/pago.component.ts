@@ -8,6 +8,11 @@ import { Router } from '@angular/router';
 })
 export class PagoComponent implements OnInit {
 
+  banco: string = "";
+  fecha:Date;
+  monto:number = 0.0;
+  concepto:string = "";
+
   constructor(private router: Router){
   }
 
@@ -17,4 +22,11 @@ export class PagoComponent implements OnInit {
   goHome(){
     this.router.navigate(["academia/home"]);
   }
+
+  selectedContract(banco:any){
+    
+  }
+
+  updateProfilePicture(){}
+  
 }

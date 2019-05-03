@@ -16,8 +16,8 @@
     <mat-card-content>
       Una vez que usted haya realizado un dep&oacute;sito para Profit Takers 
       (ya sea para Inversi&oacute;n o para la Academia)
-      podrá registrarlo por ésta v&iacute;a. Recuerde nuestras v&iacute;as 
-      previamente dispuestas para este fin (ver abajo). 
+      podr&aacute; registrarlo por &eacute;sta v&iacute;a. Recuerde nuestras v&iacute;as 
+      previamente dispuestas para este fin (ver nota al pie de esta p&aacute;gina). 
       Una vez hayamos validado su transacci&oacute;n nos pondremos
       en contacto con ud. a la brevedad posible.
     </mat-card-content>
@@ -32,15 +32,18 @@
           
           <div class="col-md-12 center">
             <mat-form-field class="full-width" color="accent">
-              <mat-label id="banco">Banco en el que realizó la consignación</mat-label>
-              <input matInput [(ngModel)]="banco" name="banco" type="text" required>
+              <mat-label>Banco/Cuenta en la que realiz&oacute; la consignaci&oacute;n</mat-label>
+              <mat-select [(ngModel)]="banco" (selectionChange)="selectedContract(banco)" required [ngModelOptions]="{standalone: true}"><!-- el color de letra lo da la calse .mat-select-value -->
+                <mat-option value="A">Bancolombia - Cta. Cte. 123465798</mat-option>
+                <mat-option value="B">Banco de Bogotá - Cta. Ah. 789789456</mat-option>
+              </mat-select>
               <mat-icon matSuffix>account_balance</mat-icon>
             </mat-form-field>
           </div>
 
           <div class="col-xs-12">
             <mat-form-field class="full-width" color="accent">
-              <mat-label>Fecha en que realizó la consignación</mat-label>
+              <mat-label>Fecha en que realiz&oacute; la consignaci&oacute;n</mat-label>
               <input matInput [matDatepicker]="picker" name="fecha" [(ngModel)]="fecha" class="inputRight">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
@@ -63,8 +66,10 @@
             </mat-form-field>
           </div>
 
-          <div class="col-xs-12">
-            iconj boton
+          <div class="col-xs-12 center pointer">
+            <mat-icon matSuffix style="font-size: 50px;">add_a_photo</mat-icon>
+            <br/>
+            Cargar foto (upload) (extensiones permitidas: .JPG, .JPEG, .PNG)
           </div>
 
         </div>
@@ -76,7 +81,11 @@
   <div class="row justify-content-md-center">
     <div class="col-md-12 center">
       <u>Nota</u>: 
-      *Es necesario adjuntar una imagen (Captura de pantalla, pantallazo, Print screen o screenshot) que evidencie su Pago.
+      *Es necesario adjuntar una 
+      <b matTooltip="Una Captura de pantalla (a veces se le llama 'Pantallazo', ó en inglés 'Print screen' o 'Screenshot') tomada en su computador/celular de cuando hizo la transferencia. En computadoras use la tecla 'Prt Scrn' ó 'Impr pant'."
+       matTooltipPosition="below" aria-label="(Captura de pantalla, pantallazo, Print screen o screenshot)" class="question">
+        imagen que evidencie su Pago.
+      </b>
       Posterior a adjuntar su archivo, puede proceder a pulsar el siguiente boton.
       <br/><br/>
       <button mat-raised-button (click)="updateProfilePicture()" color="accent"><b>Registrar Pago nuevo</b></button>

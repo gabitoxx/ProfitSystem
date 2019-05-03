@@ -10,7 +10,8 @@ import {
   MatFormFieldControl, 
   MatDatepickerModule, MatNativeDateModule,
   MAT_DIALOG_DATA,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatTooltipModule
 } from '@angular/material';
 
 @NgModule({
@@ -35,7 +36,8 @@ import {
     MatRadioModule,
     MatOptionModule,
     MatDatepickerModule, MatNativeDateModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatTooltipModule
   ],
   exports: [
     CommonModule,
@@ -55,7 +57,8 @@ import {
     MatOptionModule,
     MatSelectModule,
     MatDatepickerModule, MatNativeDateModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatTooltipModule
   ],
 })
 export class CustomMaterialModule { }

@@ -127,7 +127,7 @@ export class ValidatorUtils {
 
   /**
    * Metodo que permite validar estructura del correo eléctronico
-   * @param msg
+   * @param email
    */
   public static validateEmail(email: string) {
     // tslint:disable-next-line:max-line-length
@@ -230,6 +230,43 @@ export class ValidatorUtils {
     return [year, month, day].join('-');
   }
 
+  public static titleCase = (str:string) => {
+    if ((str===null) || (str==='')) {
+      return '';
+    } else {
+      str = str.toString();
+    }
+
+    return str.replace(/\w\S*/g, function(txt){
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  }
+
+  public static randomInt(min:number, max:number){
+    return Math.floor( Math.random() * (max - min + 1) ) + min;
+  }
+
+  public static transformNames = (names:string) => {
+    var re = / /gi;
+    if (names.search(re) == -1 ) { 
+      //console.log("Does not contain espacios"); 
+      return names;
+    } else { 
+      //console.log("Contains espacios" );
+      return ValidatorUtils.titleCase(names);
+    }
+  }
+
+  public static onlyNumbers(num:string){
+    var reg = new RegExp('^[0-9]+$');
+    return (num.search(reg) == -1 ) ? false : true;
+  }
+  
+  public static onlyLetters = (num:string) => {
+    /* minuscualasMAYUSCULAS<espacio en blanco> */
+    var reg = new RegExp('^[a-zA-Z ]+$');
+    return (num.search(reg) == -1 ) ? false : true;
+  }
 }
 
 

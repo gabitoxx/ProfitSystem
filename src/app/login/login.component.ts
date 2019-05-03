@@ -15,13 +15,16 @@ export class LoginComponent extends LoginValidacion implements OnInit {
   tooglePassw:boolean = false;
   /*
    * {'lock', 'lock_open'}
+   * {'visibility_off', 'visibility'}
    */
-  iconPassw: string = "lock";
+  iconPassw: string = "visibility_off";
   /*
    * {'text', 'password'}
    */
   typePassw: string = "password";
 
+  //
+  showSpinner:boolean = false;
 
   constructor(private router: Router) {
     super();
@@ -45,8 +48,8 @@ export class LoginComponent extends LoginValidacion implements OnInit {
 
   tooglePassword(){
     this.tooglePassw = !this.tooglePassw;
-    this.iconPassw = ( this.tooglePassw == true ) ? 'lock_open' : 'lock';
-    this.typePassw = ( this.tooglePassw == true ) ? 'text'      : 'password';
+    this.iconPassw = ( this.tooglePassw == true ) ? 'visibility' : 'visibility_off';
+    this.typePassw = ( this.tooglePassw == true ) ? 'text'       : 'password';
   }
 
   applyForNewUseraccount(){

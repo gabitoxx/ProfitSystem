@@ -128,7 +128,7 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-                        
+      
       </mat-card-content>
       <mat-card-actions class="center">
         <button mat-button (click)="addInvestor()">
@@ -144,7 +144,7 @@
       <mat-card-header>
         <div class="row justify-content-xs-center">
           <div class="col-xs-12 center">
-            <span class="subtitulo">Día de corte para este Contrato</span>
+            <span class="subtitulo">Día de corte y % de Rentabilidad</span>
           </div>
         </div>
       </mat-card-header>
@@ -158,6 +158,13 @@
               <mat-icon matSuffix>calendar_today</mat-icon>
             </mat-form-field>
           </div>
+          <div class="col-xs-12 center">
+            <mat-form-field class="full-width" color="accent">
+              <mat-label id="prpm">Porcentaje Rentabilidad pactado mensual</mat-label>
+              <input matInput [(ngModel)]="inv_prpm" name="expense" type="number" class="inputRight">
+              <mat-icon matSuffix>pie_chart</mat-icon>
+            </mat-form-field>
+          </div>
         </div>
       </mat-card-content>
     </mat-card>
@@ -165,23 +172,26 @@
     <hr/>
     
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-sm-12 bordeNota">
         <br/>
         <u>Nota</u>: una vez creado este Contrato podr&aacute; generarle ingresos/egresos Trading en la secci&oacute;n <b>Movimientos</b>.
         <br/><br/>
       </div>
-      
-      <div class="col-xs-12 center">
+    </div>
+    <div class="row">
+      <div class="col-sm-12 center">
         <button mat-raised-button (click)="newContract()" color="accent"><b>Crear Contrato</b></button>
       </div>
-
-      <div class="col-xs-12 center">
+    </div>
+    <div class="row">
+      <div class="col-sm-12 center">
         <br/>
         <a href (click)="$event.preventDefault();goHome();" class="href-red">Cancelar</a>
       </div>
-
-      <br/><br/><br/>
     </div>
+    
+    <br/><br/><br/>
+    
 
   </form>
 </div>

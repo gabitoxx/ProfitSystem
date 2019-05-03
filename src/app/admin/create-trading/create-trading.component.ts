@@ -14,7 +14,6 @@ export class CreateTradingComponent implements OnInit {
   account:string = "";
   available:number = 0.0;
   expense:number = 0.0;
-  result:number = 0.0;
   contrato:string = "";
 
   flagTrue: boolean = true;

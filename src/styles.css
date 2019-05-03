@@ -42,6 +42,7 @@
   color: black;
   font-family: arial,sans-serif;
   font-size: small;
+  margin: 10px;
 }
 .container-admin {
   color: black;
@@ -74,6 +75,11 @@ mat-card-subtitle.subtitle-actions {
 
 .card-person-actions mat-card-actions button {
   background-color: #33dc17cc;
+}
+
+.card-table-results {
+  margin-top: 1px;
+  margin-bottom: 1px;
 }
 
 /*************************
@@ -144,6 +150,29 @@ mat-toolbar {
 .pointer {
   cursor: pointer;
 }
+.question {
+  cursor: help;
+}
+
+.snackbar-accion-succes {
+  background-color: #92d18b
+}
+.snackbar-accion-succes .mat-simple-snackbar-action {
+  color: black;
+  background-color: #2b5826;
+  font-weight: 900;
+  border-radius: 5px;
+}
+
+.snackbar-accion-failure {
+  background-color: rgb(212, 179, 184);
+}
+.snackbar-accion-failure .mat-simple-snackbar-action {
+  color: black;
+  background-color: rgb(156, 48, 66);
+  font-weight: 900;
+  border-radius: 5px;
+}
 
 /********************
  * Letras
@@ -195,4 +224,13 @@ mat-toolbar {
 
 .mat-select-value {
   color: black;
+}
+
+/********************
+ * Estilos de DIV's
+ */
+
+/* para las <u>Nota:</u> */
+.bordeNota {
+  margin: 20px;
 }

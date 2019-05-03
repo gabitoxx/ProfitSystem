@@ -44,7 +44,7 @@ export class CreateContractComponent implements OnInit {
   expense: number = 30;
 
   /* XXX */
-  displayedColumns: string[] = ['name', 'porcentaje', 'porc_diario', 'responsable', 'delete'];
+  displayedColumns: string[] = ['name', /*'porcentaje', 'porc_diario',*/ 'responsable', 'delete'];
   dataSource = ELEMENT_DATA;
 
   // Dialog - modal data
@@ -122,6 +122,11 @@ export class AddInvestorModalDialog {
   dummyIndex2:number = 0;
   dummyData3:string[] = ['avengers@domin.io', 'ragnarok@domin.io', 'endgame@domin.com'];
   dummyData4:string[] = ['3001234567', '301 - 132.4657', '320 - 9876543'];
+/*
+  inv_person
+  inv_prpm
+  investor
+*/
 
   constructor(
     public dialogRef: MatDialogRef<AddInvestorModalDialog>,

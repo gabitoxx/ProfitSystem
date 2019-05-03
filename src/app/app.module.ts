@@ -30,6 +30,24 @@ import { RequestCredentialsComponent } from './request-credentials/request-crede
 import { PaymentsComponent, PaymentPictureModalDialog } from './admin/payments/payments.component';
 import { PagoComponent } from './academia/pago/pago.component';
 
+/** Firebase  */
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { UsersService } from './services/users.service';
+import { UsersComponent } from './admin/users/users.component';
+import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
+
+export const firebaseConfig = {
+  apiKey: "AIzaSyBrD2fJ8540IMWI5p-FmL_7Mik_fvZnJns",
+  authDomain: "profit-t4k3rs.firebaseapp.com",
+  databaseURL: "https://profit-t4k3rs.firebaseio.com",
+  projectId: "profit-t4k3rs",
+  storageBucket: "profit-t4k3rs.appspot.com",
+  messagingSenderId: "624618685545"
+};
 
 @NgModule({
   declarations: [
@@ -49,7 +67,9 @@ import { PagoComponent } from './academia/pago/pago.component';
     RequestCredentialsComponent,
     AddInvestorModalDialog, PaymentPictureModalDialog,
     PaymentsComponent,
-    PagoComponent
+    PagoComponent,
+    UsersComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -57,17 +77,23 @@ import { PagoComponent } from './academia/pago/pago.component';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     BrowserAnimationsModule,
     CustomMaterialModule,
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp( firebaseConfig ), // imports firebase/app needed for everything
+    AngularFirestoreModule, // imports firebase/firestore, only needed for database features
+    AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
+    AngularFireStorageModule, // imports firebase/storage only needed for storage features
+    AngularFireDatabaseModule,
   ],
   exports: [
     LoginComponent,
     CustomMaterialModule
   ],
   entryComponents: [
-    AddInvestorModalDialog, PaymentPictureModalDialog
+    AddInvestorModalDialog, PaymentPictureModalDialog,
+    ConfirmationDialogComponent, // reutilizable confirm dialog
   ],
   providers: [
-
+    UsersService
   ],
   bootstrap: [AppComponent]
 })
