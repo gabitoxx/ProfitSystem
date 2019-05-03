@@ -25,8 +25,10 @@ export class PerfilComponent implements OnInit {
   
   /*
    * {'lock', 'lock_open'}
+   * {'visibility_off', 'visibility'}
    */
-  iconPassw: string = "lock";
+  iconPassw: string = "visibility_off";
+
   /*
    * {'text', 'password'}
    */
@@ -74,7 +76,7 @@ export class PerfilComponent implements OnInit {
     this.user.apellidos = ValidatorUtils.titleCase( this.user.apellidos );
     this.user.ciudad    = ValidatorUtils.titleCase( this.user.ciudad );
 
-    this.userService.editUser( this.user ).then( 
+    this.userService.editUser( this.user ).then(
         () => {
           this.snackBar.open(CONSTANTES_UTIL.SUCCESS_CAMBIOS_GUARDADOS, 'Ok', this.configSuccess);
         },
@@ -86,15 +88,24 @@ export class PerfilComponent implements OnInit {
 
   tooglePassword(){
     this.tooglePassw = !this.tooglePassw;
-    this.iconPassw = ( this.tooglePassw == true ) ? 'lock_open' : 'lock';
-    this.typePassw = ( this.tooglePassw == true ) ? 'text'      : 'password';
+    this.iconPassw = ( this.tooglePassw == true ) ? 'visibility' : 'visibility_off';
+    this.typePassw = ( this.tooglePassw == true ) ? 'text'       : 'password';
   }
 
   goHome(){
     this.router.navigate(["academia/home"]);
   }
 
-  updatePassword(){}
+  updatePassword(){
+
+    if ( this.passw == this.rep_passw ){
+      alert("actualizar por Firebase_Auth ?")
+
+    } else {
+      this.snackBar.open(CONSTANTES_UTIL.ERROR_PASSWORDS_NO_COINCIDEN, 'X', this.configError);
+    }
+
+  }
 
   updateProfilePicture(){}
   
