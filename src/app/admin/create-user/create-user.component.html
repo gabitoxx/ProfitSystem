@@ -28,7 +28,7 @@
       <form class="full-form profile-form">
 
         <div class="row">
-          <div class="col-xs-12">
+          <div class="col-sm-12">
             <mat-label id="nombre">Elija un tipo de Usuario</mat-label><br/>
             <mat-radio-group aria-label="Elija un tipo de Usuario" [(ngModel)]="rol" [ngModelOptions]="{standalone: true}">
               <mat-radio-button value="i">Inversionista</mat-radio-button>
@@ -43,7 +43,7 @@
         </div>
 
         <div class="row justify-content-xs-center">
-          <div class="col-xs-12 center">
+          <div class="col-sm-12 center">
             <mat-form-field class="full-width" color="accent">
               <mat-label id="nombre">Nombres</mat-label>
               <input matInput [(ngModel)]="nombre" type="text" required [ngModelOptions]="{standalone: true}">
@@ -53,7 +53,7 @@
         </div>
 
         <div class="row justify-content-xs-center">
-          <div class="col-xs-12 center">
+          <div class="col-sm-12 center">
             <mat-form-field class="full-width" color="accent">
               <mat-label id="apellido">Apellidos</mat-label>
               <input matInput [(ngModel)]="apellido" type="text" required [ngModelOptions]="{standalone: true}">
@@ -63,7 +63,7 @@
         </div>
 
         <div class="row justify-content-xs-center">
-          <div class="col-xs-12 center">
+          <div class="col-sm-12 center">
             <mat-form-field class="full-width" color="accent">
               <mat-label id="email">Email (correo electr&oacute;nico)</mat-label>
               <input matInput [(ngModel)]="email" type="text" required [ngModelOptions]="{standalone: true}">
@@ -71,17 +71,17 @@
             </mat-form-field>
           </div>
         </div>
-
-        <div class="col-xs-12 center">
-          <mat-form-field class="full-width" color="accent">
-            <mat-label id="telefono">Tel&eacute;fono de contacto (preferiblemente celular)</mat-label>
-            <input matInput [(ngModel)]="telefono" type="text" required [ngModelOptions]="{standalone: true}">
-            <mat-icon matSuffix>call</mat-icon>
-          </mat-form-field>
-        </div>
-
         <div class="row justify-content-xs-center">
-          <div class="col-xs-12 center">
+          <div class="col-sm-12 center">
+            <mat-form-field class="full-width" color="accent">
+              <mat-label id="telefono">Tel&eacute;fono de contacto (preferiblemente Celular)</mat-label>
+              <input matInput [(ngModel)]="telefono" type="text" required [ngModelOptions]="{standalone: true}">
+              <mat-icon matSuffix>call</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row justify-content-xs-center">
+          <div class="col-sm-12 center">
             <mat-form-field class="full-width" color="accent">
               <mat-label id="ciudad">Ciudad</mat-label>
               <input matInput [(ngModel)]="ciudad" type="text" [ngModelOptions]="{standalone: true}">
@@ -89,7 +89,7 @@
             </mat-form-field>
           </div>
 
-          <div class="col-xs-12 center">
+          <div class="col-sm-12 center">
             <mat-form-field class="full-width" color="accent">
               <mat-label id="direccion">Direcci&oacute;n</mat-label>
               <input matInput [(ngModel)]="direccion" type="text" [ngModelOptions]="{standalone: true}">
@@ -97,7 +97,7 @@
             </mat-form-field>
           </div>
 
-          <div class="col-xs-12 center">
+          <div class="col-sm-12 center">
             <mat-form-field class="full-width" color="accent">
               <mat-label id="info">Info extra (grado, cargo, intereses, etc.)</mat-label>
               <textarea matInput rows="2" [(ngModel)]="info" [ngModelOptions]="{standalone: true}"></textarea>
@@ -105,7 +105,7 @@
             </mat-form-field>
           </div>
 
-          <div class="col-xs-12">
+          <div class="col-sm-12">
             <u>Nota:</u> 
             Debido a sus privilegios Administrativos, &eacute;ste nuevo usuario se crear&aacute;
             de una vez con ESTATUS = 'ACTIVO'; a diferencia de la Solicitud de 
@@ -116,11 +116,11 @@
             <br/><br/>
           </div>
 
-          <div class="col-xs-12 center">
+          <div class="col-sm-12 center">
             <button mat-raised-button (click)="createNewUser()" color="accent"><b>Crear Usuario</b></button>
           </div>
 
-          <div class="col-xs-12 center">
+          <div class="col-sm-12 center">
             <br/>
             <a href (click)="$event.preventDefault();goHome();" class="href-red">Cancelar</a>
           </div>

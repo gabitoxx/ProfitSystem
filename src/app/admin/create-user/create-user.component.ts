@@ -58,11 +58,7 @@ export class CreateUserComponent implements OnInit {
     }
 
     // current date
-    let date = new Date();
-    const y = date.getFullYear();
-    const m = ( date.getMonth() + 1 );
-    const d = date.getDate();
-    const f = d + CONSTANTES_UTIL.DATE_SEPARATOR + m + CONSTANTES_UTIL.DATE_SEPARATOR + y;
+    const f = ValidatorUtils.getFechaFormato1();
 
     // Rol
     let rol:string = "";
@@ -90,28 +86,29 @@ export class CreateUserComponent implements OnInit {
     }
     
     this.userService.createUser(this.usuario).then(
-      () => {
-        console.log('usuario creado',this.usuario);
+        () => {
+          console.log('usuario creado',this.usuario);
 
-        let snackBarRef = this.snackBar.open(
-          'Usuario creado. Puede verlo en la opción "Ver Usuarios"',
-          'Entendido', this.configSuccess
-        );
+          let snackBarRef = this.snackBar.open(
+            'Usuario creado. Puede verlo en la opción "Ver Usuarios"',
+            'Entendido', this.configSuccess
+          );
 
-        snackBarRef.onAction().subscribe(
-          () => {
+          snackBarRef.onAction().subscribe(
+            () => {
+              this.goHome();
+            }
+          );
+          
+          // 6 segundos
+          window.setTimeout(() => {
             this.goHome();
-          }
-        );
-        
-        // 8 segundos
-        window.setTimeout(() => {
-          this.goHome();
-        }, 8000);
-      },
-      (error) => {
-        console.error("Firebase: NO se puede crear Usuario: ", error);
-      }
+          }, 6000);
+        },
+        (error) => {
+          console.error("Firebase: NO se puede crear Usuario: ", error);
+          this.snackBar.open("Creación de Usuario fallida: " + CONSTANTES_UTIL.ERROR_CAMBIOS_NO_GUARDADOS, 'Ok', this.configError);
+        }
     );
   }
   

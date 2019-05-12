@@ -121,7 +121,7 @@ export class UsersComponent implements OnInit {
       ( data: IUser[] ) => {
 
         // mostrar u ocultar los paneles que dicen que no hay
-        this.loopingUsersFlags(data);        
+        this.loopingUsersFlags(data);
         
         //data remota
         this.arrayUsers = data;

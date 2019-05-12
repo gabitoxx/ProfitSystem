@@ -11,10 +11,20 @@ export class UsersService {
   constructor(public afDB: AngularFireDatabase){
   }
 
+  /**
+   * Devuelve todos
+   * @returns un Observable // usar
+   * .valueChanges().subscribe( ( data: IUser[] ) => {}, (error) => {} );
+   */
   public getUsers(){
     return this.afDB.list('/users/');
   }
   
+  /**
+   * Devuelve uno por ID
+   * @param id 
+   * @returns un Observable // usar .valueChanges().subscribe( (userFirebase: IUser) => {} );
+   */
   public getUserById(id:string){
     return this.afDB.object('/users/' + id);
   }
@@ -23,7 +33,6 @@ export class UsersService {
    * Crear uno nuevo
    * @param user IUser
    * @returns un Observable // usar .then( () => {}, (error) => {} ); 
-   * @param user 
    */
   public createUser(user: any){
     return this.afDB.database.ref('/users/' + user.id).set(user);

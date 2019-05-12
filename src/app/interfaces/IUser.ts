@@ -11,6 +11,6 @@ export interface IUser {
   direccion: string;
   hobbies: string;
   status: string;        // CONSTANTES_UTIL.USUARIO_ACTIVO ? USUARIO_INACTIVO
-  fechaCreacion:  string; // DD/MM/YYYY
+  fechaCreacion: string; // DD/MM/YYYY
   
 }

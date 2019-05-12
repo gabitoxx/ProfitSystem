@@ -39,6 +39,9 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { UsersService } from './services/users.service';
 import { UsersComponent } from './admin/users/users.component';
 import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
+import { ContractsComponent } from './admin/contracts/contracts.component';
+import { AccountsComponent } from './admin/accounts/accounts.component';
+
 
 export const firebaseConfig = {
   apiKey: "AIzaSyBrD2fJ8540IMWI5p-FmL_7Mik_fvZnJns",
@@ -69,7 +72,10 @@ export const firebaseConfig = {
     PaymentsComponent,
     PagoComponent,
     UsersComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    ContractsComponent,
+    AccountsComponent,
+
   ],
   imports: [
     BrowserModule,

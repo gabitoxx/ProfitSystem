@@ -267,6 +267,17 @@ export class ValidatorUtils {
     var reg = new RegExp('^[a-zA-Z ]+$');
     return (num.search(reg) == -1 ) ? false : true;
   }
+
+  /**
+   * @returns Fecha actual en formato DD/MM/YYYY
+   */
+  public static getFechaFormato1 = () => {
+    let date = new Date();
+    const y = date.getFullYear();
+    const m = ( date.getMonth() + 1 );
+    const d = date.getDate();
+    const f = d + CONSTANTES_UTIL.DATE_SEPARATOR + m + CONSTANTES_UTIL.DATE_SEPARATOR + y;
+    return f;
+  }
+
 }
-
-

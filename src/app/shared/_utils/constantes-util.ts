@@ -34,7 +34,7 @@ export const CONSTANTES_UTIL = {
 
   /** ERRORES: mensajes al usuario */
   ERROR_FIREBASE_GET_ENTITIES: 'Ocurrió un error con la Base de Datos. Intente nuevamente más tarde',
-  ERROR_CAMBIOS_NO_GUARDADOS : 'No se guardarón los cambios. Ocurrió un error. Intente nuevamente más tarde',
+  ERROR_CAMBIOS_NO_GUARDADOS : 'No se guardaron los cambios. Ocurrió un error. Intente nuevamente más tarde',
   ERROR_PASSWORDS_NO_COINCIDEN: 'Las Contraseñas no coinciden, ambas deben ser iguales',
 
   /** SUCCESS: mensajes al usuario */

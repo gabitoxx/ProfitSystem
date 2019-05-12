@@ -28,29 +28,30 @@
     <mat-card-content>
       <form class="full-form profile-form">
 
-        <div class="row justify-content-xs-center">
-
-          <div class="col-xs-12 center">
+        <div class="row">
+          <div class="col-sm-12 center">
             <mat-form-field class="full-width" color="accent">
               <mat-label id="nombre">Nombre de la Cuenta</mat-label>
-              <input matInput [(ngModel)]="nombre" name="nombre" type="text" required>
+              <input matInput [(ngModel)]="cuenta.nombre" type="text" required [ngModelOptions]="{standalone: true}">
               <mat-icon matSuffix>account_balance</mat-icon>
             </mat-form-field>
           </div>
-
-          <div class="col-xs-12 center">
+        </div>
+        <div class="row">
+          <div class="col-sm-12 center">
             <mat-form-field class="full-width" color="accent">
               <mat-label id="info">Descripción y/o Observaciones</mat-label>
-              <textarea matInput rows="2" [(ngModel)]="info"></textarea>
+              <textarea matInput rows="2" [(ngModel)]="cuenta.descripcion" required [ngModelOptions]="{standalone: true}"></textarea>
               <mat-icon matSuffix>import_contacts</mat-icon>
             </mat-form-field>
           </div>
-
-          <div class="col-xs-12 center">
+        </div>
+        <div class="row">
+          <div class="col-sm-12 center">
             <br/>
             <mat-form-field class="full-width" color="accent">
               <mat-label>Currency</mat-label>
-              <mat-select><!-- el color de letra lo da la calse .mat-select-value -->
+              <mat-select [(ngModel)]="cuenta.currency" [ngModelOptions]="{standalone: true}" required><!-- el color de letra lo da la clase .mat-select-value -->
                 <mat-option value="USD" selected>USD ($ - Dólares)</mat-option>
                 <mat-option value="EUR">EUR (€ - Euros)</mat-option>
                 <mat-option value="COP">COP ($ - Pesos Colombianos)</mat-option>
@@ -58,43 +59,46 @@
               <mat-icon matSuffix>money</mat-icon>
             </mat-form-field>
           </div>
-
-          <div class="col-xs-12 center">
+        </div>
+        <div class="row">
+          <div class="col-sm-12 center">
             <mat-form-field class="full-width" color="accent">
               <mat-label id="money">Monto inicial</mat-label>
-              <input matInput [(ngModel)]="money" name="money" type="number" placeholder="Monto inicial" class="inputRight" required>
+              <input matInput [(ngModel)]="cuenta.available" type="number" placeholder="Monto inicial" class="inputRight" required [ngModelOptions]="{standalone: true}">
               <mat-icon matSuffix>attach_money</mat-icon>
               <mat-hint style="color: red;">Este ser&aacute; el capital inicial con el que inicie esta Cuenta. Puede ser cero (0)</mat-hint>
             </mat-form-field>
           </div>
-
-          <div class="col-xs-12 center">
+        </div>
+        <div class="row">
+          <div class="col-sm-12 center">
             <br/>
             <mat-form-field class="full-width" color="accent">
               <mat-label>Gestor: Elegir un Administrador</mat-label>
-              <mat-select [(ngModel)]="gestor" required><!-- el color de letra lo da la calse .mat-select-value -->
-                <mat-option value="A">Cesar</mat-option>
-                <mat-option value="B">Fernando</mat-option>
+              <mat-select [(ngModel)]="cuenta.gestorId" required [ngModelOptions]="{standalone: true}"><!-- el color de letra lo da la clase .mat-select-value -->
+                <ng-container *ngFor="let admin of admins; let i = index">
+                  <mat-option [value]="admin.id" *ngIf="admin.rol == this.ADM">
+                    {{ admin.nombres }} {{ admin.apellidos }}
+                  </mat-option>
+                </ng-container>
               </mat-select>
               <mat-icon matSuffix>person_add</mat-icon>
             </mat-form-field>
           </div>
-
         </div>
 
         <br/><br/>
 
-        <div class="row justify-content-xs-center">
-
-          <div class="col-xs-12 center">
+        <div class="row">
+          <div class="col-sm-12 center">
             <button mat-raised-button (click)="createNewAccount()" color="accent"><b>Crear nueva Cuenta</b></button>
           </div>
-
-          <div class="col-xs-12 center">
+        </div>
+        <div class="row">
+          <div class="col-sm-12 center">
             <br/>
             <a href (click)="$event.preventDefault();goHome();" class="href-red">Cancelar</a>
           </div>
-
         </div>
 
       </form>
