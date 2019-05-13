@@ -105,8 +105,8 @@ export class CreateAccountComponent implements OnInit {
 
           snackBarRef.onAction().subscribe(() => { this.goHome(); });
           
-          // 6 segundos
-          window.setTimeout(() => { this.goHome(); }, 6000);
+          // 3 segundos
+          window.setTimeout(() => { this.goHome(); }, 3000);
           
         }, (error) => {
           console.error("Firebase: NO se puede crear CUENTA: ", error);

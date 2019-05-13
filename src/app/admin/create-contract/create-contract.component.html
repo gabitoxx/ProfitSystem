@@ -39,8 +39,8 @@
 
     <mat-card class="">
       <mat-card-header>
-        <div class="row justify-content-xs-center">
-          <div class="col-xs-12 center">
+        <div class="row justify-content-sm-center">
+          <div class="col-sm-12 center">
             <span class="subtitulo">Cuenta:</span> 
             <br/>
             <span>Seleccione una con la cual trabajar&aacute; este Contrato.</span>
@@ -48,22 +48,22 @@
         </div>
       </mat-card-header>
       <mat-card-content>
-          <div class="row justify-content-xs-center">
+          <div class="row justify-content-sm-center">
             
-            <div class="col-xs-12 center">
+            <div class="col-sm-12 center">
               <br/>
               <mat-form-field class="full-width" color="accent">
                 <mat-label>Cuenta: Elegir una</mat-label>
                 <mat-select [(ngModel)]="account" (selectionChange)="selectedAccount(account)" required [ngModelOptions]="{standalone: true}"><!-- el color de letra lo da la clase .mat-select-value -->
-                  <mat-option value="A001">Cuenta A001 - descripcion</mat-option>
-                  <mat-option value="A002">Cuenta A002 - descripcion</mat-option>
-                  <mat-option value="A003">Cuenta A003 - descripcion</mat-option>
+                  <ng-container *ngFor="let acc of accounts">
+                    <mat-option *ngIf="acc.estatusActivo == true" value="{{ acc.id }}">{{ acc.nombre }} ({{ acc.descripcion }})</mat-option>
+                  </ng-container>
                 </mat-select>
                 <mat-icon matSuffix>account_balance</mat-icon>
               </mat-form-field>
             </div>
             
-            <div class="col-xs-12 infoPanelGris">
+            <div class="col-sm-12 infoPanelGris">
               <b>Cuenta:</b> {{ this.account }}
               <br/><br/>
               <b>Moneda:</b> {{ this.currency }}
@@ -78,13 +78,13 @@
 
     <mat-card class="card-person-actions">
       <mat-card-header>
-        <div class="row justify-content-xs-center">
-          <div class="col-xs-12 center">
+        <div class="row justify-content-sm-center">
+          <div class="col-sm-12 center">
             <span class="subtitulo">Participantes:</span> 
             <br/>
             <span>Seleccione uno o varios Inversionistas para este Contrato.</span>
           </div>
-          <div class="col-xs-12 center"><br/></div>
+          <div class="col-sm-12 center"><br/></div>
         </div>
       </mat-card-header>
       <mat-card-content>
@@ -142,15 +142,15 @@
 
     <mat-card class="">
       <mat-card-header>
-        <div class="row justify-content-xs-center">
-          <div class="col-xs-12 center">
+        <div class="row justify-content-sm-center">
+          <div class="col-sm-12 center">
             <span class="subtitulo">Día de corte y % de Rentabilidad</span>
           </div>
         </div>
       </mat-card-header>
       <mat-card-content>
         <div class="row">
-          <div class="col-xs-12">
+          <div class="col-sm-12">
             <br/>
             <mat-form-field class="full-width" color="accent">
               <mat-label id="expense">D&iacute;a de Corte del mes</mat-label>
@@ -158,7 +158,7 @@
               <mat-icon matSuffix>calendar_today</mat-icon>
             </mat-form-field>
           </div>
-          <div class="col-xs-12 center">
+          <div class="col-sm-12 center">
             <mat-form-field class="full-width" color="accent">
               <mat-label id="prpm">Porcentaje Rentabilidad pactado mensual</mat-label>
               <input matInput [(ngModel)]="inv_prpm" name="expense" type="number" class="inputRight">

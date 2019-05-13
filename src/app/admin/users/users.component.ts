@@ -22,8 +22,8 @@ export class UsersComponent implements OnInit {
 
   arrayUsers: IUser[];
 
+  /** Snackbars configurations */
   configError: MatSnackBarConfig;
-
   configSuccess: MatSnackBarConfig;
   
   /** Flags */

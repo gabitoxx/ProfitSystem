@@ -1,6 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBarConfig, MatSnackBar } from '@angular/material';
+import { AccountService } from 'src/app/services/account.service';
+import { UsersService } from 'src/app/services/users.service';
+import { CONSTANTES_UTIL } from 'src/app/shared/_utils/constantes-util';
+import { IAccount } from 'src/app/interfaces/IAccount';
+import { IUser } from 'src/app/interfaces/IUser';
+import { getMultipleValuesInSingleSelectionError } from '@angular/cdk/collections';
 
 export interface PeriodicElement {
   id: number;
@@ -18,9 +24,10 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {id: 4, porc_diario: 0.1, name: 'Harry Potter', porcentaje: 5, responsable: 'No', delete: 'X'},
 ];
 
-export interface DialogData {
+export interface IDialogData {
   animal: string;
   name: string;
+  users: IUser[];
 }
 
 const MODAL_ANCHO:string = '550px';
@@ -32,6 +39,13 @@ const MODAL_ALTO:string = '400px';
   styleUrls: ['./create-contract.component.css']
 })
 export class CreateContractComponent implements OnInit {
+  
+  STATUS_ACTIVO:string   = CONSTANTES_UTIL.USUARIO_ACTIVO;
+  STATUS_INACTIVO:string = CONSTANTES_UTIL.USUARIO_INACTIVO;
+
+  INV:string = CONSTANTES_UTIL.ROL_INVERSIONISTA;
+  ADM:string = CONSTANTES_UTIL.ROL_ADMIN;
+  EST:string = CONSTANTES_UTIL.ROL_ACADEMIA;
 
   account: string = "";
   currency: string = "";
@@ -41,11 +55,15 @@ export class CreateContractComponent implements OnInit {
   dummyData1:string[] = ['USD ($)', 'EUR (€)', 'COP ($)'];
   dummyData2:number[] = [1000.0, 2000.0, 3000.0];
 
+  accounts: IAccount[];
+
   expense: number = 30;
 
   /* XXX */
   displayedColumns: string[] = ['name', /*'porcentaje', 'porc_diario',*/ 'responsable', 'delete'];
   dataSource = ELEMENT_DATA;
+
+  users: IUser[];
 
   // Dialog - modal data
   animal: string;
@@ -54,15 +72,60 @@ export class CreateContractComponent implements OnInit {
   inv_prpm: number;
   email: string;
 
-
+  /** Snackbars configurations */
+  configError: MatSnackBarConfig;
+  configSuccess: MatSnackBarConfig;
+  
   constructor(
       private router: Router,
-      public dialog: MatDialog){
+      public dialog: MatDialog,
+      private accountService: AccountService,
+      private userService: UsersService,
+      private snackBar: MatSnackBar){
+        
+    this.configError = {
+      panelClass: ['snackbar-accion-failure'],
+      duration: CONSTANTES_UTIL.SNACKBAR_DURATION_ERROR,
+    };
+    
+    this.configSuccess = {
+      panelClass: ['snackbar-accion-succes'],
+      duration: CONSTANTES_UTIL.SNACKBAR_DURATION_SUCCESS,
+    };
   }
 
   ngOnInit() {
     
+    this.getUsers();
+    this.getAccounts();
   }
+
+
+  getUsers() {
+    this.userService.getUsers().valueChanges().subscribe(
+      ( data: IUser[] ) => {
+        this.users = data;
+        
+      }, (error) => {
+        console.error('CreateContractComponent.getUsers() - error:', error);
+        this.snackBar.open(CONSTANTES_UTIL.ERROR_FIREBASE_GET_ENTITIES, 'Ok', this.configError);
+      }
+    );
+  }
+
+
+  getAccounts() {
+    this.accountService.getAccounts().valueChanges().subscribe(
+      ( data: IAccount[] ) => {
+        this.accounts = data;
+        
+      }, (error) => {
+        console.error('CreateContractComponent.getAccounts() - error:', error);
+        this.snackBar.open(CONSTANTES_UTIL.ERROR_FIREBASE_GET_ENTITIES, 'Ok', this.configError);
+      }
+    );
+  }
+
 
   selectedAccount(cuenta: any){
     console.log("cuenta:", cuenta);
@@ -96,7 +159,10 @@ export class CreateContractComponent implements OnInit {
       height: MODAL_ALTO,
       data: {
         name: this.name,
-        animal: this.animal
+        animal: this.animal,
+        users: this.users,
+        inv: this.INV,
+        activo: this.STATUS_ACTIVO,
       }
     });
 
@@ -117,11 +183,15 @@ export class AddInvestorModalDialog {
 
   name2: string   = "";
   animal2: string = "";
+  users2: IUser[];
 
   /* XXX */
   dummyIndex2:number = 0;
   dummyData3:string[] = ['avengers@domin.io', 'ragnarok@domin.io', 'endgame@domin.com'];
   dummyData4:string[] = ['3001234567', '301 - 132.4657', '320 - 9876543'];
+
+  users: IUser[];
+
 /*
   inv_person
   inv_prpm
@@ -130,19 +200,25 @@ export class AddInvestorModalDialog {
 
   constructor(
     public dialogRef: MatDialogRef<AddInvestorModalDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: IDialogData) {
+
+      console.log("data.users", data.users);
+      this.users2 = data.users;
+
+    }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
   selectedInvestor(investor){
-    console.log("investor:", investor);
-    this.name2   = this.dummyData3[ this.dummyIndex2 ];
-    this.animal2 = this.dummyData4[ this.dummyIndex2 ];
-    this.dummyIndex2++;
-    if ( this.dummyIndex2 >= 3 ){
-      this.dummyIndex2 = 0;
+    console.log("click investor:", investor);
+    
+    var i:number; 
+    var u:IUser; debugger;//XXX
+    for ( i = 0; i < this.users2.length; i++ ){
+      u = this.users2[i];
+
     }
   }
 

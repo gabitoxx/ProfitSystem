@@ -24,27 +24,29 @@
     <!-- <mat-form-field>
       <input matInput [(ngModel)]="data.animal">
     </mat-form-field> -->
-    <div class="row justify-content-xs-center">
+    <div class="row justify-content-sm-center">
 
-      <div class="col-xs-12 center">
+      <div class="col-sm-12 center">
         <mat-form-field class="full-width" color="accent">
           <mat-label>Elegir un Inversionista</mat-label>
-          <mat-select [(ngModel)]="inv_person" (selectionChange)="selectedInvestor(investor)" required [ngModelOptions]="{standalone: true}"><!-- el color de letra lo da la clase .mat-select-value -->
-            <mat-option value="A001">Doctor Strange</mat-option>
-            <mat-option value="A002">Iron man</mat-option>
-            <mat-option value="A003">Thor son of Odin</mat-option>
+
+          <mat-select [(ngModel)]="inv_person" required [ngModelOptions]="{standalone: true}"><!-- el color de letra lo da la clase .mat-select-value -->
+            <ng-container *ngFor="let u of data.users">
+              <mat-option *ngIf="u.status == data.activo && u.rol == data.inv" value="{{ u.id }}" (click)="selectedInvestor(u.id)">{{ u.nombres }} {{ u.apellidos }}</mat-option>
+            </ng-container>
           </mat-select>
+
           <mat-icon matSuffix>person_add</mat-icon>
         </mat-form-field>
       </div>
 
-      <div class="col-xs-12">
+      <div class="col-sm-12">
         Correo: xxx {{ name2 }}
         <br/>
         Tel&eacute;fono: {{ animal2 }}
       </div>
 
-      <div class="col-xs-12 rights">
+      <div class="col-sm-12 rights">
         <br/><br/>
         <mat-slide-toggle color="warn" labelPosition="before">Marcar como Responsable del Contrato: </mat-slide-toggle>
       </div>

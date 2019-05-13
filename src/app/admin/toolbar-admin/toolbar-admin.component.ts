@@ -38,6 +38,10 @@ export class ToolbarAdminComponent implements OnInit {
   createAccount(){
     this.router.navigate(["admin/createAccount"]);
   }
+  
+  seeAccounts(){
+    this.router.navigate(["admin/accounts"]);
+  }
 
   createTrading(){
     this.router.navigate(["admin/createTrading"]);

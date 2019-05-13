@@ -31,6 +31,10 @@ export class AdminHomeComponent implements OnInit {
     this.router.navigate(["admin/createAccount"]);
   }
 
+  seeAccounts(){
+    this.router.navigate(["admin/accounts"]);
+  }
+
   createTrading(){
     this.router.navigate(["admin/createTrading"]);
   }

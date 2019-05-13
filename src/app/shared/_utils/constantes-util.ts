@@ -41,4 +41,6 @@ export const CONSTANTES_UTIL = {
   SUCCESS_USER_ACTIVATED: 'Usuario Activado correctamente',
   SUCCESS_USER_DEACTIVATED: 'Usuario Inactivado (no podrá ingresar al Sistema)',
   SUCCESS_CAMBIOS_GUARDADOS : 'Cambios salvados satisfactoriamente',
+  SUCCESS_ACCOUNT_ACTIVATED: 'Cuenta Activada correctamente',
+  SUCCESS_ACCOUNT_DEACTIVATED: 'Cuenta Inactivada (no podrá usarse en Contratos)',
 }

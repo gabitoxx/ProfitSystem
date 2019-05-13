@@ -41,6 +41,7 @@ import { UsersComponent } from './admin/users/users.component';
 import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ContractsComponent } from './admin/contracts/contracts.component';
 import { AccountsComponent } from './admin/accounts/accounts.component';
+import { AccountService } from './services/account.service';
 
 
 export const firebaseConfig = {
@@ -99,7 +100,8 @@ export const firebaseConfig = {
     ConfirmationDialogComponent, // reutilizable confirm dialog
   ],
   providers: [
-    UsersService
+    UsersService,
+    AccountService
   ],
   bootstrap: [AppComponent]
 })

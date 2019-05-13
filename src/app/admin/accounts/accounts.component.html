@@ -1,3 +1,118 @@
-<p>
-  accounts works!
-</p>
+<app-toolbar-admin></app-toolbar-admin>
+
+<!-- Para dejar un espacio superior para el toolbar -->
+<div class="filler-top"></div>
+
+<div class="container-admin">
+  
+  <mat-card class="card-person-actions">
+    <mat-card-header>
+      <div class="row">
+        <div class="col-md-12 center centrado lNegra">
+          <span class="titulo">Ver Cuentas</span>
+        </div>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-md-12">
+          <br/>
+          <span class="pExplain">
+            Aquí puede ver todos las Cuentas registrados en el Sistema.
+            Puede ACTIVARLAS o DESACTIVARLAS con el <b>switch de la derecha</b> 
+            (los Cuentas No se eliminan del Sistema por razones administrativas y de Reportes).
+          </span>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  
+  <b class="subtitulo">Cuentas Activas:</b>
+  <ng-container *ngFor="let account of arrayAccounts; let i = index">
+    <mat-card *ngIf="account.estatusActivo == true" class="card-table-results">
+      <mat-card-content>
+        <div class="row">
+          <div class="col col-lg-11 col-md-9 col-sm-9">
+            {{ i + 1 }} | {{ account.nombre }} ({{ account.descripcion }})
+            <br/>
+            Currency: {{ account.currency }}
+            <br/>
+            Monto Disponible: 
+            {{ (account.currency == 'USD' || account.currency == 'COP') ? '$' : '€' }} 
+            {{ account.available | number : '1.2-2' }}
+          </div>
+          <div class="col col-lg-1 col-md-3 col-sm-3 offset-md-3 rights">
+            <mat-slide-toggle aria-labelledby="label" [id]="account.id" color="warn" [disabled]="false"
+             (change)="toogleActivation(account.id, false, $event)"
+             [checked]="account.estatusActivo == true">
+             {{ (account.estatusActivo == true ) ? 'Activa' : 'Inactiva' }}
+            </mat-slide-toggle>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+  <ng-container *ngIf="this.iAccActivos == 0">
+    <mat-card class="card-table-results">
+      <mat-card-content>
+        <div class="row">
+          <div class="col col-lg-11 col-md-9">
+            No hay Cuentas con estatus Activo.
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+
+  <hr/>
+
+  <b class="subtitulo">Cuentas Inactivas:</b>
+  <ng-container *ngFor="let account of arrayAccounts; let i = index">
+    <mat-card *ngIf="account.estatusActivo == false" class="card-table-results">
+      <mat-card-content>
+        <div class="row">
+          <div class="col col-lg-11 col-md-9 col-sm-9">
+            {{ i + 1 }} | {{ account.nombre }} ({{ account.descripcion }})
+            <br/>
+            Currency: {{ account.currency }}
+            <br/>
+            Monto Disponible: 
+            {{ (account.currency == 'USD' || account.currency == 'COP') ? '$' : '€' }} 
+            {{ account.available | number : '1.2-2' }}
+          </div>
+          <div class="col col-lg-1 col-md-3 col-sm-3 offset-md-3 rights">
+            <mat-slide-toggle aria-labelledby="label" [id]="account.id" color="warn" [disabled]="false"
+             (change)="toogleActivation(account.id, true, $event)"
+             [checked]="account.estatusActivo == true">
+             {{ (account.estatusActivo == true ) ? 'Activa' : 'Inactiva' }}
+            </mat-slide-toggle>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+  <ng-container *ngIf="this.iAccInactivos == 0">
+    <mat-card class="card-table-results">
+      <mat-card-content>
+        <div class="row">
+          <div class="col col-lg-11 col-md-9">
+            No hay Cuentas con estatus Inactivo.
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+
+  <br/><br/>
+  
+  <div class="row">
+    <div class="col-sm-12 center">
+      <br/>
+      <a href (click)="$event.preventDefault();goHome();" class="href-red">Volver</a>
+    </div>
+  </div>
+
+  <br/><br/>
+
+</div>
