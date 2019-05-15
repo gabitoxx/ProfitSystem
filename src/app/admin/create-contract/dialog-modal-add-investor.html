@@ -32,7 +32,10 @@
 
           <mat-select [(ngModel)]="inv_person" required [ngModelOptions]="{standalone: true}"><!-- el color de letra lo da la clase .mat-select-value -->
             <ng-container *ngFor="let u of data.users">
-              <mat-option *ngIf="u.status == data.activo && u.rol == data.inv" value="{{ u.id }}" (click)="selectedInvestor(u.id)">{{ u.nombres }} {{ u.apellidos }}</mat-option>
+              <mat-option *ngIf="u.status == data.activo && (u.rol == data.inv || u.rol == data.adm) && (u.contratoId == undefined || u.contratoId == null || u.contratoId == '')"
+               value="{{ u.id }}" (click)="selectedInvestor(u.id)">
+                {{ (u.rol == data.adm) ? 'Adm:' : '' }} {{ u.nombres }} {{ u.apellidos }}
+              </mat-option>
             </ng-container>
           </mat-select>
 
@@ -41,22 +44,27 @@
       </div>
 
       <div class="col-sm-12">
-        Correo: xxx {{ name2 }}
+        Correo: {{ name2 }}
         <br/>
         Tel&eacute;fono: {{ animal2 }}
       </div>
 
       <div class="col-sm-12 rights">
         <br/><br/>
-        <mat-slide-toggle color="warn" labelPosition="before">Marcar como Responsable del Contrato: </mat-slide-toggle>
+        <mat-slide-toggle aria-labelledby="label" [id]="" color="warn" labelPosition="before"
+         [disabled]="userSelected == null"
+         (change)="toogleResponsabilidad($event)"
+         [checked]="false">
+          Marcar como Responsable del Contrato: 
+        </mat-slide-toggle>
       </div>
 
     </div>
   </div>
   <div mat-dialog-actions align="end">
     <button mat-button (click)="onNoClick()">Cancelar</button>
-    <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial style="background-color: darkgreen;">
-      Agregar Inversionista
+    <button mat-button [mat-dialog-close]="userSelected" cdkFocusInitial style="background-color: darkgreen;">
+      Agregar
     </button>
   </div>
 </div>

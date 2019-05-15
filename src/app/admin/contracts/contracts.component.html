@@ -1,3 +1,135 @@
-<p>
-  contracts works!
-</p>
+<app-toolbar-admin></app-toolbar-admin>
+
+<!-- Para dejar un espacio superior para el toolbar -->
+<div class="filler-top"></div>
+
+<div class="container container-admin">
+
+  <mat-card class="card-person-actions">
+    <mat-card-header>
+      <div class="row">
+        <div class="col-md-12 center centrado lNegra">
+          <span class="titulo">Ver Contratos</span>
+        </div>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-md-12">
+          <br/>
+          <span class="pExplain">
+            Aquí puede ver todos los Contratos registrados en el Sistema.
+            Puede ACTIVARLOS o DESACTIVARLOS con el <b>switch de la derecha</b> 
+            (los Contratos No se eliminan del Sistema por razones administrativas y de Reportes).
+            <br/><br/>
+            También podrá añadir Inversionistas a los Contratos existentes
+            o darles de baja (ya no formarán parte de dicho Contrato).
+          </span>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="card-table-results" *ngFor="let contract of arrayContracts; let i = index">
+    <mat-card-header>
+      <div class="row">
+        <div class="col-10 col-lg-11 col-sm-11">
+          <span class="titulo2">{{ i + 1 }}: {{ contract.nombre }}</span>
+          <br/>
+          <span class="subtitulo2">UID: {{ contract.id }}</span>
+        </div>
+        <div class="col-2 col-lg-1 col-sm-1 offset-sm-1 rights">
+          <mat-slide-toggle aria-labelledby="label" [id]="contract.id" color="accent" [disabled]="false"
+            (change)="toogleActivation(contract.id, $event)"
+            [checked]="contract.estatusActivo == true">
+            {{ (contract.estatusActivo == true) ? 'Activo' : 'Inactivo' }}
+          </mat-slide-toggle>
+        </div>
+      </div>
+    </mat-card-header>  
+    <mat-card-content>
+      <div class="row">
+        <div class="col-8">
+          Capital actual:
+        </div>
+        <div class="col-4">
+          {{ contract.capital }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-8">
+          Constante diaria para Clientes:
+        </div>
+        <div class="col-4">
+          {{ contract.constanteDeuda }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-8">
+          Día de Corte en el mes:
+        </div>
+        <div class="col-4">
+          {{ contract.diaCorteMes }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-8">
+          Responsable:
+        </div>
+        <div class="col-4">
+          {{ getUserName( contract.responsableId ) }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <u class="extra">Extra Info</u>
+          <br/>
+          Porcentaje de rentabilidad pactado mensual: {{ contract.porcentaje }} %
+          <br/>
+          Fecha Creación: {{ contract.fechaCreacion }}
+          <br/>
+          <u class="extra">Inversionistas</u>
+          <br/>
+          Número de Inversionistas: {{ contract.inversionistasIds.length }} 
+          <span class="footerApp">(pulse ícono para darle de Baja)</span>
+          <br/>
+          <ng-container *ngFor="let inv of contract.inversionistasIds; let j = index">
+            <div class="row">
+              <div class="col-1 lineaInv" style="text-align: right;">
+                {{ (j + 1) < 10 ? ' ':'' }} {{ j + 1 }} | 
+              </div>
+              <div class="col-1 lineaInv center">
+                <mat-icon (click)="removeInvestor(inv.id)" matTooltip="Dar de baja a este Inversionista de este Contrato"
+                 matTooltipPosition="below" aria-label="Dar de baja a este Inversionista de este Contrato" class="pointer">
+                  delete_outline
+                </mat-icon>
+              </div>
+              <div class="col-9 lineaInv">
+                | {{ getUserName( inv.id ) }}
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions class="center">
+      <button mat-button (click)="addInvestor()">
+        <mat-icon>person_add</mat-icon>
+        &nbsp; 
+        Añadir nuevo Inversionista
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <br/><br/>
+
+  <div class="row">
+    <div class="col-sm-12 center">
+      <br/>
+      <a href (click)="$event.preventDefault();goHome();" class="href-red">Volver</a>
+    </div>
+  </div>
+
+  <br/><br/>
+
+</div>

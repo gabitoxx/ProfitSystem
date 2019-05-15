@@ -36,13 +36,13 @@
       <mat-card-title>Contratos</mat-card-title>
       <mat-card-subtitle class="subtitle-actions">
         un <b>Contrato</b> va atado a una <b>Cuenta</b>. 
-        Un Contrato puede tener uno o más <b>Inversionistas</b> pero un solo <b>Responsable</b> (y los porcentajes de participación de cada uno). 
+        Un Contrato puede tener uno o más <b>Inversionistas</b> pero un solo <b>Responsable</b>. 
         En un Contrato se definen también Porcentaje de rentabilidad y Día de corte.
       </mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-actions class="center">
-      <button mat-button>
+      <button mat-button (click)="seeContracts()">
         <mat-icon>people</mat-icon>
         &nbsp; 
         Ver Contratos

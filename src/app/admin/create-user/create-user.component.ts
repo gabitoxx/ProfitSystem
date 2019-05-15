@@ -82,7 +82,8 @@ export class CreateUserComponent implements OnInit {
       direccion: this.direccion,
       hobbies: this.info,
       status: CONSTANTES_UTIL.USUARIO_ACTIVO,
-      fechaCreacion: f
+      fechaCreacion: f,
+      contratoId: ''
     }
     
     this.userService.createUser(this.usuario).then(

@@ -51,6 +51,14 @@
           <div class="row justify-content-sm-center">
             
             <div class="col-sm-12 center">
+              <mat-form-field class="full-width" color="accent">
+                <mat-label id="nombre">Nombre del Contrato</mat-label>
+                <input matInput [(ngModel)]="contractName" type="text" required [ngModelOptions]="{standalone: true}">
+                <mat-icon matSuffix>edit</mat-icon>
+              </mat-form-field>
+            </div>
+            
+            <div class="col-sm-12 center">
               <br/>
               <mat-form-field class="full-width" color="accent">
                 <mat-label>Cuenta: Elegir una</mat-label>
@@ -64,11 +72,11 @@
             </div>
             
             <div class="col-sm-12 infoPanelGris">
-              <b>Cuenta:</b> {{ this.account }}
+              <b>Cuenta:</b> {{ ( null == this.accountSelected || undefined == this.accountSelected) ? ' ' : this.accountSelected.nombre + " (" + this.accountSelected.descripcion + ")" }}
               <br/><br/>
-              <b>Moneda:</b> {{ this.currency }}
+              <b>Moneda:</b> {{ ( null == this.accountSelected || undefined == this.accountSelected) ? '?' : this.accountSelected.currency }}
               <br/><br/>
-              <b>Cr&eacute;dito actualmente disponible:</b> {{ this.available }}
+              <b>Cr&eacute;dito actualmente disponible:</b> {{ ( null == this.accountSelected || undefined == this.accountSelected) ? '0.00' : this.accountSelected.available }}
             </div>
           </div>
       </mat-card-content>
@@ -154,17 +162,27 @@
             <br/>
             <mat-form-field class="full-width" color="accent">
               <mat-label id="expense">D&iacute;a de Corte del mes</mat-label>
-              <input matInput [(ngModel)]="expense" name="expense" type="number" class="inputRight">
+              <input matInput [(ngModel)]="day" type="number" class="inputRight" required [ngModelOptions]="{standalone: true}">
               <mat-icon matSuffix>calendar_today</mat-icon>
             </mat-form-field>
           </div>
+
           <div class="col-sm-12 center">
             <mat-form-field class="full-width" color="accent">
               <mat-label id="prpm">Porcentaje Rentabilidad pactado mensual</mat-label>
-              <input matInput [(ngModel)]="inv_prpm" name="expense" type="number" class="inputRight">
+              <input matInput [(ngModel)]="prpm" type="number" class="inputRight" required [ngModelOptions]="{standalone: true}">
               <mat-icon matSuffix>pie_chart</mat-icon>
             </mat-form-field>
           </div>
+
+          <div class="col-sm-12 center">
+            <mat-form-field class="full-width" color="accent">
+              <mat-label id="constante">Constante deuda diaria para los Clientes (en $)</mat-label>
+              <input matInput [(ngModel)]="constante" type="number" class="inputRight" required [ngModelOptions]="{standalone: true}">
+              <mat-icon matSuffix>timeline</mat-icon>
+            </mat-form-field>
+          </div>
+          
         </div>
       </mat-card-content>
     </mat-card>

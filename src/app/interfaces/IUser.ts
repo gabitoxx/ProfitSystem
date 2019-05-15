@@ -12,5 +12,6 @@ export interface IUser {
   hobbies: string;
   status: string;        // CONSTANTES_UTIL.USUARIO_ACTIVO ? USUARIO_INACTIVO
   fechaCreacion: string; // DD/MM/YYYY
-  
+  responsable?: boolean; // solo para la vista
+  contratoId: string;    // un Inversionista puede estar SOLO EN UN CONTRATO a la vez
 }

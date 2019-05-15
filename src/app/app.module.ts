@@ -42,6 +42,7 @@ import { ConfirmationDialogComponent } from './shared/components/confirmation-di
 import { ContractsComponent } from './admin/contracts/contracts.component';
 import { AccountsComponent } from './admin/accounts/accounts.component';
 import { AccountService } from './services/account.service';
+import { ContractService } from './services/contract.service';
 
 
 export const firebaseConfig = {
@@ -101,7 +102,8 @@ export const firebaseConfig = {
   ],
   providers: [
     UsersService,
-    AccountService
+    AccountService,
+    ContractService
   ],
   bootstrap: [AppComponent]
 })

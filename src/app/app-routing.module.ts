@@ -14,6 +14,7 @@ import { PaymentsComponent } from './admin/payments/payments.component';
 import { PagoComponent } from './academia/pago/pago.component';
 import { UsersComponent } from './admin/users/users.component';
 import { AccountsComponent } from './admin/accounts/accounts.component';
+import { ContractsComponent } from './admin/contracts/contracts.component';
 
 const appRoutes: Routes = [
   /*  { path: 'home', component: HomeComponent, canActivate: [AuthenticationGuard] }, */
@@ -39,6 +40,7 @@ const appRoutes: Routes = [
     { path: 'admin/accounts', component: AccountsComponent },
     { path: 'admin/createTrading', component: CreateTradingComponent },
     { path: 'admin/createContract', component: CreateContractComponent },
+    { path: 'admin/contracts', component: ContractsComponent },
     { path: 'admin/payments', component: PaymentsComponent },
     
   ];

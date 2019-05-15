@@ -87,7 +87,8 @@ export class RequestCredentialsComponent implements OnInit {
       direccion: this.direccion,
       hobbies: this.info,
       status: CONSTANTES_UTIL.USUARIO_INACTIVO,
-      fechaCreacion: f
+      fechaCreacion: f,
+      contratoId: ''
     }
       
     this.userService.createUser(this.usuario).then(

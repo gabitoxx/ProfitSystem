@@ -51,6 +51,10 @@ export class ToolbarAdminComponent implements OnInit {
     this.router.navigate(["admin/createContract"]);
   }
 
+  seeContracts(){
+    this.router.navigate(["admin/contracts"]);
+  }
+
   payments(){
     this.router.navigate(["admin/payments"]);
   }

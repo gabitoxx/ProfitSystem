@@ -82,6 +82,10 @@ mat-card-subtitle.subtitle-actions {
   margin-bottom: 1px;
 }
 
+.card-table-results mat-card-actions button {
+  background-color: #428d39;
+}
+
 /*************************
  * Estilos generales del encabezado
  */
