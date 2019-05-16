@@ -43,7 +43,10 @@ import { ContractsComponent } from './admin/contracts/contracts.component';
 import { AccountsComponent } from './admin/accounts/accounts.component';
 import { AccountService } from './services/account.service';
 import { ContractService } from './services/contract.service';
+import { PaymentService } from './services/payment.service';
+import { HistorialPagosComponent } from './academia/historial-pagos/historial-pagos.component';
 
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyBrD2fJ8540IMWI5p-FmL_7Mik_fvZnJns",
@@ -77,20 +80,29 @@ export const firebaseConfig = {
     ConfirmationDialogComponent,
     ContractsComponent,
     AccountsComponent,
-
+    HistorialPagosComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
+
+    /** PWA */
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     BrowserAnimationsModule,
+
+    /** Material design */
     CustomMaterialModule,
-    FormsModule,
+    
+    /** Firebase */
     AngularFireModule.initializeApp( firebaseConfig ), // imports firebase/app needed for everything
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
-    AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
+    AngularFireAuthModule, // imports firebase/auth, only needed for auth features -> login with email and password
     AngularFireStorageModule, // imports firebase/storage only needed for storage features
     AngularFireDatabaseModule,
+    
+    /** Imagen: recortar */
+    ImageCropperModule
   ],
   exports: [
     LoginComponent,
@@ -103,7 +115,8 @@ export const firebaseConfig = {
   providers: [
     UsersService,
     AccountService,
-    ContractService
+    ContractService,
+    PaymentService
   ],
   bootstrap: [AppComponent]
 })

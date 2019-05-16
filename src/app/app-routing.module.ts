@@ -15,6 +15,7 @@ import { PagoComponent } from './academia/pago/pago.component';
 import { UsersComponent } from './admin/users/users.component';
 import { AccountsComponent } from './admin/accounts/accounts.component';
 import { ContractsComponent } from './admin/contracts/contracts.component';
+import { HistorialPagosComponent } from './academia/historial-pagos/historial-pagos.component';
 
 const appRoutes: Routes = [
   /*  { path: 'home', component: HomeComponent, canActivate: [AuthenticationGuard] }, */
@@ -28,7 +29,8 @@ const appRoutes: Routes = [
     { path: 'academia/home', component: HomeComponent },
     { path: 'academia/perfil', component: PerfilComponent },
     { path: 'academia/pago/registrar', component: PagoComponent },
-
+    { path: 'academia/historial/pagos', component: HistorialPagosComponent },
+    
     /*
      * Administradores
      */

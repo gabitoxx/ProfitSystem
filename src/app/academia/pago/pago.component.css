@@ -1,3 +1,13 @@
 .mat-datepicker-toggle-default-icon, .mat-datepicker-toggle, .mat-accent {
   color: black;
 }
+
+.card-person-inverted {
+  background: #424242;
+  color: #fff;
+  width: 100%;
+  margin-left: 0px;
+}
+.lBlanca {
+  color: white !important;
+}

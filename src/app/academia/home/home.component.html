@@ -10,7 +10,10 @@
     <mat-card-header>
       <div mat-card-avatar><mat-icon>person_pin</mat-icon></div>
       <mat-card-title>Pepito Peerez</mat-card-title>
-      <mat-card-subtitle>Academia</mat-card-subtitle>
+      <mat-card-subtitle>
+        Perfil en el sistema: 
+        <b>Inversionista</b>
+      </mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content class="center">
@@ -39,10 +42,12 @@
   <mat-card class="card-person-actions">
 
     <mat-card-header>
-      <mat-card-title>Pagos a la Academia Profit Takers</mat-card-title>
+      <mat-card-title>Pagos a Profit Takers</mat-card-title>
       <mat-card-subtitle class="subtitle-actions">
-        Por medio de esta opción podrás tomar una foto de tu recibo de pago para 
-        continuar tu Suscripción o ver el historial de tus pagos realizados...
+        Por medio de esta opción podrás tomar una foto de tu recibo de pagos para 
+        continuar tu Suscripción o ver el historial de tus pagos realizados.
+        Puedes cargar pagos por concepto de <b>Inversión (Trading)</b> o por concepto de <b>Academia</b>
+        ...
       </mat-card-subtitle>
     </mat-card-header>
 
@@ -52,11 +57,6 @@
         &nbsp; 
         Cargar Pago
       </button>
-      <button mat-button>
-        <mat-icon>history</mat-icon>
-        &nbsp; 
-        Historial de pagos
-      </button>
     </mat-card-actions>
 
   </mat-card>
@@ -64,17 +64,17 @@
   <mat-card class="card-person-actions">
 
     <mat-card-header>
-      <mat-card-title>Historial de Movimientos</mat-card-title>
+      <mat-card-title>Historial de pagos</mat-card-title>
       <mat-card-subtitle class="subtitle-actions">
-        Ver el Trading que has tenido con Profit Takers
+        Ver tu historial de pagos hechos a Profit Takers.
       </mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-actions class="center">
-      <button mat-button>
-        <mat-icon>receipt</mat-icon>
+      <button mat-button (click)="pagos()">
+        <mat-icon>history</mat-icon>
         &nbsp; 
-        Ver mis Movimientos
+        Ver mi Historial
       </button>
     </mat-card-actions>
 

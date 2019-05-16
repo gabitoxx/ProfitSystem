@@ -21,6 +21,8 @@ export const CONSTANTES_UTIL = {
   PREFFIX_CONTRATC: 'C_',
   PREFFIX_TRADING: 'M_',
   PREFFIX_DAY: 'TD_',/* Total del Dia */
+  PREFFIX_PAYMENT: 'P_',
+  PREFFIX_PAYMENT_IMAGE: 'PI_',
 
   /** Fechas */
   DATE_SEPARATOR: '/',
@@ -43,4 +45,12 @@ export const CONSTANTES_UTIL = {
   SUCCESS_CAMBIOS_GUARDADOS : 'Cambios salvados satisfactoriamente',
   SUCCESS_ACCOUNT_ACTIVATED: 'Cuenta Activada correctamente',
   SUCCESS_ACCOUNT_DEACTIVATED: 'Cuenta Inactivada (no podrá usarse en Contratos)',
+
+  /** Archivos */
+  FIRESTORAGE_NODO_PAGOS: 'img/pagos/png/',    // Pagos hechos en formato .PNG
+  FIRESTORAGE_NODO_AVATAR: 'img/avatar/png/',  // imagenes del Perfil
+  EXTENSION_PNG: '.png',
+  EXTENSION_JPG: '.jpg',
+  EXTENSION_JPEG: '.jpeg',
+
 }

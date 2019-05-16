@@ -83,4 +83,5 @@ export class ContractsComponent implements OnInit {
     }
     return gestorId;
   }
+  
 }

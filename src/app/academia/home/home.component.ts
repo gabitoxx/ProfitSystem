@@ -22,4 +22,8 @@ export class HomeComponent implements OnInit {
   nuevoPago(){
     this.router.navigate(["academia/pago/registrar"]);
   }
+
+  pagos(){
+    this.router.navigate(["academia/historial/pagos"]);
+  }
 }
