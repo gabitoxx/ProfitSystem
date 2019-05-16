@@ -14,4 +14,6 @@ export interface IUser {
   fechaCreacion: string; // DD/MM/YYYY
   responsable?: boolean; // solo para la vista
   contratoId: string;    // un Inversionista puede estar SOLO EN UN CONTRATO a la vez
+  avatar?:string;
+  avatarURL?:string;
 }

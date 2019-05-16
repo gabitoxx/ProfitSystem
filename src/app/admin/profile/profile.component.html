@@ -109,15 +109,74 @@
         <span class="subtitulo">Tu Foto de Perfil</span>
         <br/><br/>
       </div>
-      <div class="col-sm-12 center">
-        <img mat-card-image class="img-home-persone" src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Persona foto de Perfil">
-        <br/><br/>
+    </div>
+
+    <div class="row">
+      <div class="col center">
+        <mat-icon matSuffix style="font-size: 50px;">add_a_photo</mat-icon>
+        <br/>
+        Cargar imagen  
+        <span style="color: red;">*</span> 
+        (extensión permitida: .PNG)
+        <input type="file" (change)="fileChangeEvent($event)">
       </div>
+    </div>
+
+    <div class="row">
+      <div class="col center">
+        <!-- https://www.npmjs.com/package/ngx-image-cropper  | [aspectRatio]="4 / 3" -->
+        <image-cropper
+          [imageChangedEvent]="imageChangedEvent"
+          [maintainAspectRatio]="false"
+          [aspectRatio]="1 / 1"
+          [resizeToWidth]="128"
+          onlyScaleDown="true"
+          format="png"
+          (imageCropped)="imageCropped($event)"
+          (imageLoaded)="imageLoaded()"
+          (loadImageFailed)="loadImageFailed()"
+          alignImage="center"
+        ></image-cropper>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col center">
+        <div class="footerApp">
+          Resultado del ajuste:
+        </div>
+        <div class="">
+          <img [src]="croppedImage || 'assets/images/update_profile.png'" style="width: 100%;">
+        </div>
+      </div>
+    </div>
+    
+    <div class="row" *ngIf="croppedImage">
+      <div class="col-2 center">
+        <br/>
+        <mat-icon matSuffix>crop</mat-icon>
+      </div>
+      <div class="col-8 center">
+        Redimensione la imagen usando las flechas de dirección.
+        Cuando termine, puede pulsar el botón final "Actualizar foto de perfil".
+      </div>
+      <div class="col-2 center">
+        <br/>
+        <mat-icon matSuffix>crop_free</mat-icon>
+      </div>
+    </div>
+    <div class="col-sm-12 center">
+      <br/>
+      <button mat-raised-button (click)="updateProfilePicture()" color="accent"><b>Actualizar foto de perfil</b></button>
+    </div>
+    <div class="row">
       <div class="col-sm-12 center">
-        <button mat-raised-button (click)="updateProfilePicture()" color="accent"><b>Cambiar mi foto de Perfil</b></button>
-        <br/><br/>
+        <br/>
+        <a href (click)="$event.preventDefault();goHome();" class="href-red">Ir al inicio</a>
       </div>
     </div>
   </form>
+
+  <br/><br/><br/>
 
 </div>

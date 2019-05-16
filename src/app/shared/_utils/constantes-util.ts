@@ -23,6 +23,7 @@ export const CONSTANTES_UTIL = {
   PREFFIX_DAY: 'TD_',/* Total del Dia */
   PREFFIX_PAYMENT: 'P_',
   PREFFIX_PAYMENT_IMAGE: 'PI_',
+  PREFFIX_FOTO: 'F_', // Foto de Perfil
 
   /** Fechas */
   DATE_SEPARATOR: '/',

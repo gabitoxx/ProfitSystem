@@ -5,6 +5,8 @@ import { UsersService } from 'src/app/services/users.service';
 import { CONSTANTES_UTIL } from 'src/app/shared/_utils/constantes-util';
 import { IUser } from 'src/app/interfaces/IUser';
 import { ValidatorUtils } from 'src/app/shared/_utils/validator-utils';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 
 @Component({
   selector: 'app-profile',
@@ -37,13 +39,21 @@ export class ProfileComponent implements OnInit {
   /** snackbar styles */
   configError:   MatSnackBarConfig;
   configSuccess: MatSnackBarConfig;
-
   
+  /**
+   * Imagen archivo firebase storage
+   */
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
+  picture: any;
+  
+
   constructor(
       private element: ElementRef,
       private router: Router,
       private userService: UsersService,
-      private snackBar: MatSnackBar){
+      private snackBar: MatSnackBar,
+      private firebaseStorage: AngularFireStorage){
 
     this.configError = {
       panelClass: ['snackbar-accion-failure'],
@@ -67,6 +77,12 @@ export class ProfileComponent implements OnInit {
     );
   }
 
+
+  goHome(){
+    this.router.navigate(["admin/home"]);
+  }
+
+  
   /**
    * Actualiza el primer formulario
    */
@@ -103,5 +119,68 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  updateProfilePicture(){}
+  
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+  }
+  
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
+  }
+  imageLoaded() {
+    // show cropper
+  }
+  loadImageFailed() {
+    // show message
+    this.snackBar.open('Error al cargar la imagen. Asegúrese que solo sea un archivo en formato .PNG', 'Intentaré de nuevo', this.configError);
+  }
+  cropperReady() {
+    // cropper ready
+  }
+
+  updateProfilePicture = () =>{
+    var hoyMillisecs = Date.now();
+    var fileID = CONSTANTES_UTIL.PREFFIX_FOTO + hoyMillisecs;
+
+    /**
+     * Guardar en el nodo de STORAGE, se debe guardar con extensión de imagen
+     */
+    const refNodoFbStorageFile = CONSTANTES_UTIL.FIRESTORAGE_NODO_AVATAR + fileID + CONSTANTES_UTIL.EXTENSION_JPG;
+
+    /**
+     * el .ref() retorna una promesa
+     */
+    const pictures = this.firebaseStorage
+        .ref( refNodoFbStorageFile )                   //referenciamos un nodo dentro de STORAGE
+        .putString( this.croppedImage, 'data_url' );   //obtenemos imagen en formato binario
+
+    /**/
+    pictures.then(
+      (result) => {
+        this.picture = this.firebaseStorage
+            .ref( refNodoFbStorageFile )      //referenciamos el objeto creado de base64
+            .getDownloadURL();                //obtenemos su URL
+
+        this.picture.subscribe( ( imgURL ) => {
+
+            this.actualizarPerfilUsuario(imgURL, fileID);
+        });
+
+      }, (error) => {
+        console.error("Firebase: NO se puede upload de IMAGEN de PAGO: ", error);
+        this.snackBar.open("Subida de archivo: " + CONSTANTES_UTIL.ERROR_CAMBIOS_NO_GUARDADOS, 'Entendido', this.configError);
+      }
+    );
+  }
+
+
+  actualizarPerfilUsuario(imgURL: any, fileID: string) {
+    
+    // aqui se debe buscar el User logueado y hacer un userService.editUser() 
+    // XXX añadiendole antes: 
+    //avatar = fileID           // avatarURL = imgURL
+    console.log("imgURL: ", imgURL, "fileID:" , fileID);
+    this.snackBar.open('Avatar cambiado', 'Ok', this.configSuccess);
+  }
+
 }
