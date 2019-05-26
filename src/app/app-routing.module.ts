@@ -26,10 +26,10 @@ const appRoutes: Routes = [
     /*
      * Academia
      */
-    { path: 'academia/home', component: HomeComponent },
-    { path: 'academia/perfil', component: PerfilComponent },
-    { path: 'academia/pago/registrar', component: PagoComponent },
-    { path: 'academia/historial/pagos', component: HistorialPagosComponent },
+    { path: 'inversionistas/home', component: HomeComponent },
+    { path: 'inversionistas/perfil', component: PerfilComponent },
+    { path: 'inversionistas/pago/registrar', component: PagoComponent },
+    { path: 'inversionistas/historial/pagos', component: HistorialPagosComponent },
     
     /*
      * Administradores

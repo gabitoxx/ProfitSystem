@@ -36,11 +36,13 @@
           <div class="col col-lg-11 col-md-9 col-sm-9">
             {{ i + 1 }} | {{ account.nombre }} ({{ account.descripcion }})
             <br/>
-            Currency: {{ account.currency }}
+            Creada el: {{ account.fechaCreacion }}
             <br/>
-            Monto Disponible: 
-            {{ (account.currency == 'USD' || account.currency == 'COP') ? '$' : '€' }} 
-            {{ account.available | number : '1.2-2' }}
+            Monto Disponible en USD: $ <b class="sideInfoMini"> {{ account.saldoUSD | number : '1.2-2' }} </b>
+            <br/>
+            Monto Disponible en EUR: € <b class="sideInfoMini"> {{ account.saldoEUR | number : '1.2-2' }} </b>
+            <br/>
+            Monto Disponible en COP: $ <b class="sideInfoMini"> {{ account.saldoCOP | number : '1.2-2' }} </b>
           </div>
           <div class="col col-lg-1 col-md-3 col-sm-3 offset-md-3 rights">
             <mat-slide-toggle aria-labelledby="label" [id]="account.id" color="warn" [disabled]="false"
@@ -75,11 +77,13 @@
           <div class="col col-lg-11 col-md-9 col-sm-9">
             {{ i + 1 }} | {{ account.nombre }} ({{ account.descripcion }})
             <br/>
-            Currency: {{ account.currency }}
+            Creada el: {{ account.fechaCreacion }}
             <br/>
-            Monto Disponible: 
-            {{ (account.currency == 'USD' || account.currency == 'COP') ? '$' : '€' }} 
-            {{ account.available | number : '1.2-2' }}
+            Monto Disponible en USD: $ <b class="sideInfoMini"> {{ account.saldoUSD | number : '1.2-2' }} </b>
+            <br/>
+            Monto Disponible en EUR: € <b class="sideInfoMini"> {{ account.saldoEUR | number : '1.2-2' }} </b>
+            <br/>
+            Monto Disponible en COP: $ <b class="sideInfoMini"> {{ account.saldoCOP | number : '1.2-2' }} </b>
           </div>
           <div class="col col-lg-1 col-md-3 col-sm-3 offset-md-3 rights">
             <mat-slide-toggle aria-labelledby="label" [id]="account.id" color="warn" [disabled]="false"

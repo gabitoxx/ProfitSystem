@@ -16,14 +16,14 @@ export class HomeComponent implements OnInit {
   }
 
   actualizarPerfil(){
-    this.router.navigate(["academia/perfil"]);
+    this.router.navigate(["inversionistas/perfil"]);
   }
   
   nuevoPago(){
-    this.router.navigate(["academia/pago/registrar"]);
+    this.router.navigate(["inversionistas/pago/registrar"]);
   }
 
   pagos(){
-    this.router.navigate(["academia/historial/pagos"]);
+    this.router.navigate(["inversionistas/historial/pagos"]);
   }
 }

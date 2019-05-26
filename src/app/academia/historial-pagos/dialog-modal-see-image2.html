@@ -18,21 +18,14 @@
 </style>
 
 <div style="transform: none;background-color: forestgreen;">
-  <p mat-dialog-title class="modalDetail">
-    <u>Detalles del Pago:</u>
-    <br/>Monto: {{ data.monto | number: '1.2-2' }} ({{ data.currency }})
-    <br/>Banco: {{ data.banco }}
-    <br/>Concepto: {{ data.concepto }}
-    <br/>
-    <u>Detalles técnicos:</u>
-    <br/>ID del Usuario: {{ data.userId }}
-    <br/>ID del archivo: {{ data.idFile }}
-    <br/>ID del Pago: {{ data.id }}
+  <p mat-dialog-title class="subtitulo">
+    Detalle del Pago (id: <b>{{ data.id }}</b>)
   </p>
   <div mat-dialog-content>
     <div class="row justify-content-xs-center">
-      <div class="col-xs-12 center">
-        <img mat-card-image class="img-home-persone" [src]="data.URL" style="width: 100%;" alt="Screenshot o pantallazo o capture del pago">
+      <div class="col center">
+        <img mat-card-image class="img-home-persone" [src]="data.url"
+         alt="Screenshot o pantallazo o capture del pago">
       </div>
     </div>
   </div>

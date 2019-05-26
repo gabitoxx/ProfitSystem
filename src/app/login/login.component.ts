@@ -36,7 +36,7 @@ export class LoginComponent extends LoginValidacion implements OnInit {
 
   login() : void {
     if ( this.email == 'academia' && this.password == 'academia' ){
-      this.router.navigate(["academia/home"]);
+      this.router.navigate(["inversionistas/home"]);
 
     } else if ( this.email == 'admin' && this.password == 'admin' ){
       this.router.navigate(["admin/home"]);

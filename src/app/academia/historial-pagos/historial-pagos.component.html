@@ -16,16 +16,83 @@
     <mat-card-content>
       Aquí podrá ver el Historial de todos sus Pagos realizados en este Sistema,
       los cuales son usados como su Crédito disponible en las operaciones de 
-      Profit Takers (Inversión o Academia).
+      Profit Takers (
+        <span style="color: #f35e5e;">Destinos: Inversión o Academia</span>
+      ).
       <br/>
       Recuerde que deben ser realizadas a través de nuestras vías de Pago avaladas 
       (ver pie de página en la sección de Registrar pago nuevo)
       <br/>
-      Nota: Todos sus registros se crean inicialmente con el estatus "No confirmado",
+      Nota: Todos sus registros se crean inicialmente con el estatus 
+      <span style="color: #f35e5e;">"Pendiente"</span>,
       hasta que uno de nuestros Administradores confirme su giro/pago entonces
-      lo marcará como "Confirmado". Cualquier duda se puede comunicar con nuestros 
-      Asesores Profit Takers.
+      lo marcará como 
+      <span style="color: #f35e5e;">"Confirmado"</span>. 
+      Cualquier duda se puede comunicar con nuestros Asesores Profit Takers.
     </mat-card-content>
   </mat-card>
+
+  
+  <div class="row" *ngIf="misPagos.length == 0">
+    <div class="col center">
+      <mat-spinner color="accent"></mat-spinner>
+    </div>
+  </div>
+
+  <mat-card class="card-person-actions" *ngFor="let pago of misPagos; let i = index">
+    <mat-card-header>
+      <div class="row">
+        <div class="col-10 col-lg-11 col-sm-11">
+          <span class="monto">
+            {{ i + 1 }}. 
+            {{ (pago.currency == 'USD' || pago.currency == 'COP') ? '$ ' : '€ ' }}  
+            {{ pago.monto | number: '1.2-2' }} 
+            ({{ pago.currency }})
+          </span>
+          <br/>
+          <span class="montoFecha">
+            Fecha: {{ pago.fecha }}
+          </span>
+        </div>
+        <div class="col-2 col-lg-1 col-sm-1 offset-sm-1 rights">
+          <div style="display: inline;">
+            <mat-icon class="font40" [ngStyle]="{'color': pago.aprobado == true ? 'green' : '#e87287' }">
+              {{ (pago.aprobado == true) ? 'check_circle' : 'hourglass_empty' }}
+            </mat-icon>
+          </div>
+          <div class="footerApp" style="display: inline; text-align: left;">
+            {{ (pago.aprobado == true) ? 'Confirmado' : 'Pendiente' }}
+          </div>
+        </div>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col" style="font-family: monospace;">
+          <b>Banco/Medio de pago</b>: {{ pago.banco }}
+          <br/>
+          <b>Concepto</b>: {{ pago.concepto }}
+          <br/>
+          <b>Destino</b>: {{ pago.destino }}
+          <br/>
+          Comprobante/Imagen cargada: 
+          <mat-icon (click)="seePayment(pago.id, pago.fileName)" class="pointer"
+           matTooltip="Click aquí para ver imagen" aria-label="Click aquí para ver imagen"
+           matTooltipPosition="below">fullscreen</mat-icon>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <br/><br/>
+
+  <div class="row">
+    <div class="col-sm-12 center">
+      <br/>
+      <a href (click)="$event.preventDefault();goHome();" class="href-red">Volver a Home</a>
+    </div>
+  </div>
+
+  <br/><br/>
 
 </div>

@@ -4,6 +4,7 @@ import { UsersService } from '../services/users.service';
 import { ValidatorUtils } from '../shared/_utils/validator-utils';
 import { MatSnackBar } from '@angular/material';
 import { CONSTANTES_UTIL } from '../shared/_utils/constantes-util';
+import { IUser } from '../interfaces/IUser';
 
 @Component({
   selector: 'app-request-credentials',
@@ -20,9 +21,10 @@ export class RequestCredentialsComponent implements OnInit {
   direccion:string = "";
   info:string = "";
   operacion:number = 0;
+  rol:string = "";
 
   /* formulario */
-  usuario:any = {};
+  usuario:IUser = null;
 
   /** captcha */
   op1:string = "";
@@ -30,6 +32,11 @@ export class RequestCredentialsComponent implements OnInit {
   val1:number = 1;
   val2:number = 1;
   iconPrefix:string = "filter_";
+
+  /** validacion correo */
+  usuariosTodos:IUser[] = [];
+  bErrorEmailRepetido = false;
+  msgErrorEmailRepetido  = '';
 
   constructor(
       private router: Router,
@@ -41,7 +48,7 @@ export class RequestCredentialsComponent implements OnInit {
   ngOnInit() {
 
     this.generateCaptcha();
-
+    this.loadUsuarios();
     //console.log("", this.val1 + this.val2)
   }
 
@@ -74,12 +81,19 @@ export class RequestCredentialsComponent implements OnInit {
     const d = date.getDate();
     const f = d + CONSTANTES_UTIL.DATE_SEPARATOR + m + CONSTANTES_UTIL.DATE_SEPARATOR + y;
 
+    // Rol
+    let rol:string = "";
+    if ( this.rol == 'i' ){         rol = CONSTANTES_UTIL.ROL_INVERSIONISTA;
+    } else if ( this.rol == 'e' ){  rol = CONSTANTES_UTIL.ROL_ACADEMIA;
+    } else {                        rol = CONSTANTES_UTIL.ROL_INVERSIONISTA;
+    }
+
     // JSON
     this.usuario = {
       id: CONSTANTES_UTIL.PREFFIX_USER + Date.now(),
       nombres:   ValidatorUtils.titleCase( this.nombre ),
       apellidos: ValidatorUtils.titleCase( this.apellido ),
-      rol: CONSTANTES_UTIL.ROL_INVERSIONISTA,
+      rol: rol,
       email: this.email,
       password: CONSTANTES_UTIL.DEFAULT_PASSWORD,
       telefono: this.telefono,
@@ -88,7 +102,18 @@ export class RequestCredentialsComponent implements OnInit {
       hobbies: this.info,
       status: CONSTANTES_UTIL.USUARIO_INACTIVO,
       fechaCreacion: f,
-      contratoId: ''
+      contratoId: '',
+      avatar: '',
+      avatarURL: '',
+      saldoDisponibleUSD: 0,
+      saldoDisponiblePorInteresesUSD: 0,
+      saldoDisponibleEUR: 0,
+      saldoDisponiblePorInteresesEUR: 0,
+      saldoDisponibleCOP: 0,
+      saldoDisponiblePorInteresesCOP: 0,
+      fechaUltimoPago: 0,
+      suscripcionActivo: false,
+      suscripcionFechaVence: 0,
     }
       
     this.userService.createUser(this.usuario).then(
@@ -99,6 +124,7 @@ export class RequestCredentialsComponent implements OnInit {
           'Usuario creado. Espere notificación de parte nuestros Administradores',
           'Entendido',
           {
+            panelClass: ['snackbar-accion-succes'],
             duration: 6000,
           }
         );
@@ -116,6 +142,10 @@ export class RequestCredentialsComponent implements OnInit {
       },
       (error) => {
         console.error("Firebase: NO se puede crear Usuario: ", error);
+        this.snackBar.open('No se pudo crear el Usuario en nuestro Sistema. Intente de nuevo más tarde.', 'Ok', {
+          panelClass: ['snackbar-accion-failure'],
+          duration: CONSTANTES_UTIL.SNACKBAR_DURATION_ERROR,
+        });
       }
     );
   }
@@ -132,37 +162,76 @@ export class RequestCredentialsComponent implements OnInit {
     
     if ( this.nombre.trim() == "" || (this.apellido.trim() == "")
         || (this.email.trim() == "") || (this.telefono.trim() == "")){
-      this.snackBar.open('Diligencie los campos obligatorios', 'X', {
+      this.snackBar.open('Diligencie los campos obligatorios', 'Lo haré', {
+        panelClass: ['snackbar-accion-failure'],
         duration: CONSTANTES_UTIL.SNACKBAR_DURATION_ERROR,
       });
       return false;
 
     } else if ( !ValidatorUtils.onlyLetters( this.nombre ) ){
-      this.snackBar.open('Campo Nombres solo admite caracteres alfabéticos', 'X', {
+      this.snackBar.open('Campo Nombres solo admite caracteres alfabéticos', 'Ok', {
+        panelClass: ['snackbar-accion-failure'],
         duration: CONSTANTES_UTIL.SNACKBAR_DURATION_ERROR,
       });
       return false;
 
     } else if ( !ValidatorUtils.onlyLetters( this.apellido ) ){
-      this.snackBar.open('Campo Apellidos solo admite caracteres alfabéticos', 'X', {
+      this.snackBar.open('Campo Apellidos solo admite caracteres alfabéticos', 'Ok', {
+        panelClass: ['snackbar-accion-failure'],
         duration: CONSTANTES_UTIL.SNACKBAR_DURATION_ERROR,
       });
       return false;
 
     } else if ( !ValidatorUtils.onlyNumbers( this.telefono ) ){
-      this.snackBar.open('Campo Teléfono solo admite caracteres numéricos', 'X', {
+      this.snackBar.open('Campo Teléfono solo admite caracteres numéricos', 'Ok', {
+        panelClass: ['snackbar-accion-failure'],
         duration: CONSTANTES_UTIL.SNACKBAR_DURATION_ERROR,
       });
       return false;
 
     } else if ( !ValidatorUtils.validateEmail(this.email)){
-      this.snackBar.open('Correo electrónico tiene formato inválido', 'X', {
+      this.snackBar.open('Correo electrónico tiene formato inválido', 'Entendido', {
+        panelClass: ['snackbar-accion-failure'],
+        duration: CONSTANTES_UTIL.SNACKBAR_DURATION_ERROR,
+      });
+      return false;
+
+    } else if ( this.bErrorEmailRepetido ){
+      this.snackBar.open('Email ya registrado en el Sistema. Debe ingresar otro.', 'Probaré con otro', {
+        panelClass: ['snackbar-accion-failure'],
         duration: CONSTANTES_UTIL.SNACKBAR_DURATION_ERROR,
       });
       return false;
     }
 
     return true;
+  }
+
+
+  loadUsuarios = () => {
+    this.userService.getUsers().valueChanges().subscribe(
+        ( data: IUser[] ) => {
+          this.usuariosTodos = data;
+        }, (error) => {
+          console.error("RequestCredentialsComponent - validarUnicoEmail() - ERROR", error);
+        }
+    );
+  }
+
+  validarUnicoEmail = () => {
+
+    this.bErrorEmailRepetido = false;
+    this.msgErrorEmailRepetido  = '';
+
+    if ( this.usuariosTodos.length > 0 ){
+      for ( var i = 0; i < this.usuariosTodos.length; i++){
+        if ( this.email == this.usuariosTodos[i].email ){
+          this.bErrorEmailRepetido = true;
+          this.msgErrorEmailRepetido  = 'Email ya registrado en el Sistema. Debe ingresar otro.';
+          break;
+        }
+      }
+    }
   }
 
 }

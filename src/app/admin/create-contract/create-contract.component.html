@@ -19,7 +19,7 @@
           <div class="row">
             <div class="col-md-12">
               <br/>
-              <span class="pExplain">
+              <span class="pExplainMini">
                 Como Administrador del Sistema Profit Takers podr&aacute;
                 crear <b>Contratos</b>.
                 Un Contrato es la vinculaci&oacute;n de:
@@ -28,8 +28,8 @@
                   <li>una <b>Cuenta</b> (que posee activos normalmente en USD $)</li>
                   <li>uno o varios <b>Inversionistas</b></li>
                   <li>un Inversionista seleccionado como el <b>Responsable</b> de este Contrato</li>
-                  <li>tendr&aacute; <b>Movimientos</b> seg&uacute;n operaciones Trading realizadas sobre este Contrato</li>
-                  <li>ser&aacute; el deber de alg&uacute;n Administrador actualizar las operaciones Trading sobre este Contrato en este sistema.</li>
+                  <li>detalles como <b>Día de corte</b> en el mes y <b>Porcentaje de Rentabilidad</b> pactado mensual</li>
+                  <li>tanto el <b>Capital del Contrato</b> como la <b>Constante de Deuda diaria con los clientes</b> son calculados automáticamente por el Sistema, no podrán ser modificados.</li>
                 </ul>
               </span>
             </div>
@@ -40,10 +40,12 @@
     <mat-card class="">
       <mat-card-header>
         <div class="row justify-content-sm-center">
-          <div class="col-sm-12 center">
-            <span class="subtitulo">Cuenta:</span> 
-            <br/>
-            <span>Seleccione una con la cual trabajar&aacute; este Contrato.</span>
+          <div class="col-sm-12">
+            <span class="subtitulo">Nombre de Contrato y selección de Cuenta</span> 
+            <ol>
+              <li>Indique nombre del Contrato.</li>
+              <li>Seleccione Cuenta con la cual trabajar&aacute; este Contrato.</li>
+            </ol>
           </div>
         </div>
       </mat-card-header>
@@ -62,9 +64,11 @@
               <br/>
               <mat-form-field class="full-width" color="accent">
                 <mat-label>Cuenta: Elegir una</mat-label>
-                <mat-select [(ngModel)]="account" (selectionChange)="selectedAccount(account)" required [ngModelOptions]="{standalone: true}"><!-- el color de letra lo da la clase .mat-select-value -->
+                <mat-select [(ngModel)]="account" required [ngModelOptions]="{standalone: true}"><!-- el color de letra lo da la clase .mat-select-value -->
                   <ng-container *ngFor="let acc of accounts">
-                    <mat-option *ngIf="acc.estatusActivo == true" value="{{ acc.id }}">{{ acc.nombre }} ({{ acc.descripcion }})</mat-option>
+                    <mat-option *ngIf="acc.estatusActivo == true" value="{{ acc.id }}" (click)="selectedAccount(acc.id)">
+                      {{ acc.nombre }} ({{ acc.descripcion }})
+                    </mat-option>
                   </ng-container>
                 </mat-select>
                 <mat-icon matSuffix>account_balance</mat-icon>
@@ -74,9 +78,11 @@
             <div class="col-sm-12 infoPanelGris">
               <b>Cuenta:</b> {{ ( null == this.accountSelected || undefined == this.accountSelected) ? ' ' : this.accountSelected.nombre + " (" + this.accountSelected.descripcion + ")" }}
               <br/><br/>
-              <b>Moneda:</b> {{ ( null == this.accountSelected || undefined == this.accountSelected) ? '?' : this.accountSelected.currency }}
-              <br/><br/>
-              <b>Cr&eacute;dito actualmente disponible:</b> {{ ( null == this.accountSelected || undefined == this.accountSelected) ? '0.00' : this.accountSelected.available }}
+              <b>Saldo disponible en USD:</b> {{ ( null == this.accountSelected || undefined == this.accountSelected) ? '0.00' : this.accountSelected.saldoUSD }}
+              <br/>
+              <b>Saldo disponible en EUR:</b> {{ ( null == this.accountSelected || undefined == this.accountSelected) ? '0.00' : this.accountSelected.saldoEUR }}
+              <br/>
+              <b>Saldo disponible en COP:</b> {{ ( null == this.accountSelected || undefined == this.accountSelected) ? '0.00' : this.accountSelected.saldoCOP }}
             </div>
           </div>
       </mat-card-content>
@@ -110,7 +116,7 @@
           <!-- Name Column -->
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Inversionista </th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
           </ng-container>
         
           <!-- Weight Column -->
@@ -121,29 +127,52 @@
         
           <!-- Symbol Column -->
           <ng-container matColumnDef="responsable">
-            <th mat-header-cell *matHeaderCellDef class="center"> Responsable </th>
-            <td mat-cell *matCellDef="let element" class="center"> {{element.responsable}} </td>
+            <th mat-header-cell *matHeaderCellDef> Responsable </th>
+            <td mat-cell *matCellDef="let element" class="center"> {{ element.responsable }} </td>
+          </ng-container>
+
+          <!-- Delete Column -->
+          <ng-container matColumnDef="entraMonto">
+            <th mat-header-cell *matHeaderCellDef> ($/€) Monto </th>
+            <td mat-cell *matCellDef="let element" class="center"> 
+              {{ element.entraMoneda }} {{ element.entraMonto | number: '1.2-2' }}
+            </td>
           </ng-container>
 
           <!-- Delete Column -->
           <ng-container matColumnDef="delete">
-              <th mat-header-cell *matHeaderCellDef class="center"> Eliminar </th>
-              <td mat-cell *matCellDef="let element" class="center pointer" (click)="deleteInvestor(element.id);">
-                <mat-icon>delete</mat-icon>
-              </td>
-            </ng-container>
+            <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+            <td mat-cell *matCellDef="let element" class="center pointer" (click)="deleteInvestor(element.id);">
+              <mat-icon>delete</mat-icon>
+            </td>
+          </ng-container>
         
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
       
       </mat-card-content>
-      <mat-card-actions class="center">
-        <button mat-button (click)="addInvestor()">
-          <mat-icon>edit</mat-icon>
-          &nbsp; 
-          Agregar Inversionista
-        </button>
+      <mat-card-actions>
+        <div class="row">
+          <div class="col sideInfoMini">
+            Capital del Contrato hasta ahora: 
+            <br/>
+            USD: {{ capitalContratoUSD | number: '1.2-2' }}
+            <br/>
+            EUR: {{ capitalContratoEUR | number: '1.2-2' }}
+            <br/>
+            COP: {{ capitalContratoCOP | number: '1.2-2' }}
+          </div>
+        </div>
+        <div class="row justify-content-sm-center">
+          <div class="col center">
+            <button mat-button (click)="addInvestor()">
+              <mat-icon>edit</mat-icon>
+              &nbsp; 
+              Agregar Inversionista
+            </button>
+          </div>
+        </div>
         <br/>
       </mat-card-actions>
     </mat-card>
@@ -170,17 +199,24 @@
           <div class="col-sm-12 center">
             <mat-form-field class="full-width" color="accent">
               <mat-label id="prpm">Porcentaje Rentabilidad pactado mensual</mat-label>
-              <input matInput [(ngModel)]="prpm" type="number" class="inputRight" required [ngModelOptions]="{standalone: true}">
+              <input matInput [(ngModel)]="prpm" type="number" class="inputRight" required [ngModelOptions]="{standalone: true}"
+               on-focus="focusPorcFunction()" on-focusout="focusPorcFunction()">
               <mat-icon matSuffix>pie_chart</mat-icon>
+              <mat-hint style="color: red;">{{ bErrorPorcentaje ? msgErrorPorcentaje : '' }}</mat-hint>
             </mat-form-field>
           </div>
 
-          <div class="col-sm-12 center">
-            <mat-form-field class="full-width" color="accent">
-              <mat-label id="constante">Constante deuda diaria para los Clientes (en $)</mat-label>
-              <input matInput [(ngModel)]="constante" type="number" class="inputRight" required [ngModelOptions]="{standalone: true}">
-              <mat-icon matSuffix>timeline</mat-icon>
-            </mat-form-field>
+          
+          <div class="col-sm-12 infoPanelGris sideInfoMini">
+            Constante de Deuda diaria para los Clientes: 
+            <br/>
+            En USD: <b>{{ constanteUSD | number: '1.2-2' }}</b>
+            <br/>
+            En EUR: <b>{{ constanteEUR | number: '1.2-2' }}</b>
+            <br/>
+            En COP: <b>{{ constanteCOP | number: '1.2-2' }}</b>
+            <br/><br/>
+            Constante = ( Capital del Contrato * Porcentaje Rentabilidad ) / 22 (días)
           </div>
           
         </div>
@@ -189,13 +225,12 @@
 
     <hr/>
     
-    <div class="row">
-      <div class="col-sm-12 bordeNota">
-        <br/>
-        <u>Nota</u>: una vez creado este Contrato podr&aacute; generarle ingresos/egresos Trading en la secci&oacute;n <b>Movimientos</b>.
-        <br/><br/>
+    <div class="row" *ngIf="bPensando == true">
+      <div class="col center">
+        <mat-spinner color="accent"></mat-spinner>
       </div>
     </div>
+
     <div class="row">
       <div class="col-sm-12 center">
         <button mat-raised-button (click)="newContract()" color="accent"><b>Crear Contrato</b></button>

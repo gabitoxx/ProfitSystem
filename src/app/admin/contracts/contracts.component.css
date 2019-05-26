@@ -5,3 +5,6 @@
   padding-right: 2px;
   padding-left: 2px;
 }
+.mat-select-value {
+  color: white;
+}

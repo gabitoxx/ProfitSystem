@@ -56,9 +56,25 @@ export class PaymentService {
        });
   }
 
-  public getYYY(userId:string){
-    return this.afDB.database.ref('/payments/').orderByChild("idUser").on("value", function(snapshot) {
-         console.log(snapshot.key + " was " + snapshot.val().idUser + " m tall");
-       });
+  /**
+   * 
+   * @param userId 
+   */
+  public async getYYY(userId:string){
+
+    var pagos: IPayment[] = [];
+
+    await this.afDB.database
+        .ref('/payments/')
+        .orderByChild("idUser")
+        .equalTo(userId)
+        .on("child_added", function(snapshot) {
+          //console.log(snapshot.key + " was " + snapshot.val().idUser + " m tall");
+          console.log("adding to [] getYYY(" + userId + ")",  snapshot.val());
+          pagos.push( snapshot.val() );
+        }
+    );
+    console.log("devolviendo " + pagos.length +" pagos:", pagos);
+    return pagos;
   }
 }

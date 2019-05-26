@@ -48,25 +48,29 @@
         </div>
         <div class="row">
           <div class="col-sm-12 center">
-            <br/>
             <mat-form-field class="full-width" color="accent">
-              <mat-label>Currency</mat-label>
-              <mat-select [(ngModel)]="cuenta.currency" [ngModelOptions]="{standalone: true}" required><!-- el color de letra lo da la clase .mat-select-value -->
-                <mat-option value="USD" selected>USD ($ - Dólares)</mat-option>
-                <mat-option value="EUR">EUR (€ - Euros)</mat-option>
-                <mat-option value="COP">COP ($ - Pesos Colombianos)</mat-option>
-              </mat-select>
-              <mat-icon matSuffix>money</mat-icon>
+              <mat-label id="money">Monto inicial en $ (USD)</mat-label>
+              <input matInput [(ngModel)]="cuenta.saldoUSD" type="number" placeholder="Monto inicial en $ (USD)" class="inputRight" required [ngModelOptions]="{standalone: true}">
+              <mat-icon matSuffix>attach_money</mat-icon>
+              <mat-hint style="color: red;">Este ser&aacute; el capital inicial con el que inicie esta Cuenta. Puede ser cero (0)</mat-hint>
             </mat-form-field>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-12 center">
             <mat-form-field class="full-width" color="accent">
-              <mat-label id="money">Monto inicial</mat-label>
-              <input matInput [(ngModel)]="cuenta.available" type="number" placeholder="Monto inicial" class="inputRight" required [ngModelOptions]="{standalone: true}">
+              <mat-label id="money">Monto inicial en € (EUR) - Puede ser cero (0)</mat-label>
+              <input matInput [(ngModel)]="cuenta.saldoEUR" type="number" placeholder="Monto inicial en $ (EUR)" class="inputRight" required [ngModelOptions]="{standalone: true}">
               <mat-icon matSuffix>attach_money</mat-icon>
-              <mat-hint style="color: red;">Este ser&aacute; el capital inicial con el que inicie esta Cuenta. Puede ser cero (0)</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 center">
+            <mat-form-field class="full-width" color="accent">
+              <mat-label id="money">Monto inicial en $ (COP) - Puede ser cero (0)</mat-label>
+              <input matInput [(ngModel)]="cuenta.saldoCOP" type="number" placeholder="Monto inicial en $ (COP)" class="inputRight" required [ngModelOptions]="{standalone: true}">
+              <mat-icon matSuffix>attach_money</mat-icon>
             </mat-form-field>
           </div>
         </div>

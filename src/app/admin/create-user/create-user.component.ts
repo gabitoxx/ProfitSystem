@@ -27,10 +27,16 @@ export class CreateUserComponent implements OnInit {
   /* formulario */
   usuario: IUser;
 
+  /** validacion correo */
+  usuariosTodos:IUser[] = [];
+  bErrorEmailRepetido = false;
+  msgErrorEmailRepetido  = '';
+
   /** snackbar styles */
   configError:   MatSnackBarConfig;
   configSuccess: MatSnackBarConfig;
   
+
   constructor(
       private router: Router,
       private userService: UsersService,
@@ -48,6 +54,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadUsuarios();
   }
 
   createNewUser = () => {
@@ -83,7 +90,18 @@ export class CreateUserComponent implements OnInit {
       hobbies: this.info,
       status: CONSTANTES_UTIL.USUARIO_ACTIVO,
       fechaCreacion: f,
-      contratoId: ''
+      contratoId: '',
+      avatar: '',
+      avatarURL: '',
+      saldoDisponibleUSD: 0,
+      saldoDisponiblePorInteresesUSD: 0,
+      saldoDisponibleEUR: 0,
+      saldoDisponiblePorInteresesEUR: 0,
+      saldoDisponibleCOP: 0,
+      saldoDisponiblePorInteresesCOP: 0,
+      fechaUltimoPago: 0,
+      suscripcionActivo: ( rol == CONSTANTES_UTIL.ROL_ACADEMIA ) ? true : false,
+      suscripcionFechaVence: 0,
     }
     
     this.userService.createUser(this.usuario).then(
@@ -140,8 +158,41 @@ export class CreateUserComponent implements OnInit {
     } else if ( !ValidatorUtils.validateEmail(this.email)){
       this.snackBar.open('Correo electrónico tiene formato inválido', 'Ok', this.configError);
       return false;
+
+    } else if ( this.bErrorEmailRepetido ){
+      this.snackBar.open('Email ya registrado en el Sistema. Debe ingresar otro.', 'Probaré con otro', {
+        panelClass: ['snackbar-accion-failure'],
+        duration: CONSTANTES_UTIL.SNACKBAR_DURATION_ERROR,
+      });
+      return false;
     }
 
     return true;
+  }
+
+  loadUsuarios = () => {
+    this.userService.getUsers().valueChanges().subscribe(
+        ( data: IUser[] ) => {
+          this.usuariosTodos = data;
+        }, (error) => {
+          console.error("CreateUserComponent - validarUnicoEmail() - ERROR", error);
+        }
+    );
+  }
+
+  validarUnicoEmail = () => {
+
+    this.bErrorEmailRepetido = false;
+    this.msgErrorEmailRepetido  = '';
+
+    if ( this.usuariosTodos.length > 0 ){
+      for ( var i = 0; i < this.usuariosTodos.length; i++){
+        if ( this.email == this.usuariosTodos[i].email ){
+          this.bErrorEmailRepetido = true;
+          this.msgErrorEmailRepetido  = 'Email ya registrado en el Sistema. Debe ingresar otro.';
+          break;
+        }
+      }
+    }
   }
 }

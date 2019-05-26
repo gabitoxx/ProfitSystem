@@ -61,7 +61,7 @@
     <mat-card-header>
       <mat-card-title>Cuentas</mat-card-title>
       <mat-card-subtitle class="subtitle-actions">
-        una <b>Cuenta</b> tiene asignación (ingresos/egresos) de capital (en dólares).
+        una <b>Cuenta</b> tiene asignación (ingresos/egresos) de capital (disponible en USD dólares, Euros y Pesos Colombianos).
       </mat-card-subtitle>
     </mat-card-header>
 
@@ -93,7 +93,7 @@
     </mat-card-header>
 
     <mat-card-actions class="center">
-      <button mat-button>
+      <button mat-button (click)="seeTradings()">
         <mat-icon>receipt</mat-icon>
         &nbsp; 
         Ver Movimientos
@@ -145,18 +145,18 @@
     </mat-card-header>
 
     <mat-card-actions class="center">
-      <button mat-button>
+      <button mat-button (click)="reports('contracts')">
         <mat-icon>toc</mat-icon>
         &nbsp; 
         por Contrato
       </button>
-      <button mat-button>
+      <button mat-button (click)="reports('accounts')">
         <mat-icon>vertical_split</mat-icon>
         &nbsp; 
         por Cuenta (Mov.'s)
       </button>
       <br/><br/>
-      <button mat-button>
+      <button mat-button (click)="reports('people')">
         <mat-icon>view_list</mat-icon>
         &nbsp; 
         por Persona
@@ -164,7 +164,7 @@
       <button mat-button (click)="payments()">
         <mat-icon>attach_money</mat-icon>
         &nbsp; 
-        Pagos en Academia
+        Ver/Certificar Pagos
       </button>
     </mat-card-actions>
 

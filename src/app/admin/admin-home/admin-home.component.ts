@@ -50,4 +50,16 @@ export class AdminHomeComponent implements OnInit {
   payments(){
     this.router.navigate(["admin/payments"]);
   }
+
+  seeTradings(){
+    alert("PENDIENTE TODO en Construccion")
+  }
+
+  reports = (menu:string) => {
+    alert("PENDIENTE TODO en Construccion")
+    /*
+    * contracts, accounts, people
+    */
+  }
+
 }

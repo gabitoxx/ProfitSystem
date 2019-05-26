@@ -68,7 +68,7 @@ export class PagoComponent implements OnInit {
   }
 
   goHome(){
-    this.router.navigate(["academia/home"]);
+    this.router.navigate(["inversionistas/home"]);
   }
 
 
@@ -142,11 +142,11 @@ export class PagoComponent implements OnInit {
       banco:    this.banco,
       fecha:          ValidatorUtils.getFechaFormato1(),
       fechaMillisecs: hoyMillisecs,
-      monto:    this.monto,
+      monto:    this.monto,        // aumenta el 'saldoDisponible' del usuario UNA VEZ que el Admin certifique el pago
       currency: this.currency,
       concepto: this.concepto,
       destino:  this.destino,
-      idUser:   'U_1557160176431', // XXX cambiar por el user logueado
+      idUser:   'U_1558735692972', // XXX cambiar por el user logueado
       aprobado: false,  // solo el ADMIN lo podrá aprobar, deberá hacer verificación manual
     }
     

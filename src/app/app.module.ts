@@ -39,12 +39,12 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { UsersService } from './services/users.service';
 import { UsersComponent } from './admin/users/users.component';
 import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
-import { ContractsComponent } from './admin/contracts/contracts.component';
+import { ContractsComponent, AddInvestorModalDialog2 } from './admin/contracts/contracts.component';
 import { AccountsComponent } from './admin/accounts/accounts.component';
 import { AccountService } from './services/account.service';
 import { ContractService } from './services/contract.service';
 import { PaymentService } from './services/payment.service';
-import { HistorialPagosComponent } from './academia/historial-pagos/historial-pagos.component';
+import { HistorialPagosComponent, PaymentPictureModalDialog2 } from './academia/historial-pagos/historial-pagos.component';
 
 import { ImageCropperModule } from 'ngx-image-cropper';
 
@@ -73,7 +73,9 @@ export const firebaseConfig = {
     CreateTradingComponent,
     CreateContractComponent,
     RequestCredentialsComponent,
-    AddInvestorModalDialog, PaymentPictureModalDialog,
+    AddInvestorModalDialog,
+    AddInvestorModalDialog2,
+    PaymentPictureModalDialog, PaymentPictureModalDialog2,
     PaymentsComponent,
     PagoComponent,
     UsersComponent,
@@ -109,7 +111,9 @@ export const firebaseConfig = {
     CustomMaterialModule
   ],
   entryComponents: [
-    AddInvestorModalDialog, PaymentPictureModalDialog,
+    AddInvestorModalDialog,
+    AddInvestorModalDialog2,
+    PaymentPictureModalDialog, PaymentPictureModalDialog2,
     ConfirmationDialogComponent, // reutilizable confirm dialog
   ],
   providers: [

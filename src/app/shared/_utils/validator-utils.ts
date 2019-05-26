@@ -1,5 +1,7 @@
 import { FormBuilder, AbstractControl, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
 import { CONSTANTES_UTIL } from "./constantes-util";
+import { IUser } from 'src/app/interfaces/IUser';
+import { IInvestor } from 'src/app/interfaces/IInvestor';
 //import { FileValidator } from "ngx-material-file-input";
 
 export class ValidatorUtils {
@@ -165,7 +167,7 @@ export class ValidatorUtils {
   }
 
   /**
-   * Valida el n úmero de documento a digitar.
+   * Valida el número de documento a digitar.
    * Si es cedula solo permite números de lo contrario permite 
    * letras.
    * @param event 
@@ -187,10 +189,16 @@ export class ValidatorUtils {
   /**
    * Filtra la fecha hasta la actual.
    */
-  fiterCurrent = (date: Date): boolean => {
+  fiterCurrentDate = (date: Date): boolean => {
     return date < (new Date());
   }
 
+
+  /**
+   * 
+   * @param pattern 
+   * @param msg 
+   */
   public static pattern(pattern: string, msg?: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const ref = Validators.pattern(pattern);
@@ -280,4 +288,26 @@ export class ValidatorUtils {
     return f;
   }
 
+
+  public static getUsuario = (usuarioId:string, arrayUsuarios:IUser[]) : IUser => {
+    if ( arrayUsuarios.length ){
+      for ( var i = 0; i < arrayUsuarios.length; i++ ){
+        if ( arrayUsuarios[i].id == usuarioId ){
+          return arrayUsuarios[i];
+        }
+      }
+    }
+    return null;
+  }
+  
+  public static getInvestor = (usuarioId:string, arrayUsuarios:IInvestor[]) : IInvestor => {
+    if ( arrayUsuarios.length ){
+      for ( var i = 0; i < arrayUsuarios.length; i++ ){
+        if ( arrayUsuarios[i].id == usuarioId ){
+          return arrayUsuarios[i];
+        }
+      }
+    }
+    return null;
+  }
 }

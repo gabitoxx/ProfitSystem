@@ -218,6 +218,11 @@ mat-toolbar {
   text-decoration: none;
   font-family: arial,sans-serif;
 }
+.pExplainMini {
+  font-size: 12px;
+  text-decoration: none;
+  font-family: arial,sans-serif;
+}
 
 .lNegra {
   color: black;
@@ -231,6 +236,30 @@ mat-toolbar {
   color: black;
 }
 
+.monto {
+  color: black;
+  font-family: monospace;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.montoFecha {
+  color: gray;
+  font-family: monospace;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.font40 {
+  font-size: 40px;
+}
+
+.sideInfoMini {
+  font-family: monospace;
+  color: black;
+  font-size: 14px;
+}
+
 /********************
  * Estilos de DIV's
  */
@@ -238,4 +267,23 @@ mat-toolbar {
 /* para las <u>Nota:</u> */
 .bordeNota {
   margin: 20px;
+}
+
+
+/********************
+ * Estilos de Tablas
+ */
+.tableResults {
+  width: 100%;
+  font-size: 12px !important;
+}
+
+
+/********************
+ * Estilos de Modales
+ */
+ .modalDetail {
+  font-family: monospace;
+  font-style: normal;
+  font-size: 16px;
 }

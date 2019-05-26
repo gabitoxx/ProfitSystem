@@ -103,7 +103,7 @@ export class PerfilComponent implements OnInit {
   }
 
   goHome(){
-    this.router.navigate(["academia/home"]);
+    this.router.navigate(["inversionistas/home"]);
   }
 
   updatePassword(){

@@ -33,7 +33,7 @@
             <mat-radio-group aria-label="Elija un tipo de Usuario" [(ngModel)]="rol" [ngModelOptions]="{standalone: true}">
               <mat-radio-button value="i">Inversionista</mat-radio-button>
               <mat-radio-button value="e">Estudiante</mat-radio-button>
-              <mat-radio-button value="a">Ambos</mat-radio-button>
+              <!-- mat-radio-button value="a">Ambos</mat-radio-button -->
               <br/>
               <mat-radio-button value="x" style="margin-left: 0px;">
                 Administrador (tendr&aacute; los mismos privilegios que ud.)
@@ -66,8 +66,10 @@
           <div class="col-sm-12 center">
             <mat-form-field class="full-width" color="accent">
               <mat-label id="email">Email (correo electr&oacute;nico)</mat-label>
-              <input matInput [(ngModel)]="email" type="text" required [ngModelOptions]="{standalone: true}">
+              <input matInput [(ngModel)]="email" type="text" required [ngModelOptions]="{standalone: true}"
+               on-focus="validarUnicoEmail()" on-focusout="validarUnicoEmail()">
               <mat-icon matSuffix>email</mat-icon>
+              <mat-hint style="color: red;">{{ bErrorEmailRepetido == true ? msgErrorEmailRepetido : '' }}</mat-hint>
             </mat-form-field>
           </div>
         </div>

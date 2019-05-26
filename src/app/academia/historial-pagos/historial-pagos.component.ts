@@ -1,4 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject  } from '@angular/core';
+import { Router } from '@angular/router';
+import { PaymentService } from 'src/app/services/payment.service';
+import { IPayment } from 'src/app/interfaces/IPayment';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+
+export interface IMG {
+  id: string;
+  url: string;
+}
+
+const MODAL_ANCHO:string = '850px';
+const MODAL_ALTO:string = '650px';
+
 
 @Component({
   selector: 'app-historial-pagos',
@@ -7,9 +20,73 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HistorialPagosComponent implements OnInit {
 
-  constructor() { }
+  misPagos: IPayment[];
+  
+  constructor(
+      private router: Router,
+      private paymentService: PaymentService,
+      public dialog: MatDialog){
 
-  ngOnInit() {
+    
+    this.reloadPayments();
+
+    window.setTimeout(() => { 
+      this.reloadPayments();
+    }, 4000);
+    
+
   }
 
+  ngOnInit() {
+    
+  }
+
+
+  goHome(){
+    this.router.navigate(["inversionistas/home"]);
+  }
+
+  /**
+   * no funciona el async
+   */
+  async reloadPayments(){
+    this.misPagos = await this.paymentService.getYYY('U_1558735692972'); // XXX cambiar por user logueado 
+    console.log ( 'misPagos:', this.misPagos );
+  }
+
+  seePayment(id:string, url:string){
+
+    const dialogRef = this.dialog.open(PaymentPictureModalDialog2, {
+      width: MODAL_ANCHO,
+      height: MODAL_ALTO,
+      data: {
+        id: id,
+        url: url
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+}
+
+
+@Component({
+  selector: 'dialog-modal-see-image2',
+  templateUrl: 'dialog-modal-see-image2.html',
+})
+export class PaymentPictureModalDialog2 {
+
+  id: string = "";
+
+  constructor(
+      public dialogRef: MatDialogRef<PaymentPictureModalDialog2>,
+      @Inject(MAT_DIALOG_DATA) public data: IMG){
+
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }

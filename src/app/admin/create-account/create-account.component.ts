@@ -61,11 +61,13 @@ export class CreateAccountComponent implements OnInit {
       id: '',
       nombre: '',
       descripcion: '',
-      currency:  '',
-      available: 0,
       gestorId:  '',
       estatusActivo: false,
-      fechaCreacion: ''
+      fechaCreacion: '',
+      fechaCreacionMillisecs: 0,
+      saldoUSD: 0.0,
+      saldoEUR: 0.0,
+      saldoCOP: 0.0,
     }
 
   }
@@ -80,16 +82,19 @@ export class CreateAccountComponent implements OnInit {
       return false;
     }
 
+    const dateNow = Date.now();
+
     /*
      * Formatear JSON
      */
-    this.cuenta.id = CONSTANTES_UTIL.PREFFIX_ACCOUNT + Date.now();
+    this.cuenta.id = CONSTANTES_UTIL.PREFFIX_ACCOUNT + dateNow;
     this.cuenta.nombre = ValidatorUtils.titleCase( this.cuenta.nombre );
     this.cuenta.estatusActivo = true;
 
     // current date
     const f = ValidatorUtils.getFechaFormato1();
     this.cuenta.fechaCreacion = f;
+    this.cuenta.fechaCreacionMillisecs = dateNow;
     
     console.log('this.cuenta=>', this.cuenta);
     
@@ -124,13 +129,10 @@ export class CreateAccountComponent implements OnInit {
     } else if ( this.cuenta.descripcion.trim() == "" ){
       this.snackBar.open('Indique alguna descripción.', 'Ok', this.configError);
       return false;
-    } else if ( this.cuenta.currency.trim() == "" ){
-      this.snackBar.open('Elija un tipo de Moneda.', 'Ok', this.configError);
-      return false;
     } else if ( this.cuenta.gestorId.trim() == "" ){
       this.snackBar.open('Un Gestor es Obligatorio.', 'Ok', this.configError);
       return false;
-    } else if ( this.cuenta.available < 0.0 ){
+    } else if ( this.cuenta.saldoUSD < 0 || this.cuenta.saldoEUR < 0 || this.cuenta.saldoCOP < 0 ){
       this.snackBar.open('No se permiten montos negativos.', 'Ok', this.configError);
       return false;
     }

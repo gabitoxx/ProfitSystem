@@ -30,96 +30,124 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card class="card-table-results" *ngFor="let contract of arrayContracts; let i = index">
-    <mat-card-header>
-      <div class="row">
-        <div class="col-10 col-lg-11 col-sm-11">
-          <span class="titulo2">{{ i + 1 }}: {{ contract.nombre }}</span>
-          <br/>
-          <span class="subtitulo2">UID: {{ contract.id }}</span>
+  <div class="row" *ngIf="arrayContracts.length == 0">
+    <div class="col center">
+      <mat-spinner color="accent"></mat-spinner>
+    </div>
+  </div>
+  
+  <ng-container *ngFor="let contract of arrayContracts; let i = index">
+    <mat-card class="card-table-results">
+      <mat-card-header>
+        <div class="row">
+          <div class="col-10 col-lg-11 col-sm-11">
+            <span class="titulo2">{{ i + 1 }}: {{ contract.nombre }}</span>
+            <br/>
+            <span class="subtitulo2">Cuenta: {{ getCuentaName( contract.cuentaId ) }}</span>
+            <br/>
+            <span class="sideInfoMini">UID: {{ contract.id }}</span>
+          </div>
+          <div class="col-2 col-lg-1 col-sm-1 offset-sm-1 rights">
+            <mat-slide-toggle aria-labelledby="label" [id]="contract.id" color="accent" [disabled]="false"
+              (change)="toogleActivation(contract.id, $event)"
+              [checked]="contract.estatusActivo == true"
+              matTooltip="Activar / Inactivar este Contrato" aria-label="Activar / Inactivar este Contrato"
+              matTooltipPosition="below">
+              {{ (contract.estatusActivo == true) ? 'Activo' : 'Inactivo' }}
+            </mat-slide-toggle>
+          </div>
         </div>
-        <div class="col-2 col-lg-1 col-sm-1 offset-sm-1 rights">
-          <mat-slide-toggle aria-labelledby="label" [id]="contract.id" color="accent" [disabled]="false"
-            (change)="toogleActivation(contract.id, $event)"
-            [checked]="contract.estatusActivo == true">
-            {{ (contract.estatusActivo == true) ? 'Activo' : 'Inactivo' }}
-          </mat-slide-toggle>
+      </mat-card-header>  
+      <mat-card-content>
+        <br/>
+        <div class="row">
+          <div class="col">
+            Capital actual:
+          </div>
         </div>
-      </div>
-    </mat-card-header>  
-    <mat-card-content>
-      <div class="row">
-        <div class="col-8">
-          Capital actual:
+        <div class="row">
+          <div class="col-4 center">
+            USD <br/> $ {{ contract.capitalContratoUSD | number: '1.2-2' }}
+          </div>
+          <div class="col-4 center">
+            EUR <br/> € {{ contract.capitalContratoEUR | number: '1.2-2' }}
+          </div>
+          <div class="col-4 center">
+            COP <br/> $ {{ contract.capitalContratoCOP | number: '1.2-2' }}
+          </div>
         </div>
-        <div class="col-4">
-          {{ contract.capital }}
+        <br/>
+        <div class="row">
+          <div class="col">
+            Constante diaria para Clientes:
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-8">
-          Constante diaria para Clientes:
+        <div class="row">
+          <div class="col-4 center">
+            USD <br/> $ {{ contract.constanteDeudaUSD | number: '1.2-2' }}
+          </div>
+          <div class="col-4 center">
+            EUR <br/> € {{ contract.constanteDeudaEUR | number: '1.2-2' }}
+          </div>
+          <div class="col-4 center">
+            COP <br/> $ {{ contract.constanteDeudaCOP | number: '1.2-2' }}
+          </div>
         </div>
-        <div class="col-4">
-          {{ contract.constanteDeuda }}
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-8">
-          Día de Corte en el mes:
-        </div>
-        <div class="col-4">
-          {{ contract.diaCorteMes }}
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-8">
-          Responsable:
-        </div>
-        <div class="col-4">
-          {{ getUserName( contract.responsableId ) }}
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <u class="extra">Extra Info</u>
-          <br/>
-          Porcentaje de rentabilidad pactado mensual: {{ contract.porcentaje }} %
-          <br/>
-          Fecha Creación: {{ contract.fechaCreacion }}
-          <br/>
-          <u class="extra">Inversionistas</u>
-          <br/>
-          Número de Inversionistas: {{ contract.inversionistasIds.length }} 
-          <span class="footerApp">(pulse ícono para darle de Baja)</span>
-          <br/>
-          <ng-container *ngFor="let inv of contract.inversionistasIds; let j = index">
-            <div class="row">
-              <div class="col-1 lineaInv" style="text-align: right;">
-                {{ (j + 1) < 10 ? ' ':'' }} {{ j + 1 }} | 
+        <br/>
+        <div class="row">
+          <div class="col">
+            <u class="extra">Extra Info</u>
+            <br/>
+            Responsable: <b class="sideInfoMini" style="color: white;">{{ getUserName( contract.responsableId ) }}</b>
+            <br/>
+            Porcentaje de rentabilidad pactado mensual: <b class="sideInfoMini" style="color: white;">{{ contract.porcentaje }} %</b>
+            <br/>
+            Día de Corte en el mes: <b class="sideInfoMini" style="color: white;">{{ contract.diaCorteMes }}</b>
+            <br/>
+            Fecha Creación: <b class="sideInfoMini" style="color: white;">{{ contract.fechaCreacion }}</b>
+            <br/>
+            <br/>
+            <u class="extra">Inversionistas</u>
+            <br/>
+            Número de Inversionistas: {{ contract.inversionistas.length }} 
+            <span class="footerApp">(pulse ícono para darle de Baja)</span>
+            <br/>
+            <ng-container *ngFor="let inv of contract.inversionistas; let j = index">
+              <div class="row">
+                <div class="col-1 lineaInv" style="text-align: right;">
+                  {{ (j + 1) < 10 ? ' ':'' }} {{ j + 1 }} | 
+                </div>
+                <div class="col-1 lineaInv center">
+                  <mat-icon (click)="removeInvestor(contract.id, inv.id)" matTooltip="Dar de baja a este Inversionista de este Contrato"
+                  matTooltipPosition="below" aria-label="Dar de baja a este Inversionista de este Contrato" class="pointer">
+                    delete_outline
+                  </mat-icon>
+                </div>
+                <div class="col-4 lineaInv">
+                  | {{ getUserName( inv.id ) }}
+                </div>
+                <div class="col-3 lineaInv">
+                  | {{ inv.aporteCurrency }} {{ inv.aporteMonto | number: '1.2-2' }}
+                </div>
+                <div class="col-3 lineaInv">
+                  | {{ inv.fechaActivo | date }}
+                </div>
               </div>
-              <div class="col-1 lineaInv center">
-                <mat-icon (click)="removeInvestor(inv.id)" matTooltip="Dar de baja a este Inversionista de este Contrato"
-                 matTooltipPosition="below" aria-label="Dar de baja a este Inversionista de este Contrato" class="pointer">
-                  delete_outline
-                </mat-icon>
-              </div>
-              <div class="col-9 lineaInv">
-                | {{ getUserName( inv.id ) }}
-              </div>
-            </div>
-          </ng-container>
+            </ng-container>
+          </div>
         </div>
-      </div>
-    </mat-card-content>
-    <mat-card-actions class="center">
-      <button mat-button (click)="addInvestor()">
-        <mat-icon>person_add</mat-icon>
-        &nbsp; 
-        Añadir nuevo Inversionista
-      </button>
-    </mat-card-actions>
-  </mat-card>
+      </mat-card-content>
+      <mat-card-actions class="center">
+        <button mat-button (click)="addInvestor(contract)">
+          <mat-icon>person_add</mat-icon>
+          &nbsp; 
+          Añadir nuevo Inversionista
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </ng-container>
+
+  <br/>
 
   <div class="row">
     <div class="col-sm-12 center">
@@ -128,5 +156,7 @@
       <br/>
     </div>
   </div>
+
+  <br/><br/><br/>
 
 </div>

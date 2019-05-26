@@ -2,6 +2,17 @@ import { trigger, state, style, transition, animate } from "@angular/animations"
 
 export const CONSTANTES_UTIL = {
   
+  SI: 'Sí',
+  NO: 'No',
+
+  /** Monedas */
+  CURRENCY_DOLAR: 'USD',
+  CURRENCY_EURO: 'EUR',
+  CURRENCY_PESO_CO: 'COP',
+  MONEDA_USD: '$',
+  MONEDA_EUR: '€',
+  MONEDA_COP: '$',
+
   /** Documentos */
   TIPODOC_EXTRANJERIA: 'CE',
   TIPODOC_CEDULA: 'CC',
@@ -46,6 +57,9 @@ export const CONSTANTES_UTIL = {
   SUCCESS_CAMBIOS_GUARDADOS : 'Cambios salvados satisfactoriamente',
   SUCCESS_ACCOUNT_ACTIVATED: 'Cuenta Activada correctamente',
   SUCCESS_ACCOUNT_DEACTIVATED: 'Cuenta Inactivada (no podrá usarse en Contratos)',
+  SUCCESS_CONTRACT_ACTIVATED: 'Contrato Activado correctamente',
+  SUCCESS_CONTRACT_DEACTIVATED: 'Contrato Inactivado',
+
 
   /** Archivos */
   FIRESTORAGE_NODO_PAGOS: 'img/pagos/png/',    // Pagos hechos en formato .PNG
@@ -53,5 +67,10 @@ export const CONSTANTES_UTIL = {
   EXTENSION_PNG: '.png',
   EXTENSION_JPG: '.jpg',
   EXTENSION_JPEG: '.jpeg',
+
+  /**  
+   * Divisor de la ecuación del Porcentaje de Rentabilidad pactado mensual
+   */
+  DIVISOR_CONSTANTE_PRPM: 22,
 
 }
