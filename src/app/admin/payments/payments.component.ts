@@ -30,6 +30,13 @@ const MODAL_ALTO:string = '650px';
 export interface DialogModalData {
   id: string;
   linkURL: string;
+  currency: string;
+  banco: string;
+  concepto: string;
+  userId: string;
+  idFile: string;
+  URL: string;
+  monto: number;
 }
 
 @Component({
@@ -264,7 +271,7 @@ export class PaymentsComponent implements OnInit {
 }
 
 
-
+/***************************************************************************************************/
 @Component({
   selector: 'dialog-modal-see-image',
   templateUrl: 'dialog-modal-see-image.html',

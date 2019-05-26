@@ -86,9 +86,6 @@ export class CreateContractComponent implements OnInit {
   users: IUser[];
   inversionistas: PeriodicElement[] = [];
 
-  // Dialog - modal data
-  inv_person: string;
-
   /** Snackbars configurations */
   configError: MatSnackBarConfig;
   configSuccess: MatSnackBarConfig;
@@ -592,6 +589,9 @@ export class AddInvestorModalDialog {
   monto: number = 0.0;
   currency: string = 'USD';
   responsability: boolean = false;
+
+  // solo para que compile
+  inv_person:string='';
 
   users2: IUser[];
   users: IUser[];

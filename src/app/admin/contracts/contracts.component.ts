@@ -209,7 +209,7 @@ export class ContractsComponent implements OnInit {
         var r = confirm("¿Está seguro de querer agregar al Inversionista " + result.name + " al Contrato ID: " 
             + result.contratoId + "?");
         if ( r ){
-          alert("NO sé cómo se hace a partir de acá: se agrega y cómo se le asigna los intereses, a partir de qué fecha, y como afecta al Contrato la inclusion de un INV NUEVO ??? ");
+          alert("NO sé cómo se hace a partir de acá: se agrega y cómo se le asigna los intereses, a partir de qué fecha, y como afecta al Contrato la inclusion de un INVERSIONISTA  NUEVO ??? ");
         }
 
       } else {
@@ -257,7 +257,10 @@ export class AddInvestorModalDialog2 {
   /* Validaciones */
   bErrorMontoMayor = false;
   msgErrorMontoMayor = '';
-  
+
+  // solo para que compile
+  inv_person:string='';
+
 
   constructor(
     public dialogRef: MatDialogRef<AddInvestorModalDialog2>,
