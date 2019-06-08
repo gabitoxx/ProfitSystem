@@ -23,10 +23,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {id: 4, fecha: '12/24/2021', name: 'Harry Potter',link: 'link', monto: 123000, u1: 1, u2: 2},
 ];
 
-
-const MODAL_ANCHO:string = '850px';
-const MODAL_ALTO:string = '650px';
-
 export interface DialogModalData {
   id: string;
   linkURL: string;
@@ -150,8 +146,8 @@ export class PaymentsComponent implements OnInit {
   seePayment(id:string, idFile:string, fileName:string, concepto:string, banco:string, currency:string, monto:number, idUser:string){
 
     const dialogRef = this.dialog.open(PaymentPictureModalDialog, {
-      width: MODAL_ANCHO,
-      height: MODAL_ALTO,
+      width:  CONSTANTES_UTIL.MODAL_ANCHO_2,
+      height: CONSTANTES_UTIL.MODAL_ALTO_2,
       data: {
         id: id,
         idFile: idFile,

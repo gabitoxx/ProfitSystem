@@ -14,3 +14,7 @@
 .mat-datepicker-toggle-default-icon, .mat-datepicker-toggle, .mat-accent {
   color: black;
 }
+
+.full-form {
+  max-width: 1500px;
+}

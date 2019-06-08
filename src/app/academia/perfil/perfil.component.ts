@@ -69,7 +69,7 @@ export class PerfilComponent implements OnInit {
   ngOnInit() {
     console.log("XXX.1!")
     /** XXX id quemado */
-    var userId = 'U_1556752233379';
+    var userId = 'U_1558737773138';
     this.userService.getUserById(userId).valueChanges().subscribe(
         (userFirebase: IUser) => {
           this.user = userFirebase; console.log("XXX.2 userFirebase:" , userFirebase);
@@ -174,11 +174,20 @@ export class PerfilComponent implements OnInit {
 
   actualizarPerfilUsuario(imgURL: any, fileID: string) {
     
-    // aqui se debe buscar el User logueado y hacer un userService.editUser() 
-    // XXX añadiendole antes: 
-    //avatar = fileID           // avatarURL = imgURL
-    console.log("imgURL: ", imgURL, "fileID:" , fileID);
-    this.snackBar.open('Avatar cambiado', 'Ok', this.configSuccess);
+    this.user.avatar    = fileID;
+    this.user.avatarURL = imgURL;
+
+    this.userService.editUser( this.user ).then(
+        () => {
+          console.log("imgURL: ", imgURL, "fileID:" , fileID);
+          this.snackBar.open('Avatar modificado exitosamente.', 'Ok', this.configSuccess);
+          window.setTimeout(() => { this.goHome(); }, 3000);
+
+        }, (error) => {
+          console.error("PerfilComponent.actualizarPerfilUsuario() - imgURL: ", imgURL, "fileID:" , fileID, "error:", error);
+          this.snackBar.open('Avatar no actualizado debido a error interno. Por favor intente más tarde.', 'Ok', this.configError);
+        }
+    );
   }
 
 }

@@ -47,6 +47,10 @@ export class ToolbarAdminComponent implements OnInit {
     this.router.navigate(["admin/createTrading"]);
   }
   
+  seeTradings(){
+    this.router.navigate(["admin/tradings"]);
+  }
+  
   createContract(){
     this.router.navigate(["admin/createContract"]);
   }
@@ -57,5 +61,13 @@ export class ToolbarAdminComponent implements OnInit {
 
   payments(){
     this.router.navigate(["admin/payments"]);
+  }
+  
+  reporteUser(){
+    this.router.navigate(["admin/reportes/persona"]);
+  }
+  
+  reporteTradings(){
+    this.router.navigate(["admin/reportes/movimientos"]);
   }
 }

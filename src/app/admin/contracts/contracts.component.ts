@@ -11,9 +11,6 @@ import { IAccount } from 'src/app/interfaces/IAccount';
 import { ValidatorUtils } from 'src/app/shared/_utils/validator-utils';
 import { ISeleccionUsuario } from 'src/app/interfaces/ISeleccionUsuario';
 
-const MODAL_ANCHO:string = '550px';
-const MODAL_ALTO:string = '90%';
-
 export interface IDialogData {
   correo: string;
   telef: string;
@@ -190,8 +187,8 @@ export class ContractsComponent implements OnInit {
   addInvestor = (contract:IContract) => {
 
     const dialogRef = this.dialog.open(AddInvestorModalDialog2, {
-      width: MODAL_ANCHO,
-      height: MODAL_ALTO,
+      width:  CONSTANTES_UTIL.MODAL_ANCHO_1,
+      height: CONSTANTES_UTIL.MODAL_ALTO_1,
       data: {
         users: this.arrayUser,
         inv: this.INV,

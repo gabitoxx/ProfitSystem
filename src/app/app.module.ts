@@ -37,7 +37,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { UsersService } from './services/users.service';
-import { UsersComponent } from './admin/users/users.component';
+import { UsersComponent, SeeUserMoreDetailsModalDialog } from './admin/users/users.component';
 import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ContractsComponent, AddInvestorModalDialog2 } from './admin/contracts/contracts.component';
 import { AccountsComponent } from './admin/accounts/accounts.component';
@@ -47,6 +47,11 @@ import { PaymentService } from './services/payment.service';
 import { HistorialPagosComponent, PaymentPictureModalDialog2 } from './academia/historial-pagos/historial-pagos.component';
 
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { TotalDayService } from './services/total-day.service';
+import { TradingService } from './services/trading.service';
+import { PersonaComponent } from './admin/reportes/persona/persona.component';
+import { TradingsComponent } from './admin/tradings/tradings.component';
+import { MovimientosComponent } from './admin/reportes/movimientos/movimientos.component';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyBrD2fJ8540IMWI5p-FmL_7Mik_fvZnJns",
@@ -73,9 +78,6 @@ export const firebaseConfig = {
     CreateTradingComponent,
     CreateContractComponent,
     RequestCredentialsComponent,
-    AddInvestorModalDialog,
-    AddInvestorModalDialog2,
-    PaymentPictureModalDialog, PaymentPictureModalDialog2,
     PaymentsComponent,
     PagoComponent,
     UsersComponent,
@@ -83,6 +85,13 @@ export const firebaseConfig = {
     ContractsComponent,
     AccountsComponent,
     HistorialPagosComponent,
+    /** ventanas MODALES */
+    AddInvestorModalDialog, AddInvestorModalDialog2,
+    PaymentPictureModalDialog, PaymentPictureModalDialog2,
+    SeeUserMoreDetailsModalDialog,
+    PersonaComponent,
+    TradingsComponent,
+    MovimientosComponent,
   ],
   imports: [
     BrowserModule,
@@ -115,12 +124,15 @@ export const firebaseConfig = {
     AddInvestorModalDialog2,
     PaymentPictureModalDialog, PaymentPictureModalDialog2,
     ConfirmationDialogComponent, // reutilizable confirm dialog
+    SeeUserMoreDetailsModalDialog,
   ],
   providers: [
     UsersService,
     AccountService,
     ContractService,
-    PaymentService
+    PaymentService,
+    TradingService,
+    TotalDayService,
   ],
   bootstrap: [AppComponent]
 })

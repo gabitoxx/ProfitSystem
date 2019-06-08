@@ -18,12 +18,11 @@
         <div class="col-md-12">
           <br/>
           <span class="pExplain">
-            Aquí puede ver todos los Contratos registrados en el Sistema.
-            Puede ACTIVARLOS o DESACTIVARLOS con el <b>switch de la derecha</b> 
-            (los Contratos No se eliminan del Sistema por razones administrativas y de Reportes).
-            <br/><br/>
-            También podrá añadir Inversionistas a los Contratos existentes 
-            o darles de baja (ya no formarán parte de dicho Contrato).
+            Esta sección es meramente informativa de los Movimientos
+            registrados en el Sistema. Se realiza una consulta lineal de Movimientos
+            tal cual como están almacenados en la Base de Datos.
+            <br/>
+            Para un reporte más completo, dirigirse a la sección <b>Reportes -&gt; Cuentas/Movimientos</b>.
           </span>
         </div>
       </div>
@@ -31,7 +30,7 @@
   </mat-card>
 
   <div class="row" *ngIf="arrayContracts.length == 0">
-    <div class="col center">
+    <div class="col center centerChrome">
       <mat-spinner color="accent"></mat-spinner>
     </div>
   </div>
@@ -40,14 +39,14 @@
     <mat-card class="card-table-results">
       <mat-card-header>
         <div class="row">
-          <div class="col-10 col-lg-11 col-sm-11">
+          <div class="col-8">
             <span class="titulo2">{{ i + 1 }}: {{ contract.nombre }}</span>
             <br/>
             <span class="subtitulo2">Cuenta: {{ getCuentaName( contract.cuentaId ) }}</span>
             <br/>
             <span class="sideInfoMini">UID: {{ contract.id }}</span>
           </div>
-          <div class="col-2 col-lg-1 col-sm-1 offset-sm-1 rights">
+          <div class="col-4 rights">
             <mat-slide-toggle aria-labelledby="label" [id]="contract.id" color="accent" [disabled]="false"
               (change)="toogleActivation(contract.id, $event)"
               [checked]="contract.estatusActivo == true"

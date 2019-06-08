@@ -73,4 +73,12 @@ export const CONSTANTES_UTIL = {
    */
   DIVISOR_CONSTANTE_PRPM: 22,
 
+  /**
+   * Alturas de lo modales
+   */
+  MODAL_ANCHO_1: '550px',
+  MODAL_ALTO_1: '90%',
+  MODAL_ANCHO_2: '850px',
+  MODAL_ALTO_2: '650px',
+  
 }

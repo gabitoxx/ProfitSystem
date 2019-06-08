@@ -1,0 +1,336 @@
+<app-toolbar-admin></app-toolbar-admin>
+
+<!-- Para dejar un espacio superior para el toolbar -->
+<div class="filler-top"></div>
+
+<div class="container-admin">
+
+  <mat-card class="card-person">
+    <mat-card-header style="font-size: 18px;">
+      <div mat-card-avatar><mat-icon style="font-size: 40px;">recent_actors</mat-icon></div>
+      <mat-card-title>
+        Ver operaciones de una Persona
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="">
+      Como <b>Administrador</b> ud. podr&aacute; <b>ver las operaciones</b>
+      hechas por una Persona en el Sistema.
+      <br/>
+      Si selecciona un 
+      <span style="color: #f35e5e;">Inversionista</span>
+      ud. podrá ver los Pagos hechos a través del modulo 'Inversionistas',
+      ver su información de Contacto
+      así como también ver en qué Contratos está asociado.
+      <br/>
+      Si selecciona un 
+      <span style="color: #f35e5e;">Administrador</span>
+      ud. podrá ver su información de Contacto, 
+      así como también ver los Movimientos que ha registrado
+      y cuáles son las Cuentas en las que aparece como Gestor.
+      <br/>
+      <mat-form-field class="full-width" color="accent">
+        <mat-label>Elegir un Inversionista...</mat-label>
+        <mat-select [(ngModel)]="inversioonista" [ngModelOptions]="{standalone: true}"><!-- el color de letra lo da la clase .mat-select-value -->
+          <mat-option value=""></mat-option>
+          <ng-container *ngFor="let u of users">
+            <mat-option *ngIf="u.rol == INV"
+              value="{{ u.id }}" (click)="selectedInvestor(u.id)">
+              {{ u.nombres }} {{ u.apellidos }}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+        <mat-icon matSuffix>person_pin</mat-icon>
+      </mat-form-field>
+      <br/>
+      <mat-form-field class="full-width" color="accent">
+        <mat-label>ó elegir un Administrador</mat-label>
+        <mat-select [(ngModel)]="admini" [ngModelOptions]="{standalone: true}"><!-- el color de letra lo da la clase .mat-select-value -->
+          <mat-option value=""></mat-option>
+          <ng-container *ngFor="let u of users">
+            <mat-option *ngIf="u.rol == ADM"
+              value="{{ u.id }}" (click)="selectedAdmin(u.id)">
+              {{ u.nombres }} {{ u.apellidos }}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+        <mat-icon matSuffix>vpn_key</mat-icon>
+      </mat-form-field>
+    </mat-card-content>
+
+  </mat-card>
+
+  <div class="row" *ngIf="users.length == 0">
+    <div class="col center centerChrome">
+      <mat-spinner color="accent"></mat-spinner>
+    </div>
+  </div>
+  
+  
+  <mat-card class="card-person-actions" *ngIf="bInvSelected == true">
+    <mat-card-header>
+      <mat-card-title>
+        Información de {{ invSelected.nombres }} {{ invSelected.apellidos }}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <table>
+            <tr>
+              <td class="rights">Email:</td>
+              <td class="sideInfoMini">{{ invSelected.email  }}</td>
+            </tr>
+            <tr>
+              <td class="rights">Teléfono:</td>
+              <td class="sideInfoMini">{{ invSelected.telefono  }}</td>
+            </tr>
+            <tr>
+              <td class="rights">Rol en el sistema:</td>
+              <td class="sideInfoMini">{{ invSelected.rol  }}</td>
+            </tr>
+            <tr>
+              <td class="rights">Estatus en el sistema:</td>
+              <td class="sideInfoMini">{{ invSelected.status  }}</td>
+            </tr>
+            <tr>
+              <td class="rights">Dirección registrada:</td>
+              <td class="sideInfoMini">{{ invSelected.direccion  }} - ({{ invSelected.ciudad  }})</td>
+            </tr>
+            <tr>
+              <td class="rights">Extra info:</td>
+              <td class="sideInfoMini">{{ invSelected.hobbies  }}</td>
+            </tr>
+            <tr>
+              <td class="rights">Fecha de creación en sistema:</td>
+              <td class="sideInfoMini">{{ invSelected.fechaCreacion  }}</td>
+            </tr>
+            <tr>
+              <td class="rights">Es Responsable de algún Contrato:</td>
+              <td class="sideInfoMini">
+                {{ invSelected.contratoId != null && invSelected.contratoId != undefined && invSelected.contratoId != '' ? "Sí (Contrato ID: " + invSelected.contratoId + ")" : 'No'  }}
+              </td>
+            </tr>
+            <tr>
+              <td class="rights">Saldo disponible en USD:</td>
+              <td class="sideInfoMini">$ {{ invSelected.saldoDisponibleUSD | number: '1.2-2' }}</td>
+            </tr>
+            <tr>
+              <td class="rights">Saldo disponible en EUR:</td>
+              <td class="sideInfoMini">€ {{ invSelected.saldoDisponibleEUR | number: '1.2-2' }}</td>
+            </tr>
+            <tr>
+              <td class="rights">Saldo disponible en COP:</td>
+              <td class="sideInfoMini">$ {{ invSelected.saldoDisponibleCOP | number: '1.2-2' }}</td>
+            </tr>
+            <tr>
+              <td class="rights">Avatar:</td>
+              <td class="sideInfoMini">
+                <img mat-card-image class="img-home-persone noMargins" alt="Persona foto de Perfil" style="max-width: 150px;"
+                  [src]="invSelected.avatarURL != null && invSelected.avatarURL != undefined && invSelected.avatarURL != '' ? invSelected.avatarURL : 'assets/images/update_profile.png'">
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col titulo">
+          <br/>
+          Pagos registrados por este usuario:
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <ng-container *ngIf="pagos.length > 0;else else_pagos">
+            <div *ngFor="let pago of pagos; let i = index">
+              <span class="monto">
+                {{ i + 1 }}. 
+                {{ (pago.currency == 'USD' || pago.currency == 'COP') ? '$ ' : '€ ' }}  
+                {{ pago.monto | number: '1.2-2' }} 
+                ({{ pago.currency }})
+              </span>
+              <span class="montoFecha">
+                Fecha: {{ pago.fecha }} 
+                <mat-icon class="" [ngStyle]="{'color': pago.aprobado == true ? 'green' : '#e87287' }">
+                  {{ (pago.aprobado == true) ? 'check_circle' : 'hourglass_empty' }}
+                </mat-icon> 
+                {{ (pago.aprobado == true) ? 'Confirmado' : 'Pendiente' }}
+              </span>
+              <br/>
+            </div>
+          </ng-container>
+          <ng-template #else_pagos>
+            <span style="color: #f35e5e;">
+              No se encontraron Pagos en el Sistema.
+            </span>
+          </ng-template>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col titulo">
+          <br/>
+          Contrato al que está asociado este Usuario:
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          {{ msgContrato }}
+          <div *ngIf="contratoSelected != null">
+            <span class="monto">
+              {{ contratoSelected.nombre }}
+            </span>
+            <br/>
+            <span class="montoFecha">
+              Porcentaje: <b>{{ contratoSelected.porcentaje }}</b>
+              <br/>
+              Dia de Corte en el mes: <b>{{ contratoSelected.diaCorteMes }}</b>
+              <br/>
+              Estatus actual: <b>{{ contratoSelected.estatusActivo == true ? 'Activo' : 'Inactivo' }}</b>
+              <br/>
+              Fecha de Creación: <b>{{ contratoSelected.fechaCreacion }}</b>
+              <br/>
+              Responsable: <b>{{ getNombrePersona( contratoSelected.responsableId ) }}</b>
+              <br/>
+              Número de Inversionistas: <b>{{ contratoSelected.inversionistas.length }}</b>
+              <br/>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="bNoContent == true">
+        <div class="col center" style="color: #f35e5e;">
+          {{ msgNoContent }}
+        </div>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="card-person-inverted" *ngIf="bAdmSelected == true">
+    <mat-card-header>
+      <mat-card-title>
+        Información del Admin: {{ admSelected.nombres }} {{ admSelected.apellidos }}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <table>
+            <tr>
+              <td class="rights">Email:</td>
+              <td class="sideInfoMini">{{ admSelected.email  }}</td>
+            </tr>
+            <tr>
+              <td class="rights">Teléfono:</td>
+              <td class="sideInfoMini">{{ admSelected.telefono  }}</td>
+            </tr>
+            <tr>
+              <td class="rights">Rol en el sistema:</td>
+              <td class="sideInfoMini">{{ admSelected.rol  }}</td>
+            </tr>
+            <tr>
+              <td class="rights">Estatus en el sistema:</td>
+              <td class="sideInfoMini">{{ admSelected.status  }}</td>
+            </tr>
+            <tr>
+              <td class="rights">Dirección registrada:</td>
+              <td class="sideInfoMini">{{ admSelected.direccion  }} - ({{ admSelected.ciudad  }})</td>
+            </tr>
+            <tr>
+              <td class="rights">Extra info:</td>
+              <td class="sideInfoMini">{{ admSelected.hobbies  }}</td>
+            </tr>
+            <tr>
+              <td class="rights">Fecha de creación en sistema:</td>
+              <td class="sideInfoMini">{{ admSelected.fechaCreacion  }}</td>
+            </tr>
+            <tr>
+              <td class="rights">Es Responsable de algún Contrato:</td>
+              <td class="sideInfoMini">
+                {{ admSelected.contratoId != null && admSelected.contratoId != undefined && admSelected.contratoId != '' ? "Sí (Contrato ID: " + admSelected.contratoId + ")" : 'No'  }}
+              </td>
+            </tr>
+            <tr>
+              <td class="rights">Saldo disponible en USD:</td>
+              <td class="sideInfoMini">$ {{ admSelected.saldoDisponibleUSD | number: '1.2-2' }}</td>
+            </tr>
+            <tr>
+              <td class="rights">Saldo disponible en EUR:</td>
+              <td class="sideInfoMini">€ {{ admSelected.saldoDisponibleEUR | number: '1.2-2' }}</td>
+            </tr>
+            <tr>
+              <td class="rights">Saldo disponible en COP:</td>
+              <td class="sideInfoMini">$ {{ admSelected.saldoDisponibleCOP | number: '1.2-2' }}</td>
+            </tr>
+            <tr>
+              <td class="rights">Avatar:</td>
+              <td class="sideInfoMini">
+                <img mat-card-image class="img-home-persone noMargins" alt="Persona foto de Perfil" style="max-width: 150px;"
+                  [src]="admSelected.avatarURL != null && admSelected.avatarURL != undefined && admSelected.avatarURL != '' ? admSelected.avatarURL : 'assets/images/update_profile.png'">
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col subtitulo">
+          <br/>
+          Este Admin. aparece como Gestor de esta Cuenta:
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col">
+          <ng-container *ngIf="bGestor == true;else else_gestor">
+            {{ msgGestor }}
+          </ng-container>
+          <ng-template #else_gestor>
+            <span style="color: #f35e5e;">
+              No está como Gestor de ninguna Cuenta hasta los momentos.
+            </span>
+          </ng-template>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col subtitulo">
+          <br/>
+          Movimientos registrados por este Admin: 
+          <br/>
+          <span style="font-size: 12px;">(resumen, para más detalles ver Reporte por Cuenta y Mov.'s)</span>
+          <br/>
+        </div>
+      </div>
+      
+      <div class="row">
+        <ng-container *ngIf="movimientos.length > 0;else else_movs">
+          <div class="col-12 montoFecha2" *ngFor="let mov of movimientos; let i = index">
+            {{ i + 1 }}. {{ mov.currency }} - {{ mov.currency == 'EUR' ? '€' : '$' }} {{ mov.monto | number: '1.2-2' }}
+            en fecha: {{ mov.fechaMillisecs | date: 'long' }}
+            <br/>
+          </div>
+          <br/>
+        </ng-container>
+        <ng-template #else_movs>
+          <div class="col" style="color: #f35e5e;">
+            No ha registrado Tradings hasta los momentos.
+          </div>
+        </ng-template>
+      </div>
+      
+    </mat-card-content>
+  </mat-card>
+
+  <div class="row">
+    <div class="col-sm-12 center">
+      <br/><br/>
+      <a href (click)="$event.preventDefault();goHome();" class="href-red">Volver a Home</a>
+      <br/><br/>
+    </div>
+  </div>
+</div>

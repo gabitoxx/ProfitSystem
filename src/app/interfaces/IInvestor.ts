@@ -2,7 +2,7 @@
  * Usado como la Lista de INVERSIONISTAS que pertenecen a un CONTRATO
  */
 export interface IInvestor {
-  id: string;
+  inversionistaId: string;
   activo: boolean;
   
   fechaActivo:   number; // millisecs cuando INGRESA al contrato, al momento de crear éste

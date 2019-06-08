@@ -1,0 +1,103 @@
+<style>
+  ::ng-deep mat-dialog-container,
+  .mat-dialog-container {
+    transform: none;
+    background-color: forestgreen !important;
+  }
+
+  ::ng-deep .mat-dialog-content {
+    height: 90% !important;
+  }
+
+  ::ng-deep mat-label {
+    font-size: 13px;
+  }
+
+  ::ng-deep mat-slide-toggle {
+    font-size: 13px;
+  }
+
+  td {
+    padding: 3px;
+  }
+</style>
+
+<div style="transform: none;background-color: forestgreen;">
+  <p mat-dialog-title class="subtitulo">
+    Más Detalles...
+  </p>
+  <div mat-dialog-content>
+
+    <div class="row justify-content-sm-center">
+      <div class="col">
+        <table>
+          <tr>
+            <td class="rights">Nombre completo:</td>
+            <td class="sideInfoMini">{{ data.usuario.nombres + " " + data.usuario.apellidos }}</td>
+          </tr>
+          <tr>
+            <td class="rights">Email:</td>
+            <td class="sideInfoMini">{{ data.usuario.email  }}</td>
+          </tr>
+          <tr>
+            <td class="rights">Teléfono:</td>
+            <td class="sideInfoMini">{{ data.usuario.telefono  }}</td>
+          </tr>
+          <tr>
+            <td class="rights">Rol en el sistema:</td>
+            <td class="sideInfoMini">{{ data.usuario.rol  }}</td>
+          </tr>
+          <tr>
+            <td class="rights">Estatus en el sistema:</td>
+            <td class="sideInfoMini">{{ data.usuario.status  }}</td>
+          </tr>
+          <tr>
+            <td class="rights">Dirección registrada:</td>
+            <td class="sideInfoMini">{{ data.usuario.direccion  }} - ({{ data.usuario.ciudad  }})</td>
+          </tr>
+          <tr>
+            <td class="rights">Extra info:</td>
+            <td class="sideInfoMini">{{ data.usuario.hobbies  }}</td>
+          </tr>
+          <tr>
+            <td class="rights">Fecha de creación en sistema:</td>
+            <td class="sideInfoMini">{{ data.usuario.fechaCreacion  }}</td>
+          </tr>
+          <tr>
+            <td class="rights">Es Responsable de algún Contrato:</td>
+            <td class="sideInfoMini">
+              {{ data.usuario.contratoId != null && data.usuario.contratoId != undefined && data.usuario.contratoId != '' ? "Sí (Contrato ID: " + data.usuario.contratoId + ")" : 'No'  }}
+            </td>
+          </tr>
+          <tr>
+            <td class="rights">Saldo disponible en USD:</td>
+            <td class="sideInfoMini">$ {{ data.usuario.saldoDisponibleUSD | number: '1.2-2' }}</td>
+          </tr>
+          <tr>
+            <td class="rights">Saldo disponible en EUR:</td>
+            <td class="sideInfoMini">€ {{ data.usuario.saldoDisponibleEUR | number: '1.2-2' }}</td>
+          </tr>
+          <tr>
+            <td class="rights">Saldo disponible en COP:</td>
+            <td class="sideInfoMini">$ {{ data.usuario.saldoDisponibleCOP | number: '1.2-2' }}</td>
+          </tr>
+          <tr>
+            <td class="rights">Avatar:</td>
+            <td class="sideInfoMini">
+              <img mat-card-image class="img-home-persone" alt="Persona foto de Perfil" style="max-width: 150px;"
+                [src]="data.usuario.avatarURL != null && data.usuario.avatarURL != undefined && data.usuario.avatarURL != '' ? data.usuario.avatarURL : 'assets/images/update_profile.png'">
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="row justify-content-sm-center">
+      <div class="col rights">
+        <br />
+        <button mat-button (click)="onNoClick()">Cerrar</button>
+      </div>
+    </div>
+
+  </div>
+</div>

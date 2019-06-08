@@ -9,7 +9,7 @@
     <mat-card-header>
       <div class="row">
         <div class="col-md-12 center centrado lNegra">
-          <span class="titulo">Crear Movimiento</span>
+          <span class="titulo">Crear nuevo Movimiento</span>
           <br/><br/>
         </div>
         <div class="col-md-12">
@@ -19,8 +19,8 @@
             Un Movimiento afectar&aacute; el balance de una <b>Cuenta</b> 
             la cual puede estar relacionada a uno o m&aacute;s <b>Contratos</b>.
             <ul>
-              <li>Los <b>Movimientos</b> son operaciones Trading realizadas sobre una Cuenta.</li>
-              <li>Ser&aacute; el deber de alg&uacute;n Administrador actualizar las operaciones Trading en este sistema.</li>
+              <li>Los <b>Movimientos</b> son operaciones Trading realizadas sobre una <b>Cuenta</b>.</li>
+              <li>Ser&aacute; el deber de alg&uacute;n Administrador actualizar las operaciones Trading en este Sistema.</li>
             </ul>
           </span>
         </div>
@@ -29,8 +29,8 @@
     <mat-card-content>
       <form class="full-form profile-form">
 
-        <div class="row" *ngIf="accounts.length == 0">
-          <div class="col center">
+        <div class="row" *ngIf="accounts.length == 0 || bCreandoTrading == true">
+          <div class="col center centerChrome">
             <mat-spinner color="accent"></mat-spinner>
           </div>
         </div>
@@ -103,11 +103,11 @@
         <hr/>
 
         <div class="row">
-          <div class="col-sm-12 rights">
+          <div class="col-sm-12">
             <mat-form-field class="full-width" color="accent">
               <mat-label id="expense">D&eacute;bito</mat-label>
               <input matInput [(ngModel)]="debito" name="expense" type="number" [ngModelOptions]="{standalone: true}"
-               on-focus="focusOperacion()" on-focusout="focusOperacion()">
+               on-focus="focusOperacion()" on-focusout="focusOperacion()" class="inputRight">
               <mat-icon matSuffix>monetization_on</mat-icon>
             </mat-form-field>
           </div>
@@ -133,15 +133,15 @@
           <div class="col-sm-12 infoPanelGris">
             <b>Resultado de la Operaci&oacute;n:</b>
             <br/>
-            {{ calculoOperacionUSD | number: '1.2-2' }}
+            &nbsp; &nbsp; En USD: $ {{ calculoOperacionUSD | number: '1.2-2' }}
             <br/>
-            {{ calculoOperacionEUR | number: '1.2-2' }}
+            &nbsp; &nbsp; En EUR: € {{ calculoOperacionEUR | number: '1.2-2' }}
             <br/>
-            {{ calculoOperacionCOP | number: '1.2-2' }}
+            &nbsp; &nbsp; En COP: $ {{ calculoOperacionCOP | number: '1.2-2' }}
             <br/>
             <span class="footerApp" style="font-family: SFMono-Regular,Menlo,Monaco,Consolas,monospace;">
-              *Este cálculo de es generado automaticamente a manera informativa,
-              no tendrá efecto hasta que no pulse el botón 'Registrar Movimiento'.
+              *Este c&aacute;lculo es generado autom&aacute;ticamente a manera informativa,
+              no tendr&aacute; efecto hasta que no pulse el bot&oacute;n 'Registrar Movimiento'.
             </span>
           </div>
         </div>
@@ -152,12 +152,12 @@
           <div class="col-sm-12">
             <u>Nota:</u>
             Este Movimiento tomar&aacute; efecto inmediatamente sobre la Cuenta y sus Inversionistas seg&uacute;n el Porcentaje asignado.
-            <i>Puede demorar algunos segundos mientras crea/actualiza el Movimiento del día, la data necesaria para los Reportes y el saldo de la Cuenta seleccionada</i>.
+            <i>Puede demorar algunos segundos/minutos mientras crea/actualiza el Movimiento del d&iacute;a, la data necesaria para los Reportes y el saldo de la Cuenta seleccionada</i>.
             <br/><br/>
           </div>
           
           <div class="col-sm-12 center">
-            <button mat-raised-button (click)="newTrading()" color="accent"><b>Registrar Movimiento</b></button>
+            <button mat-raised-button (click)="newTrading()" color="accent"><b>Registrar nuevo Movimiento</b></button>
           </div>
 
           <div class="col-sm-12 center">

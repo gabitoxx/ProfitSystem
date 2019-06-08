@@ -2,6 +2,7 @@ import { FormBuilder, AbstractControl, ValidationErrors, ValidatorFn, Validators
 import { CONSTANTES_UTIL } from "./constantes-util";
 import { IUser } from 'src/app/interfaces/IUser';
 import { IInvestor } from 'src/app/interfaces/IInvestor';
+import { IAccount } from 'src/app/interfaces/IAccount';
 //import { FileValidator } from "ngx-material-file-input";
 
 export class ValidatorUtils {
@@ -280,12 +281,72 @@ export class ValidatorUtils {
    * @returns Fecha actual en formato DD/MM/YYYY
    */
   public static getFechaFormato1 = () => {
+    
     let date = new Date();
+    
     const y = date.getFullYear();
+    
     const m = ( date.getMonth() + 1 );
+    const mm = ( m < 10 ) ? "0" + m : m;
+
     const d = date.getDate();
-    const f = d + CONSTANTES_UTIL.DATE_SEPARATOR + m + CONSTANTES_UTIL.DATE_SEPARATOR + y;
-    return f;
+    const dd = ( d < 10 ) ? "0" + d : d;
+
+    return dd + CONSTANTES_UTIL.DATE_SEPARATOR + mm + CONSTANTES_UTIL.DATE_SEPARATOR + y;
+  }
+
+  /**
+   * @param date Fecha
+   * @returns Fecha actual en formato DD/MM/YYYY
+   */
+  public static getFechaFormato1Date = (date:Date) => {
+    
+    const y = date.getFullYear();
+    
+    const m = ( date.getMonth() + 1 );
+    const mm = ( m < 10 ) ? "0" + m : m;
+
+    const d = date.getDate();
+    const dd = ( d < 10 ) ? "0" + d : d;
+
+    return dd + CONSTANTES_UTIL.DATE_SEPARATOR + mm + CONSTANTES_UTIL.DATE_SEPARATOR + y;
+  }
+
+  /**
+   * @returns Fecha actual en formato YYYYMMAA
+   */
+  public static getFechaFormato2 = () => {
+    
+    let date = new Date();
+    
+    const y = date.getFullYear();
+    
+    const m = ( date.getMonth() + 1 );
+    const mm = ( m < 10 ) ? "0" + m : m;
+
+    const d = date.getDate();
+    const dd = ( d < 10 ) ? "0" + d : d;
+
+    return "" + y + mm + dd;
+    
+  }
+
+  /**
+   * @param date Fecha
+   * @returns Fecha en formato YYYYMMAA
+   */
+  public static getFechaFormato2Date = (date:Date) => {
+    
+    const y = date.getFullYear();
+    
+    const m = ( date.getMonth() + 1 );
+    const mm = ( m < 10 ) ? "0" + m : m;
+
+    const d = date.getDate();
+    const dd = ( d < 10 ) ? "0" + d : d;
+
+    return "" + y + mm + dd;
+    
   }
 
 
@@ -299,15 +360,39 @@ export class ValidatorUtils {
     }
     return null;
   }
+
+  public static getUsuarioNombre = (usuarioId:string, arrayUsuarios:IUser[]) : string => {
+    if ( arrayUsuarios.length ){
+      for ( var i = 0; i < arrayUsuarios.length; i++ ){
+        if ( arrayUsuarios[i].id == usuarioId ){
+          return arrayUsuarios[i].nombres + " " + arrayUsuarios[i].apellidos;
+        }
+      }
+    }
+    return '';
+  }
   
   public static getInvestor = (usuarioId:string, arrayUsuarios:IInvestor[]) : IInvestor => {
     if ( arrayUsuarios.length ){
       for ( var i = 0; i < arrayUsuarios.length; i++ ){
-        if ( arrayUsuarios[i].id == usuarioId ){
+        if ( arrayUsuarios[i].inversionistaId == usuarioId ){
           return arrayUsuarios[i];
         }
       }
     }
     return null;
   }
+
+
+  public static getAccountName = (cuentaId:string, arrayCuentas:IAccount[]) : string => {
+    if ( arrayCuentas.length ){
+      for ( var i = 0; i < arrayCuentas.length; i++ ){
+        if ( arrayCuentas[i].id == cuentaId ){
+          return arrayCuentas[i].nombre + " (" + arrayCuentas[i].descripcion + ")";
+        }
+      }
+    }
+    return '';
+  }
+  
 }

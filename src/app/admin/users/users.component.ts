@@ -1,10 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { IUser } from 'src/app/interfaces/IUser';
 import { Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
-import { MatSnackBar, MatSnackBarConfig, MatDialog, MatSlideToggleChange } from '@angular/material';
+import { MatSnackBar, MatSnackBarConfig, MatDialog, MatSlideToggleChange, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { CONSTANTES_UTIL } from 'src/app/shared/_utils/constantes-util';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
+import { ValidatorUtils } from 'src/app/shared/_utils/validator-utils';
+
+export interface IDialogData {
+  usuario: IUser;
+}
 
 @Component({
   selector: 'app-users',
@@ -20,7 +25,7 @@ export class UsersComponent implements OnInit {
   ADM:string = CONSTANTES_UTIL.ROL_ADMIN;
   EST:string = CONSTANTES_UTIL.ROL_ACADEMIA;
 
-  arrayUsers: IUser[];
+  arrayUsers: IUser[] = [];
 
   /** Snackbars configurations */
   configError: MatSnackBarConfig;
@@ -178,5 +183,42 @@ export class UsersComponent implements OnInit {
 
   goHome(){
     this.router.navigate(["admin/home"]);
+  }
+
+
+  moreInfo(userId:string){
+
+    var u:IUser = ValidatorUtils.getUsuario(userId, this.arrayUsers);
+
+    const dialogRef = this.dialog.open(SeeUserMoreDetailsModalDialog, {
+      width:  CONSTANTES_UTIL.MODAL_ANCHO_2,
+      height: CONSTANTES_UTIL.MODAL_ALTO_1,
+      data: {
+        usuario: u
+      }
+    });
+  }
+}
+
+
+
+/**********************************************************************************************************/
+@Component({
+  selector: 'dialog-modal-see-user',
+  templateUrl: 'dialog-modal-see-user.html',
+})
+export class SeeUserMoreDetailsModalDialog {
+
+  userSelected:IUser = null;
+
+  constructor(
+      public dialogRef: MatDialogRef<SeeUserMoreDetailsModalDialog>,
+      @Inject(MAT_DIALOG_DATA) public data: IDialogData) {
+
+    this.userSelected = data.usuario;
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }

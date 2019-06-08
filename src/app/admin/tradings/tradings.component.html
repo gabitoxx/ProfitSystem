@@ -1,0 +1,105 @@
+<app-toolbar-admin></app-toolbar-admin>
+
+<!-- Para dejar un espacio superior para el toolbar -->
+<div class="filler-top"></div>
+
+<div class="container-admin">
+  
+  <mat-card class="card-person-actions">
+    <mat-card-header>
+      <div class="row">
+        <div class="col-md-12 center centrado lNegra">
+          <span class="titulo">Ver Movimientos</span>
+        </div>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-md-12">
+          <br/>
+          <span class="pExplain">
+            Esta sección es meramente informativa de los Movimientos
+            registrados en el Sistema. Se realiza una consulta lineal de Movimientos
+            tal cual como están almacenados en la Base de Datos.
+            <br/>
+            Para un reporte más completo, dirigirse a la sección <b>Reportes -&gt; Cuentas/Movimientos</b>.
+          </span>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="row" *ngIf="arrayTradings.length == 0">
+    <div class="col center centerChrome">
+      <mat-spinner color="accent"></mat-spinner>
+    </div>
+  </div>
+
+  <mat-card class="card-person-actions">
+    <mat-card-header>
+      <div class="row justify-content-sm-center">
+        <div class="col-sm-12 center">
+          <span class="">Movimientos ordenados por <i>Fecha en orden descendente</i>:</span>
+        </div>
+        <div class="col-sm-12 center"><br/></div>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]="arrayTradings" class="mat-elevation-z8 tableResults">
+
+        <ng-container matColumnDef="fecha">
+          <th mat-header-cell *matHeaderCellDef class="center"> Fecha </th>
+          <td mat-cell *matCellDef="let element" style="text-align: left;"> {{ element.fechaMillisecs | date: 'long' }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Cuenta </th>
+          <td mat-cell *matCellDef="let element"> {{ getCuentaName( element.accountId ) }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="monto">
+          <th mat-header-cell *matHeaderCellDef class="center"> Monto </th>
+          <td mat-cell *matCellDef="let element" class="center">
+            {{ element.currency == 'USD' || element.currency == 'COP' ? '$' : '€' }} 
+            {{ element.monto | number: '1.2-2' }}
+          </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="by">
+          <th mat-header-cell *matHeaderCellDef class="center" style="text-align: center;"> Realizado por </th>
+          <td mat-cell *matCellDef="let element" class="center" style="font-size: 14px;"> {{ getUserName( element.adminId ) }} </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+                      
+    </mat-card-content>
+    
+  </mat-card>
+
+  <br/>
+
+  <div class="row">
+    <div class="col-sm-12 center">
+      <br/>
+      <a href (click)="$event.preventDefault();goHome();" class="href-red">Volver</a>
+      <br/>
+    </div>
+  </div>
+
+  <br/><br/><br/>
+
+</div>
+
+<button mat-fab class="mat-fab mat-fab-bottom-left" aria-label="Paginación: Anterior"
+ (click)="pagination('left')" matTooltipPosition="above"
+ matTooltip="Paginación: Anterior" aria-label="Paginación: Anterior">
+  <mat-icon>skip_previous</mat-icon>
+</button>
+
+<button mat-fab class="mat-fab mat-fab-bottom-right" aria-label="Paginación: Posterior"
+ (click)="pagination('right')" matTooltipPosition="above"
+ matTooltip="Paginación: Posterior" aria-label="Paginación: Posterior">
+  <mat-icon>skip_next</mat-icon>
+</button>

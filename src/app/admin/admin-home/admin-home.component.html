@@ -9,14 +9,17 @@
     
     <mat-card-header>
       <div mat-card-avatar><mat-icon>person_pin</mat-icon></div>
-      <mat-card-title>Admin Jimmy</mat-card-title>
+      <mat-card-title>
+        {{ user.nombres + " " + user.apellidos }}
+      </mat-card-title>
       <mat-card-subtitle>Administrador</mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content class="center">
-      <img mat-card-image class="img-home-persone" src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Persona foto de Perfil">
+      <img mat-card-image class="img-home-persone" alt="Persona foto de Perfil" 
+       [src]="user != null ? user.avatarURL : 'assets/images/update_profile.png'">
       <p>
-        <b>Info:</b> Alguna info útil que mostrar aqui o a sus alumnos de Academia
+        <b>Info:</b> Alguna info útil que mostrar aquí
       </p>
     </mat-card-content>
 
@@ -145,19 +148,14 @@
     </mat-card-header>
 
     <mat-card-actions class="center">
-      <button mat-button (click)="reports('contracts')">
-        <mat-icon>toc</mat-icon>
-        &nbsp; 
-        por Contrato
-      </button>
-      <button mat-button (click)="reports('accounts')">
+      <button mat-button (click)="reports('tradings')">
         <mat-icon>vertical_split</mat-icon>
         &nbsp; 
-        por Cuenta (Mov.'s)
+        Cuenta y Movimientos
       </button>
       <br/><br/>
       <button mat-button (click)="reports('people')">
-        <mat-icon>view_list</mat-icon>
+        <mat-icon>assignment_ind</mat-icon>
         &nbsp; 
         por Persona
       </button>
@@ -181,7 +179,9 @@
 
 </div>
 
-<button mat-fab class="mat-fab mat-fab-bottom-right" aria-label="Nuevo Movimiento Trading" (click)="createTrading()">
+<button mat-fab class="mat-fab mat-fab-bottom-right" aria-label="Nuevo Movimiento Trading"
+ (click)="createTrading()" matTooltipPosition="below"
+ matTooltip="Registrar nuevo Movimiento (Trading)" aria-label="Registrar nuevo Movimiento (Trading)">
   <mat-icon>trending_up</mat-icon>
 </button>
 

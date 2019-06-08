@@ -27,24 +27,31 @@
     </mat-card-content>
   </mat-card>
 
+  <div class="row" *ngIf="arrayAccounts.length == 0">
+    <div class="col center centerChrome">
+      <mat-spinner color="accent"></mat-spinner>
+    </div>
+  </div>
   
   <b class="subtitulo">Cuentas Activas:</b>
   <ng-container *ngFor="let account of arrayAccounts; let i = index">
     <mat-card *ngIf="account.estatusActivo == true" class="card-table-results">
       <mat-card-content>
         <div class="row">
-          <div class="col col-lg-11 col-md-9 col-sm-9">
+          <div class="col col-lg-9 col-md-8 col-sm-10">
             {{ i + 1 }} | {{ account.nombre }} ({{ account.descripcion }})
             <br/>
-            Creada el: {{ account.fechaCreacion }}
+            Gestor: <b class="sideInfoMini">{{ getNombre( account.gestorId ) }}</b>
             <br/>
-            Monto Disponible en USD: $ <b class="sideInfoMini"> {{ account.saldoUSD | number : '1.2-2' }} </b>
+            Creada el: <b class="sideInfoMini">{{ account.fechaCreacion }}</b>
             <br/>
-            Monto Disponible en EUR: € <b class="sideInfoMini"> {{ account.saldoEUR | number : '1.2-2' }} </b>
+            Saldo actual en USD: <b class="sideInfoMini">$ {{ account.saldoUSD | number : '1.2-2' }} </b>
             <br/>
-            Monto Disponible en COP: $ <b class="sideInfoMini"> {{ account.saldoCOP | number : '1.2-2' }} </b>
+            Saldo actual en EUR: <b class="sideInfoMini">€ {{ account.saldoEUR | number : '1.2-2' }} </b>
+            <br/>
+            Saldo actual en COP: <b class="sideInfoMini">$ {{ account.saldoCOP | number : '1.2-2' }} </b>
           </div>
-          <div class="col col-lg-1 col-md-3 col-sm-3 offset-md-3 rights">
+          <div class="col col-lg-3 col-md-2 col-sm-2 offset-sm-2 rights">
             <mat-slide-toggle aria-labelledby="label" [id]="account.id" color="warn" [disabled]="false"
              (change)="toogleActivation(account.id, false, $event)"
              [checked]="account.estatusActivo == true">
@@ -74,7 +81,7 @@
     <mat-card *ngIf="account.estatusActivo == false" class="card-table-results">
       <mat-card-content>
         <div class="row">
-          <div class="col col-lg-11 col-md-9 col-sm-9">
+          <div class="col col-lg-9 col-md-9 col-sm-9">
             {{ i + 1 }} | {{ account.nombre }} ({{ account.descripcion }})
             <br/>
             Creada el: {{ account.fechaCreacion }}
@@ -85,7 +92,7 @@
             <br/>
             Monto Disponible en COP: $ <b class="sideInfoMini"> {{ account.saldoCOP | number : '1.2-2' }} </b>
           </div>
-          <div class="col col-lg-1 col-md-3 col-sm-3 offset-md-3 rights">
+          <div class="col col-lg-3 col-md-3 col-sm-3 offset-md-3 rights">
             <mat-slide-toggle aria-labelledby="label" [id]="account.id" color="warn" [disabled]="false"
              (change)="toogleActivation(account.id, true, $event)"
              [checked]="account.estatusActivo == true">

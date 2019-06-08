@@ -24,9 +24,6 @@ export interface PeriodicElement {
   entraMoneda: string;
 }
 
-const MODAL_ANCHO:string = '550px';
-const MODAL_ALTO:string = '90%';
-
 var ELEMENT_DATA: PeriodicElement[] = [
   {id: '1', porc_diario: 0.7, name: 'Pepito PErez', porcentaje: 20, responsable: 'No', entraMonto: 0, delete: 'X', entraMoneda: 'USD'},
   {id: '2', porc_diario: 0.4, name: 'Gab Sanchez', porcentaje: 15, responsable: 'No', entraMonto: 0, delete: 'X', entraMoneda: 'USD'},
@@ -197,8 +194,8 @@ export class CreateContractComponent implements OnInit {
   addInvestor() {
 
     const dialogRef = this.dialog.open(AddInvestorModalDialog, {
-      width: MODAL_ANCHO,
-      height: MODAL_ALTO,
+      width:  CONSTANTES_UTIL.MODAL_ANCHO_1,
+      height: CONSTANTES_UTIL.MODAL_ALTO_1,
       data: {
         name: '',
         animal: '',
@@ -307,7 +304,7 @@ export class CreateContractComponent implements OnInit {
     for ( var i = 0; i < this.inversionistas.length; i++ ){
       
       var current: IInvestor = {
-        id: this.inversionistas[i].id,
+        inversionistaId: this.inversionistas[i].id,
         activo: true,
         fechaActivo: milsecs,
         fechaInactivo: 0,
@@ -387,6 +384,7 @@ export class CreateContractComponent implements OnInit {
     
     var u:IUser = ValidatorUtils.getUsuario(responsableID, this.users);
 
+    // Este quedará atado a este Contrato
     u.contratoId = contratoId;
     
     // actualizar el disponible SOLO del Responsable
@@ -405,7 +403,7 @@ export class CreateContractComponent implements OnInit {
           console.log("CreateContractComponent - actualizarUsuarioContrato() - OK - Usuario id:" + responsableID 
               + " actualizado con su ContratoId: " + contratoId);
 
-          this.actualizarSaldoCuenta( invests, responsableID);
+          this.actualizarSaldoCuenta( invests, responsableID, contratoId );
 
         }, (error) => {
           console.error("CreateContractComponent - actualizarUsuarioContrato() - ERROR:", contratoId, responsableID, error);
@@ -413,7 +411,7 @@ export class CreateContractComponent implements OnInit {
     );
   }
   
-  actualizarSaldoCuenta(inversoresArray: IInvestor[], responsableId: string) {
+  actualizarSaldoCuenta(inversoresArray: IInvestor[], responsableId: string, contratoId:string) {
     
     // actualizar en todos los currencies
     this.accountSelected.saldoUSD += this.capitalContratoUSD;
@@ -425,7 +423,7 @@ export class CreateContractComponent implements OnInit {
           console.log("CreateContractComponent - actualizarSaldoCuenta() - OK - SALDOS de Cuenta actualizados (id:" + this.accountSelected.id + ")");
 
           // actualizar los Disponibles de los demás Inversionistas
-          this.restarDelDisponible( inversoresArray, responsableId );
+          this.restarDelDisponible( inversoresArray, responsableId, contratoId );
 
           let snackBarRef = this.snackBar.open(
             'Contrato creado. Puede verlos en el menú "Ver Contratos"',
@@ -444,19 +442,22 @@ export class CreateContractComponent implements OnInit {
 
   }
 
-  restarDelDisponible = (invests: IInvestor[], responsableId: string) => {
+  restarDelDisponible = (invests: IInvestor[], responsableId: string, contratoId: string) => {
     
     var u:IUser;
 
     recorrerInversores:
     for ( var i = 0; i < invests.length; i++ ){
-      if ( invests[i].id != responsableId ){
+      if ( invests[i].inversionistaId != responsableId ){
         /** 
-         * ya el responsable se actuaizó en actualizarUsuarioContrato()
+         * ya el Responsable se actualizó en actualizarUsuarioContrato()
          * Acá toca actualizar los disponibles de los otros
          */
-        u = ValidatorUtils.getUsuario( invests[i].id, this.users);
+        u = ValidatorUtils.getUsuario( invests[i].inversionistaId, this.users);
 
+        // Este Inversionista quedará atado a este Contrato
+        u.contratoId = contratoId;
+        
         if ( invests[i].aporteCurrency == CONSTANTES_UTIL.CURRENCY_DOLAR ){
           u.saldoDisponibleUSD -= invests[i].aporteMonto;
 
@@ -607,14 +608,14 @@ export class AddInvestorModalDialog {
   
 
   constructor(
-    public dialogRef: MatDialogRef<AddInvestorModalDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: IDialogData) {
+      public dialogRef: MatDialogRef<AddInvestorModalDialog>,
+      @Inject(MAT_DIALOG_DATA) public data: IDialogData) {
 
-      console.log("data.users", data.users);
-      this.users2 = data.users;
+    console.log("data.users", data.users);
+    this.users2 = data.users;
 
-      this.userSelected = this.users2[0];
-    }
+    this.userSelected = this.users2[0];
+  }
 
   onNoClick(): void {
     this.dialogRef.close();

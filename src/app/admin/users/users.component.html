@@ -27,17 +27,28 @@
     </mat-card-content>
   </mat-card>
 
+  <div class="row" *ngIf="arrayUsers.length == 0">
+    <div class="col center centerChrome">
+      <mat-spinner color="accent"></mat-spinner>
+    </div>
+  </div>
+
   <b class="subtitulo">Inversionistas Inactivos:</b>
   <ng-container *ngFor="let user of arrayUsers; let i = index">
     <mat-card *ngIf="user.status == this.STATUS_INACTIVO && user.rol == this.INV" class="card-table-results">
       <mat-card-content>
         <div class="row">
-          <div class="col col-lg-11 col-md-9">
-            {{ i + 1 }} | {{ user.nombres }} {{ user.apellidos }} | {{ user.telefono }}
+          <div class="col col-lg-9 col-md-9">
+            {{ i + 1 }} 
+            | 
+            <a href (click)="$event.preventDefault();moreInfo(user.id);" matTooltip="Click aquí para ver más Detalles del Usuario" aria-label="Click aquí para ver más Detalles del Usuario"
+             matTooltipPosition="below">{{ user.nombres }} {{ user.apellidos }}</a>
+            |
+            {{ user.telefono }}
             <br/>
             {{ user.email }}
           </div>
-          <div class="col-6 col-lg-1 col-md-3 offset-md-3 rights">
+          <div class="col-6 col-lg-3 col-md-3 offset-md-3 rights">
             <mat-slide-toggle aria-labelledby="label" [id]="user.id" color="accent" [disabled]="false"
              (change)="toogleActivation(user.id, 'activate', 'Inversionista', $event)"
              [checked]="user.status == this.STATUS_ACTIVO">
@@ -67,12 +78,17 @@
     <mat-card *ngIf="user.status == this.STATUS_ACTIVO && user.rol == this.INV" class="card-table-results">
       <mat-card-content>
         <div class="row">
-          <div class="col col-lg-11 col-md-9">
-            {{ i + 1 }} | {{ user.nombres }} {{ user.apellidos }} | {{ user.telefono }}
+          <div class="col col-lg-9 col-md-9">
+            {{ i + 1 }} 
+            | 
+            <a href (click)="$event.preventDefault();moreInfo(user.id);" matTooltip="Click aquí para ver más Detalles del Usuario" aria-label="Click aquí para ver más Detalles del Usuario"
+              matTooltipPosition="below">{{ user.nombres }} {{ user.apellidos }}</a>
+            |
+            {{ user.telefono }}
             <br/>
             {{ user.email }}
           </div>
-          <div class="col-6 col-lg-1 col-md-3 offset-md-3 rights">
+          <div class="col-6 col-lg-3 col-md-3 offset-md-3 rights">
 
             <mat-slide-toggle aria-labelledby="label" [id]="user.id" color="accent" [disabled]="false"
              (change)="toogleActivation(user.id, 'deactivate', 'Inversionista', $event)"
@@ -104,12 +120,17 @@
     <mat-card *ngIf="user.status == this.STATUS_INACTIVO && user.rol == this.EST" class="card-table-results">
       <mat-card-content>
         <div class="row">
-          <div class="col col-lg-11 col-md-9">
-            {{ i + 1 }} | {{ user.nombres }} {{ user.apellidos }} | {{ user.telefono }}
+          <div class="col col-lg-9 col-md-9">
+            {{ i + 1 }} 
+            | 
+            <a href (click)="$event.preventDefault();moreInfo(user.id);" matTooltip="Click aquí para ver más Detalles del Usuario" aria-label="Click aquí para ver más Detalles del Usuario"
+              matTooltipPosition="below">{{ user.nombres }} {{ user.apellidos }}</a>
+            |
+            {{ user.telefono }}
             <br/>
             {{ user.email }}
           </div>
-          <div class="col-6 col-lg-1 col-md-3 offset-md-3 rights">
+          <div class="col-6 col-lg-3 col-md-3 offset-md-3 rights">
             <mat-slide-toggle aria-labelledby="label" [id]="user.id" color="primary" [disabled]="false"
              (change)="toogleActivation(user.id, 'activate', 'Estudiante', $event)"
              [checked]="user.status == this.STATUS_ACTIVO">
@@ -139,12 +160,17 @@
     <mat-card *ngIf="user.status == this.STATUS_ACTIVO && user.rol == this.EST" class="card-table-results">
       <mat-card-content>
         <div class="row">
-          <div class="col col-lg-11 col-md-9">
-            {{ i + 1 }} | {{ user.nombres }} {{ user.apellidos }} | {{ user.telefono }}
+          <div class="col col-lg-9 col-md-9">
+            {{ i + 1 }} 
+            | 
+            <a href (click)="$event.preventDefault();moreInfo(user.id);" matTooltip="Click aquí para ver más Detalles del Usuario" aria-label="Click aquí para ver más Detalles del Usuario"
+              matTooltipPosition="below">{{ user.nombres }} {{ user.apellidos }}</a>
+            |
+            {{ user.telefono }}
             <br/>
             {{ user.email }}
           </div>
-          <div class="col-6 col-lg-1 col-md-3 offset-md-3 rights">
+          <div class="col-6 col-lg-3 col-md-3 offset-md-3 rights">
             <mat-slide-toggle aria-labelledby="label" [id]="user.id" color="primary" [disabled]="false"
              (change)="toogleActivation(user.id, 'deactivate', 'Estudiante', $event)"
              [checked]="user.status == this.STATUS_ACTIVO">
@@ -174,12 +200,17 @@
     <mat-card *ngIf="user.rol == this.ADM;" class="card-table-results">
       <mat-card-content>
         <div class="row">
-          <div class="col col-lg-11 col-md-9">
-            {{ i + 1 }} | {{ user.nombres }} {{ user.apellidos }} | {{ user.telefono }}
+          <div class="col col-lg-9 col-md-9">
+            {{ i + 1 }} 
+            | 
+            <a href (click)="$event.preventDefault();moreInfo(user.id);" matTooltip="Click aquí para ver más Detalles del Usuario" aria-label="Click aquí para ver más Detalles del Usuario"
+              matTooltipPosition="below">{{ user.nombres }} {{ user.apellidos }}</a>
+            |
+            {{ user.telefono }}
             <br/>
             {{ user.email }}
           </div>
-          <div class="col-6 col-lg-1 col-md-3 offset-md-3 rights">
+          <div class="col-6 col-lg-3 col-md-3 offset-md-3 rights">
             <mat-slide-toggle aria-labelledby="label" [id]="user.id" color="warn" [disabled]="false"
              (change)="toogleActivation(user.id, user.status, this.ADM, $event)"
              [checked]="user.status == this.STATUS_ACTIVO">

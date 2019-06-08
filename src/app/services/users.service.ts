@@ -89,4 +89,22 @@ export class UsersService {
       );
     
   }
+
+
+  /**
+   * Devuelve los Usuarios por orden alfabetico: nombres
+   * Llamarlo desde una funcion async
+   * La variable que reciba este arreglo debe esperar a que termine: await
+   */
+  public async getUsersOrdered(){
+    var array:IUser[] = [];
+
+    var us = this.afDB.database.ref('/users/');
+    us.orderByChild("nombres").on("child_added", function( data ){
+      //console.log(data.val().name);
+      array.push( data.val() );
+   });
+
+   return array;
+  }
 }

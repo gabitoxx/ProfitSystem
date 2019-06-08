@@ -9,24 +9,29 @@
     
     <mat-card-header>
       <div mat-card-avatar><mat-icon>person_pin</mat-icon></div>
-      <mat-card-title>Pepito Peerez</mat-card-title>
+      <mat-card-title>
+        {{ user.nombres + " " + user.apellidos }}
+      </mat-card-title>
       <mat-card-subtitle>
         Perfil en el sistema: 
-        <b>Inversionista</b>
+        <b>
+          {{ user.rol }}
+        </b>
       </mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content class="center">
-      <img mat-card-image class="img-home-persone" src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Persona foto de Perfil">
+      <img mat-card-image class="img-home-persone"
+       [src]="user != null ? user.avatarURL : 'assets/images/update_profile.png'" alt="Persona foto de Perfil">
       <p>
-        <b>Status de suscripción:</b> Activo
+        <b>Status:</b> {{ user.status }}
       </p>
-      <p>
+      <!-- p>
         <b>Suscripción vence el:</b> 31/31/2021
       </p>
       <p>
         <b>Último pago realizado:</b> 12/12/2020
-      </p>
+      </p -->
     </mat-card-content>
 
     <mat-card-actions class="center">

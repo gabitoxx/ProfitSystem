@@ -57,10 +57,11 @@ export class PaymentService {
   }
 
   /**
-   * 
+   * Llamarlo desde una funcion async
+   * La variable que reciba este arreglo debe esperar a que termine: await
    * @param userId 
    */
-  public async getYYY(userId:string){
+  public async getPagosDeUsuario(userId:string){
 
     var pagos: IPayment[] = [];
 
@@ -70,7 +71,7 @@ export class PaymentService {
         .equalTo(userId)
         .on("child_added", function(snapshot) {
           //console.log(snapshot.key + " was " + snapshot.val().idUser + " m tall");
-          console.log("adding to [] getYYY(" + userId + ")",  snapshot.val());
+          console.log("adding to [] getPagosDeUsuario(" + userId + ")",  snapshot.val());
           pagos.push( snapshot.val() );
         }
     );

@@ -3,14 +3,12 @@ import { Router } from '@angular/router';
 import { PaymentService } from 'src/app/services/payment.service';
 import { IPayment } from 'src/app/interfaces/IPayment';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { CONSTANTES_UTIL } from 'src/app/shared/_utils/constantes-util';
 
 export interface IMG {
   id: string;
   url: string;
 }
-
-const MODAL_ANCHO:string = '850px';
-const MODAL_ALTO:string = '650px';
 
 
 @Component({
@@ -50,15 +48,15 @@ export class HistorialPagosComponent implements OnInit {
    * no funciona el async
    */
   async reloadPayments(){
-    this.misPagos = await this.paymentService.getYYY('U_1558735692972'); // XXX cambiar por user logueado 
+    this.misPagos = await this.paymentService.getPagosDeUsuario('U_1558735692972'); // XXX cambiar por user logueado 
     console.log ( 'misPagos:', this.misPagos );
   }
 
   seePayment(id:string, url:string){
 
     const dialogRef = this.dialog.open(PaymentPictureModalDialog2, {
-      width: MODAL_ANCHO,
-      height: MODAL_ALTO,
+      width:  CONSTANTES_UTIL.MODAL_ANCHO_2,
+      height: CONSTANTES_UTIL.MODAL_ALTO_2,
       data: {
         id: id,
         url: url

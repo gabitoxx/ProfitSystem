@@ -16,6 +16,9 @@ import { UsersComponent } from './admin/users/users.component';
 import { AccountsComponent } from './admin/accounts/accounts.component';
 import { ContractsComponent } from './admin/contracts/contracts.component';
 import { HistorialPagosComponent } from './academia/historial-pagos/historial-pagos.component';
+import { PersonaComponent } from './admin/reportes/persona/persona.component';
+import { TradingsComponent } from './admin/tradings/tradings.component';
+import { MovimientosComponent } from './admin/reportes/movimientos/movimientos.component';
 
 const appRoutes: Routes = [
   /*  { path: 'home', component: HomeComponent, canActivate: [AuthenticationGuard] }, */
@@ -41,9 +44,13 @@ const appRoutes: Routes = [
     { path: 'admin/createAccount', component: CreateAccountComponent },
     { path: 'admin/accounts', component: AccountsComponent },
     { path: 'admin/createTrading', component: CreateTradingComponent },
+    { path: 'admin/tradings', component: TradingsComponent },
     { path: 'admin/createContract', component: CreateContractComponent },
     { path: 'admin/contracts', component: ContractsComponent },
     { path: 'admin/payments', component: PaymentsComponent },
+    /** Reportes */
+    { path: 'admin/reportes/persona', component: PersonaComponent },
+    { path: 'admin/reportes/movimientos', component: MovimientosComponent },
     
   ];
 

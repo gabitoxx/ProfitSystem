@@ -4,6 +4,9 @@ import { MatSnackBar, MatDialog, MatSnackBarConfig, MatSlideToggleChange } from 
 import { CONSTANTES_UTIL } from 'src/app/shared/_utils/constantes-util';
 import { AccountService } from 'src/app/services/account.service';
 import { IAccount } from 'src/app/interfaces/IAccount';
+import { UsersService } from 'src/app/services/users.service';
+import { IUser } from 'src/app/interfaces/IUser';
+import { ValidatorUtils } from 'src/app/shared/_utils/validator-utils';
 
 @Component({
   selector: 'app-accounts',
@@ -20,21 +23,23 @@ export class AccountsComponent implements OnInit {
   configSuccess: MatSnackBarConfig;
   
   // Cuentas
-  arrayAccounts: IAccount[];
+  arrayAccounts: IAccount[] = [];
   iAccInactivos:number = 0;
   iAccActivos:number = 0;
 
-  //
+  users:IUser[] = [];
+
+  /*
+   * Flag para cuando te da el problema del loop infinito al obtener un valor que luego has de editar
+   */
   flagOperando:boolean = false;
 
   constructor(
       private router: Router,
       private accountService: AccountService,
+      private userService: UsersService,
       private snackBar: MatSnackBar,
       public dialog: MatDialog){
-
-    //datos remotos - Observable
-    this.reloadTables();
 
     this.configError = {
       panelClass: ['snackbar-accion-failure'],
@@ -45,10 +50,22 @@ export class AccountsComponent implements OnInit {
       panelClass: ['snackbar-accion-succes'],
       duration: CONSTANTES_UTIL.SNACKBAR_DURATION_SUCCESS,
     };
+
+    this.flagOperando = false;
   }
 
   
   ngOnInit() {
+    this.userService.getUsers().valueChanges().subscribe(
+        ( data: IUser[] ) => {
+          this.users = data;
+        }, (error) => {
+          console.error("AccountsComponent.userService.getUsers() - No se pudo cargar arreglo de las personas", error);
+        }
+    );
+
+    //datos remotos - Observable
+    this.reloadTables();
   }
 
 
@@ -121,5 +138,9 @@ export class AccountsComponent implements OnInit {
 
   goHome(){
     this.router.navigate(["admin/home"]);
+  }
+
+  getNombre(gestorId:string){
+    return ValidatorUtils.getUsuarioNombre(gestorId, this.users);
   }
 }

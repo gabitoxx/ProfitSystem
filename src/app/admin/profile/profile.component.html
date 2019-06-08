@@ -35,7 +35,7 @@
       <div class="col-sm-12 center">
         <mat-form-field class="full-width" color="accent">
           <mat-label id="email">Email (correo electrónico)</mat-label>
-          <input matInput [(ngModel)]="user.email" type="text" disabled ng-readonly="true" style="color: black;" [ngModelOptions]="{standalone: true}">
+          <input matInput [(ngModel)]="user.email" type="text" disabled ng-readonly="true" style="color: black; background-color: #dadada;" [ngModelOptions]="{standalone: true}">
           <mat-icon matSuffix>email</mat-icon>
           <mat-hint style="color: red;">El email no puede ser modificado. Es tu identificador único en nuestro Sistema.</mat-hint>
         </mat-form-field>
@@ -146,7 +146,7 @@
           Resultado del ajuste:
         </div>
         <div class="">
-          <img [src]="croppedImage || 'assets/images/update_profile.png'" style="width: 100%;">
+          <img [src]="user.avatarURL || croppedImage || 'assets/images/update_profile.png'" style="width: 100%;">
         </div>
       </div>
     </div>
@@ -172,7 +172,7 @@
     <div class="row">
       <div class="col-sm-12 center">
         <br/>
-        <a href (click)="$event.preventDefault();goHome();" class="href-red">Ir al inicio</a>
+        <a href (click)="$event.preventDefault();goHome();" class="href-red">Cancelar, no guardar cambios</a>
       </div>
     </div>
   </form>

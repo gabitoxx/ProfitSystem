@@ -1,0 +1,234 @@
+<app-toolbar-admin></app-toolbar-admin>
+
+<!-- Para dejar un espacio superior para el toolbar -->
+<div class="filler-top"></div>
+
+<div class="container-admin">
+
+  <mat-card class="card-person">
+    <mat-card-header style="font-size: 18px;">
+      <div mat-card-avatar><mat-icon style="font-size: 40px;">vertical_split</mat-icon></div>
+      <mat-card-title>
+        Movimientos por Cuenta
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <br/>
+      Reporte de <span class="letrasRojasSobreNegro">Movimientos por Cuentas</span>
+      según las <b>Fechas especificadas</b>
+
+      <br/><br/>
+
+      <mat-radio-group aria-label="Elija un movimiento" color="warn">
+        <mat-radio-button value="menos" matTooltipPosition="below" matTooltip="TODO para Fase 2" aria-label="Paginación: Posterior" disabled>&Uacute;ltima semana</mat-radio-button>
+        <mat-radio-button value="mas"   matTooltipPosition="below" matTooltip="TODO para Fase 2" aria-label="Paginación: Posterior" disabled>Mes actual</mat-radio-button>
+        <mat-radio-button value="fecha" checked="checked">Filtrar por Fechas</mat-radio-button>
+      </mat-radio-group>
+      
+      <br/><br/>
+
+      <mat-form-field class="full-width" color="accent">
+        <mat-label>Desde</mat-label>
+        <input matInput [matDatepicker]="picker" placeholder="Desde" name="from" [(ngModel)]="fechaDesde" class="inputRight">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="full-width" color="accent">
+        <mat-label>Hasta</mat-label>
+        <input matInput [matDatepicker]="picker2" placeholder="Hasta" name="until" [(ngModel)]="fechaHasta" class="inputRight">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+    </mat-card-content>
+    
+    <mat-card-actions class="full-width center">
+      <button mat-raised-button (click)="filtrar()" color="accent"><b>Buscar / Filtrar</b></button>
+    </mat-card-actions>
+  </mat-card>
+
+  <div class="row" *ngIf="iBuildingReport == 1">
+    <div class="col center centerChrome">
+      <mat-spinner color="accent"></mat-spinner>
+      <span style="color: #69f0ae;">Buscando data en Base de Datos...</span>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="iBuildingReport == 2">
+    <div class="col center centerChrome">
+      <mat-spinner color="primary"></mat-spinner>
+      <span style="color: #69f0ae;">Construyendo Reporte...</span>
+    </div>
+  </div>
+
+  <ng-container *ngIf="iBuildingReport == 3">
+    <mat-card class="card-person-actions sombras" *ngFor="let item of dataReporte; let i = index">
+      <mat-card-header>
+        <div class="row">
+          <div class="col-sm-12 reporte-cabecera">
+            D&iacute;a: {{ item.dia }}
+          </div>
+          <div class="col-sm-12" *ngIf="item.acumulado != null">
+            <table class="reporte-cabecera2 ends" style="border: none;">
+              <tr>
+                <th style="min-width: 80px;">Moneda</th>
+                <th style="min-width: 100px;">Acumulado</th>
+                <th style="min-width: 120px;">Intereses</th>
+                <th style="min-width: 120px;">Saldo Profit</th>
+              </tr>
+              <tr>
+                <td>USD</td>
+                <td>$ {{ item.acumulado.totalAcumUSD | number: '1.2-2' }}</td>
+                <td>$ {{ item.acumulado.sumConstanteDiariaUSD | number: '1.2-2' }}</td>
+                <td>$ {{ item.acumulado.saldoProfitUSD | number: '1.2-2' }}</td>
+              </tr>
+              <tr>
+                <td>EUR</td>
+                <td>€ {{ item.acumulado.totalAcumEUR | number: '1.2-2' }}</td>
+                <td>€ {{ item.acumulado.sumConstanteDiariaEUR | number: '1.2-2' }}</td>
+                <td>€ {{ item.acumulado.saldoProfitEUR | number: '1.2-2' }}</td>
+              </tr>
+              <tr>
+                <td>COP</td>
+                <td>$ {{ item.acumulado.totalAcumCOP | number: '1.2-2' }}</td>
+                <td>$ {{ item.acumulado.sumConstanteDiariaCOP | number: '1.2-2' }}</td>
+                <td>$ {{ item.acumulado.saldoProfitCOP | number: '1.2-2' }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngIf="item.acumulado != null;else else_noMovs">
+          <br/>
+          <span class="reporte-cabecera">Detalle:</span>
+          <br/>
+          <table class="reporte-cabecera2" style="border: none;">
+            <tr class="center">
+              <th>#</th>
+              <th style="min-width: 62px;">Moneda</th>
+              <th style="min-width: 100px;">Monto</th>
+              <th>Cuenta</th>
+              <th>Admin</th>
+            </tr>
+            <tr *ngFor="let mov of item.movimientos; let j = index">
+              <td>{{ j + 1 }}.</td>
+              <td class="center">
+                {{ mov.currency }} - 
+                {{ mov.currency == 'EUR' ? '€' : '$' }} 
+              </td>
+              <td class="ends">
+                {{ mov.monto | number: '1.2-2' }}
+              </td>
+              <td class="center" style="padding-left: 5px;">{{ getCuentaName( mov.accountId ) }}</td>
+              <td class="center">{{ getAdminName( mov.adminId ) }}</td>
+            </tr>  
+          </table>
+        </div>
+        <ng-template #else_noMovs>
+          <span class="letrasRojasSobreNegro">
+            No se registraron Movimientos en este día.
+          </span>
+        </ng-template>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+
+  <mat-card class="card-person sombras" *ngIf="iBuildingReport == 3">
+    <mat-card-header>
+      <mat-card-title>
+        <span class="letrasRojasSobreNegro">TOTAL de Acumulados para este reporte:</span>
+      </mat-card-title>
+      <mat-card-subtitle>
+        <i>Desde el <b>{{ fechaDesde | date:'dd/MM/yyyy' }}</b> hasta el <b>{{ fechaHasta | date:'dd/MM/yyyy' }}</b></i>
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <table class="reporte-cabecera-totales1 ends" style="border: none;">
+        <tr>
+          <th style="min-width: 80px;">Moneda</th>
+          <th style="min-width: 100px;">Acumulado</th>
+          <th style="min-width: 120px;">Intereses</th>
+          <th style="min-width: 120px;">Saldo Profit</th>
+        </tr>
+        <tr>
+          <td>USD</td>
+          <td>$ {{ USD_TOTAL_ACUM | number: '1.2-2' }}</td>
+          <td>$ {{ USD_TOTAL_INTERESES | number: '1.2-2' }}</td>
+          <td>$ {{ USD_TOTAL_SALDOPROFIT | number: '1.2-2' }}</td>
+        </tr>
+        <tr>
+          <td>EUR</td>
+          <td>€ {{ EUR_TOTAL_ACUM | number: '1.2-2' }}</td>
+          <td>€ {{ EUR_TOTAL_INTERESES | number: '1.2-2' }}</td>
+          <td>€ {{ EUR_TOTAL_SALDOPROFIT | number: '1.2-2' }}</td>
+        </tr>
+        <tr>
+          <td>COP</td>
+          <td>$ {{ COP_TOTAL_ACUM | number: '1.2-2' }}</td>
+          <td>$ {{ COP_TOTAL_INTERESES | number: '1.2-2' }}</td>
+          <td>$ {{ COP_TOTAL_SALDOPROFIT | number: '1.2-2' }}</td>
+        </tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="card-person sombras" *ngIf="iBuildingReport == 3">
+    <mat-card-header>
+      <mat-card-title>
+        <span class="letrasRojasSobreNegro">Estado de las Cuentas al día de hoy:</span>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row montoFecha2" *ngFor="let account of arrayAccounts; let k = index">
+        <div class="col-12">
+          Cuenta: <b>{{ account.nombre }}</b> ({{ account.descripcion }})
+        </div>
+        <div class="col-4 center">
+          USD <br/> $ {{ account.saldoUSD | number: '1.2-2' }}
+        </div>
+        <div class="col-4 center">
+          EUR <br/> € {{ account.saldoEUR | number: '1.2-2' }}
+        </div>
+        <div class="col-4 center">
+          COP <br/> $ {{ account.saldoCOP | number: '1.2-2' }}
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <div class="row justify-content-md-center">
+    <div class="col-sm-12">
+      &nbsp;&nbsp;&nbsp;
+      *Resultados según el filtro de la parte superior.
+    </div>
+    <div class="col-sm-12 center">
+      <br/>
+      <button mat-raised-button (click)="excel()" color="accent">
+        <mat-icon>cloud_download</mat-icon>
+        &nbsp; 
+        Descargar en Excel
+      </button>
+      <br/>
+    </div>
+    <div class="col-sm-12 center">
+      <br/>
+      <a href (click)="$event.preventDefault();goHome();" class="href-red">Volver</a>
+    </div>
+    <br/><br/><br/>
+  </div>
+
+</div>
+
+<br/><br/><br/>
+
+<button mat-fab class="mat-fab mat-fab-bottom-left" aria-label="Paginación: Anterior"
+ (click)="pagination('left')" matTooltipPosition="above"
+ matTooltip="Paginación: Anterior" aria-label="Paginación: Anterior">
+  <mat-icon>skip_previous</mat-icon>
+</button>
+
+<button mat-fab class="mat-fab mat-fab-bottom-right" aria-label="Paginación: Posterior"
+ (click)="pagination('right')" matTooltipPosition="above"
+ matTooltip="Paginación: Posterior" aria-label="Paginación: Posterior">
+  <mat-icon>skip_next</mat-icon>
+</button>
