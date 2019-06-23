@@ -6,6 +6,7 @@ import { MatSnackBar, MatSnackBarConfig, MatDialog, MatSlideToggleChange, MAT_DI
 import { CONSTANTES_UTIL } from 'src/app/shared/_utils/constantes-util';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ValidatorUtils } from 'src/app/shared/_utils/validator-utils';
+import { AuthService } from 'src/app/services/auth.service';
 
 export interface IDialogData {
   usuario: IUser;
@@ -42,7 +43,8 @@ export class UsersComponent implements OnInit {
       private router: Router,
       private userService: UsersService,
       private snackBar: MatSnackBar,
-      public dialog: MatDialog){
+      public dialog: MatDialog,
+      private authService: AuthService){
 
     //datos remotos - Observable
     this.reloadTables();
@@ -80,22 +82,35 @@ export class UsersComponent implements OnInit {
     */
     if ( accion == 'activate' ){
 
-      this.userService.getUserById(userId).valueChanges().subscribe(
+      this.userService.getUserById( userId ).valueChanges().subscribe(
           (userFirebase: IUser) => {
             //
             userFirebase.status = CONSTANTES_UTIL.USUARIO_ACTIVO;
 
             this.userService.editUser(userFirebase).then(
                 (success) => {
-                  this.snackBar.open(entity + ": " + CONSTANTES_UTIL.SUCCESS_USER_ACTIVATED, 'Ok', this.configSuccess);
+                  
+                  this.authService.sendPasswordResetEmail( userFirebase.email )
+                      .then(function() {
+                        // Password reset email sent. 
+                        this.snackBar.open(entity + ": " + CONSTANTES_UTIL.SUCCESS_USER_ACTIVATED + userFirebase.email,
+                          'Qué bueno', this.configSuccess);
+
+                      }).catch( function(error) {
+                        this.snackBar.open(CONSTANTES_UTIL.ERROR_CAMBIOS_NO_GUARDADOS + ". No fue posible enviarle el correo al Usuario, a su cuenta " + userFirebase.email,
+                          'Lo intentaré luego', this.configError + 2000);
+                        console.error(userFirebase.email, error);
+                      });
+                  
                   this.reloadTables();
-                
+
                 }).catch(
                   (error) => {
                     this.snackBar.open(CONSTANTES_UTIL.ERROR_CAMBIOS_NO_GUARDADOS, 'Ok', this.configError);
                     console.error(error);
                   }
-                );
+                )
+            ;
           }
       );
     } else if ( accion == 'deactivate' ){

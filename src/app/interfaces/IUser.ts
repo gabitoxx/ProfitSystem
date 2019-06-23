@@ -40,4 +40,7 @@ export interface IUser {
   fechaUltimoPago?: number;         // Fecha en millisecs
   suscripcionActivo: boolean;       // solo si rol = Academia
   suscripcionFechaVence: number;    // Fecha en millisecs
+
+  /* Firebase ID */
+  fbId: string;
 }

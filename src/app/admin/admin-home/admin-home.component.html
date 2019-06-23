@@ -17,9 +17,9 @@
 
     <mat-card-content class="center">
       <img mat-card-image class="img-home-persone" alt="Persona foto de Perfil" 
-       [src]="user != null ? user.avatarURL : 'assets/images/update_profile.png'">
+       [src]="user && user.avatarURL ? user.avatarURL : 'assets/images/update_profile.png'">
       <p>
-        <b>Info:</b> Alguna info útil que mostrar aquí
+        <b>Info:</b> Alguna info útil que mostrar aquí.
       </p>
     </mat-card-content>
 

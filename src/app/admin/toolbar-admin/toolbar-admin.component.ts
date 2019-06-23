@@ -1,14 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+import { SessionService } from 'src/app/services/session.service';
+import { CONSTANTES_UTIL } from 'src/app/shared/_utils/constantes-util';
 
 @Component({
   selector: 'app-toolbar-admin',
   templateUrl: './toolbar-admin.component.html',
-  styleUrls: ['./toolbar-admin.component.css']
+  styleUrls: ['./toolbar-admin.component.css'],
+  providers: [SessionService],
 })
 export class ToolbarAdminComponent implements OnInit {
 
-  constructor(private router: Router){
+  constructor(
+      private router: Router,
+      private authService: AuthService,
+      private session: SessionService){
     
   }
 
@@ -24,7 +31,17 @@ export class ToolbarAdminComponent implements OnInit {
   }
 
   logout(){
-    this.router.navigate(["login"]);
+    this.authService.logOut().then(
+      () => {
+        if ( this.session.onExistItem(CONSTANTES_UTIL.key) )
+          this.session.onRemoveItem(CONSTANTES_UTIL.key);
+        
+        this.router.navigate(['login']);
+      }
+    ).catch( (error) => {
+      console.error('cerrarSesion() - error', error);
+      alert("Problemas con el Internet impidieron el cierre de sesión correcto. Si lo deseas intentalo de nuevo o cierra esta pestaña y borra la caché de tu navegador");
+    });
   }
 
   createUser(){

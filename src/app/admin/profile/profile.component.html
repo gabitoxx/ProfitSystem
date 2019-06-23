@@ -80,7 +80,7 @@
 
     <div class="row justify-content-md-center">
       
-      <div class="col-sm-12 center">
+      <!--div class="col-sm-12 center">
         <mat-form-field class="full-width" color="accent">
           <mat-label id="passw">Contraseña</mat-label>
           <input matInput [(ngModel)]="passw" name="passw" [type]="typePassw" required>
@@ -93,6 +93,17 @@
           <input matInput [(ngModel)]="rep_passw" name="rep_passw" [type]="typePassw" required>
           <mat-icon matSuffix (click)="tooglePassword()">{{ iconPassw }}</mat-icon>
         </mat-form-field>
+      </div -->
+      <div class="col-sm-12 center">
+        Para cambiar su contraseña actual pulse el siguiente botón.
+        <br/>
+        <span style="color: red;">Nota:</span> 
+        se enviará un correo electrónico a la dirección 
+        <br/>
+        <b>{{ user.email }}</b>
+        <br/>
+        donde deberá indicar la nueva contraseña para su <b>Cuenta Profit Takers</b>.
+        <br/><br/>
       </div>
       <div class="col-sm-12 center">
         <button mat-raised-button (click)="updatePassword()" color="accent"><b>Actualizar contraseña</b></button>

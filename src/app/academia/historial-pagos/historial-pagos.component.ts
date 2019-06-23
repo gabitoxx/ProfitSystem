@@ -4,6 +4,7 @@ import { PaymentService } from 'src/app/services/payment.service';
 import { IPayment } from 'src/app/interfaces/IPayment';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { CONSTANTES_UTIL } from 'src/app/shared/_utils/constantes-util';
+import { SessionService } from 'src/app/services/session.service';
 
 export interface IMG {
   id: string;
@@ -14,7 +15,8 @@ export interface IMG {
 @Component({
   selector: 'app-historial-pagos',
   templateUrl: './historial-pagos.component.html',
-  styleUrls: ['./historial-pagos.component.css']
+  styleUrls: ['./historial-pagos.component.css'],
+  providers: [SessionService],
 })
 export class HistorialPagosComponent implements OnInit {
 
@@ -23,7 +25,8 @@ export class HistorialPagosComponent implements OnInit {
   constructor(
       private router: Router,
       private paymentService: PaymentService,
-      public dialog: MatDialog){
+      public dialog: MatDialog,
+      private session: SessionService){
 
     
     this.reloadPayments();
@@ -48,7 +51,11 @@ export class HistorialPagosComponent implements OnInit {
    * no funciona el async
    */
   async reloadPayments(){
-    this.misPagos = await this.paymentService.getPagosDeUsuario('U_1558735692972'); // XXX cambiar por user logueado 
+    
+    var user = this.session.onGetItemJSON(CONSTANTES_UTIL.key);
+
+    this.misPagos = await this.paymentService.getPagosDeUsuario( user.id );
+
     console.log ( 'misPagos:', this.misPagos );
   }
 

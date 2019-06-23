@@ -64,18 +64,24 @@
           </div>
         </div>
       </form>
-      <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+      <mat-spinner [style.display]="bShowSpinner ? 'block' : 'none'"></mat-spinner>
     </mat-card-content>
     <div class="row justify-content-md-center">
       <div class="col-md-12 center">
         <mat-card-actions>
-          <button mat-raised-button (click)="login()" color="accent"><b>Ingresar</b></button>
+          <button mat-raised-button (click)="login()" color="accent" class="font14"
+           [disabled]="bShowSpinner == true">
+            <b>Ingresar</b>
+          </button>
         </mat-card-actions>
+      </div>
+      <div class="col-md-12 center loginFont" *ngIf="bError == true" style="color: #c8292d; font-weight: 800;">
+        {{ msgError }}
       </div>
       <div class="col-md-12 center loginFont">
         ¿ No tienes cuenta en Profit Takers ?
         <br/>
-        <a href (click)="$event.preventDefault();applyForNewUseraccount();" style="color: red;">Solicita una aqu&iacute;</a>
+        <a href (click)="$event.preventDefault();applyForNewUseraccount();" style="color: #3d1fad;">Solicita una aqu&iacute;</a>
         <br/><br/>
       </div>
     </div>

@@ -68,6 +68,11 @@ export class CreateAccountComponent implements OnInit {
       saldoUSD: 0.0,
       saldoEUR: 0.0,
       saldoCOP: 0.0,
+
+      /** se establecerá con el 1er Trading que se genere para esta Cuenta */
+      interesDiarioUSD: 0.0,
+      interesDiarioEUR: 0.0,
+      interesDiarioCOP: 0.0,
     }
 
   }

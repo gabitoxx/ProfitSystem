@@ -7,11 +7,13 @@ import { CONSTANTES_UTIL } from 'src/app/shared/_utils/constantes-util';
 import { IPayment } from 'src/app/interfaces/IPayment';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { SessionService } from 'src/app/services/session.service';
 
 @Component({
   selector: 'app-pago',
   templateUrl: './pago.component.html',
-  styleUrls: ['./pago.component.css']
+  styleUrls: ['./pago.component.css'],
+  providers: [SessionService],
 })
 export class PagoComponent implements OnInit {
   
@@ -29,6 +31,7 @@ export class PagoComponent implements OnInit {
   destino:string = "";
 
   pago: IPayment = null;
+  bProcesandoPago:boolean = false;
 
   /**
    * Imagen archivo firebase storage
@@ -49,7 +52,8 @@ export class PagoComponent implements OnInit {
       private router: Router,
       private snackBar: MatSnackBar,
       private paymentService: PaymentService,
-      private firebaseStorage: AngularFireStorage){
+      private firebaseStorage: AngularFireStorage,
+      private session: SessionService){
 
     this.configError = {
       panelClass: ['snackbar-accion-failure'],
@@ -84,6 +88,23 @@ export class PagoComponent implements OnInit {
     // validar
     if ( !this.validarForm() ){
       return;
+
+    } else if ( !this.session.onExistItem(CONSTANTES_UTIL.key) ){
+      
+      this.bProcesandoPago = false;
+
+      let snackBarRef = this.snackBar.open(
+        CONSTANTES_UTIL.ERROR_NO_SESSIONSTORAGEKEY,
+        'Entendido', this.configSuccess
+      );
+
+      snackBarRef.onAction().subscribe(() => { this.router.navigate(['login']); });
+      
+      // 4 segundos
+      window.setTimeout(() => { this.router.navigate(['login']); }, 4000);
+
+    } else {
+      this.bProcesandoPago = true;
     }
 
     // current date
@@ -133,6 +154,8 @@ export class PagoComponent implements OnInit {
    */
   crearPagoObj = (imgURL:string, hoyMillisecs:number, fileId:string) => {
 
+    var user = this.session.onGetItemJSON(CONSTANTES_UTIL.key);
+    
     // Formatear JSON
     this.pago = {
       id: CONSTANTES_UTIL.PREFFIX_PAYMENT + hoyMillisecs,
@@ -146,7 +169,7 @@ export class PagoComponent implements OnInit {
       currency: this.currency,
       concepto: this.concepto,
       destino:  this.destino,
-      idUser:   'U_1558735692972', // XXX cambiar por el user logueado
+      idUser:   user.id,
       aprobado: false,  // solo el ADMIN lo podrá aprobar, deberá hacer verificación manual
     }
     
@@ -156,6 +179,7 @@ export class PagoComponent implements OnInit {
     this.paymentService.createPayment(this.pago).then(
         () => {
           console.log('pago exitoso');
+          this.bProcesandoPago = false;
 
           let snackBarRef = this.snackBar.open(
             'Pago registrado satisfactoriamente. Podrá ver sus pagos en la sección Historial"',

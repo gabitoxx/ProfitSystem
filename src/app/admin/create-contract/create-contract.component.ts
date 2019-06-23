@@ -485,7 +485,7 @@ export class CreateContractComponent implements OnInit {
       return false;
 
     } else if ( this.accountSelected == null || this.accountSelected.id.trim() == '' ){
-      this.snackBar.open('Debe seleccionar una Cuenta.', 'Entendido', this.configError);
+      this.snackBar.open('Debe seleccionar una Cuenta. Si no se desplegan Cuentas, verifique que estén Activas en la sección "Ver Cuentas".', 'Entendido', this.configError);
       return false;
 
     } else if ( this.day == null || this.day <= 0 || this.day > 31 ){

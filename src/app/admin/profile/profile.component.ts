@@ -7,11 +7,14 @@ import { IUser } from 'src/app/interfaces/IUser';
 import { ValidatorUtils } from 'src/app/shared/_utils/validator-utils';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { SessionService } from 'src/app/services/session.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.css'],
+  providers: [SessionService],
 })
 export class ProfileComponent implements OnInit {
 
@@ -19,6 +22,7 @@ export class ProfileComponent implements OnInit {
    * Datos del usuario logueado
    */
   user: IUser;
+  currentEmail:string = '';
 
   //
   passw:string = "";
@@ -53,7 +57,9 @@ export class ProfileComponent implements OnInit {
       private router: Router,
       private userService: UsersService,
       private snackBar: MatSnackBar,
-      private firebaseStorage: AngularFireStorage){
+      private firebaseStorage: AngularFireStorage,
+      private session: SessionService,
+      private authService: AuthService){
 
     this.configError = {
       panelClass: ['snackbar-accion-failure'],
@@ -67,14 +73,8 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("XXX.1!")
-    /** XXX id quemado */
-    var userId = 'U_1558735761114';
-    this.userService.getUserById(userId).valueChanges().subscribe(
-        (userFirebase: IUser) => {
-          this.user = userFirebase; console.log("XXX.2 userFirebase:" , userFirebase);
-        }
-    );
+    this.user = this.session.onGetItemJSON(CONSTANTES_UTIL.key);
+    this.currentEmail = this.user.email;
   }
 
 
@@ -110,13 +110,32 @@ export class ProfileComponent implements OnInit {
 
   updatePassword(){
 
-    if ( this.passw == this.rep_passw ){
-      alert("actualizar por Firebase_Auth ?")
+    var mail = this.currentEmail;
 
-    } else {
-      this.snackBar.open(CONSTANTES_UTIL.ERROR_PASSWORDS_NO_COINCIDEN, 'X', this.configError);
+    var r = confirm("Se procederá a enviar un correo electrónico de parte del sistema de Profit Takers para el cambio de Contraseña... \n\n ¿Desea continuar?");
+    if ( r ){
+      if ( mail == null || mail == undefined || mail.trim() == '' ){
+        this.snackBar.open("No es posible confirmar su correo (" + mail + ")",
+            'Lo intentaré luego', this.configError);
+
+      } else {
+        console.log("Mail:" + mail);
+        this.authService.sendPasswordResetEmail( mail )
+            .then(function() {
+              // Password reset email sent. 
+              console.log("Password reset email sent.");
+              //this.snackBar.open("Se envió correo requiriendo cambio de Password a la cuenta " + mail,
+              //  'Ok', this.configSuccess);
+              alert("Se envió correo requiriendo cambio de Password a la cuenta " + mail);
+
+            }).catch( function(error) {
+              //this.snackBar.open("No fue posible el envío de correo 'Password reset' a la cuenta: " + mail,
+              //  'Lo intentaré luego', this.configError + 2000);
+              alert("No fue posible el envío de correo 'Password reset' a la cuenta: " + mail);
+              console.error(mail, error);
+            });
+      }
     }
-
   }
 
   
@@ -140,6 +159,12 @@ export class ProfileComponent implements OnInit {
 
 
   updateProfilePicture = () =>{
+
+    if ( !this.croppedImage ){
+      this.snackBar.open("Primero seleccione un archivo de imagen, luego redimenzione ajustando a su gusto y luego pulse 'Actualizar foto de perfil'",
+        'Entendido', this.configError);
+      return;
+    }
 
     var hoyMillisecs = Date.now();
     var fileID = CONSTANTES_UTIL.PREFFIX_FOTO + hoyMillisecs;
@@ -185,6 +210,9 @@ export class ProfileComponent implements OnInit {
         () => {
           console.log("imgURL: ", imgURL, "fileID:" , fileID);
           this.snackBar.open('Avatar modificado exitosamente.', 'Ok', this.configSuccess);
+
+          this.session.onSetItemJSON(CONSTANTES_UTIL.key, this.user);
+          
           window.setTimeout(() => { this.goHome(); }, 3000);
 
         }, (error) => {

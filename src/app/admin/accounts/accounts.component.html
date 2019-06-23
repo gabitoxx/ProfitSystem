@@ -50,6 +50,14 @@
             Saldo actual en EUR: <b class="sideInfoMini">€ {{ account.saldoEUR | number : '1.2-2' }} </b>
             <br/>
             Saldo actual en COP: <b class="sideInfoMini">$ {{ account.saldoCOP | number : '1.2-2' }} </b>
+            <br/><hr/><br/>
+            Intereses diarios que genera:
+            <br/>
+            Int. en USD: <b class="sideInfoMini">$ {{ account.interesDiarioUSD | number : '1.2-2' }} </b>
+            <br/>
+            Int. en EUR: <b class="sideInfoMini">$ {{ account.interesDiarioEUR | number : '1.2-2' }} </b>
+            <br/>
+            Int. en COP: <b class="sideInfoMini">$ {{ account.interesDiarioCOP | number : '1.2-2' }} </b>
           </div>
           <div class="col col-lg-3 col-md-2 col-sm-2 offset-sm-2 rights">
             <mat-slide-toggle aria-labelledby="label" [id]="account.id" color="warn" [disabled]="false"

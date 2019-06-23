@@ -5,6 +5,7 @@ import { ValidatorUtils } from '../shared/_utils/validator-utils';
 import { MatSnackBar } from '@angular/material';
 import { CONSTANTES_UTIL } from '../shared/_utils/constantes-util';
 import { IUser } from '../interfaces/IUser';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-request-credentials',
@@ -25,6 +26,7 @@ export class RequestCredentialsComponent implements OnInit {
 
   /* formulario */
   usuario:IUser = null;
+  bProcesandoCreacion:boolean = false;
 
   /** captcha */
   op1:string = "";
@@ -41,7 +43,8 @@ export class RequestCredentialsComponent implements OnInit {
   constructor(
       private router: Router,
       private userService: UsersService,
-      private snackBar: MatSnackBar){
+      private snackBar: MatSnackBar,
+      private authService: AuthService){
     
   }
 
@@ -94,7 +97,7 @@ export class RequestCredentialsComponent implements OnInit {
       nombres:   ValidatorUtils.titleCase( this.nombre ),
       apellidos: ValidatorUtils.titleCase( this.apellido ),
       rol: rol,
-      email: this.email,
+      email: '',
       password: CONSTANTES_UTIL.DEFAULT_PASSWORD,
       telefono: this.telefono,
       ciudad: this.ciudad,
@@ -114,40 +117,65 @@ export class RequestCredentialsComponent implements OnInit {
       fechaUltimoPago: 0,
       suscripcionActivo: false,
       suscripcionFechaVence: 0,
+      fbId: ''
     }
-      
-    this.userService.createUser(this.usuario).then(
-      () => {
-        console.log('usuario creado',this.usuario);
+    
+    this.bProcesandoCreacion = true;
 
-        let snackBarRef = this.snackBar.open(
-          'Usuario creado. Espere notificación de parte nuestros Administradores',
-          'Entendido',
-          {
-            panelClass: ['snackbar-accion-succes'],
-            duration: 6000,
-          }
-        );
+    this.authService.registerWithEmail( this.email, CONSTANTES_UTIL.DEFAULT_PASSWORD )
+    .then(
+        (data) => {
+          console.log("fb.data", data);
 
-        snackBarRef.onAction().subscribe(
-          () => {
-            this.router.navigate(["login"]);
-          }
-        );
+          /* Crear el user en BD interna */
+          this.usuario.fbId = data.user.uid;
+          this.usuario.email= data.user.email;
+
+          this.userService.createUser( this.usuario ).then(
+              () => {
+                console.log('usuario creado',this.usuario);
         
-        // 8 segundos
-        window.setTimeout(() => {
-          this.router.navigate(["login"]);
-        }, 8000);
-      },
+                this.bProcesandoCreacion = false;
+
+                let snackBarRef = this.snackBar.open(
+                  'Usuario creado. Espere notificación de parte nuestros Administradores',
+                  'Entendido',
+                  {
+                    panelClass: ['snackbar-accion-succes'],
+                    duration: 6000,
+                  }
+                );
+        
+                snackBarRef.onAction().subscribe(
+                  () => {
+                    this.router.navigate(["login"]);
+                  }
+                );
+                
+                // 8 segundos
+                window.setTimeout(() => {
+                  this.router.navigate(["login"]);
+                }, 8000);
+              },
+              (error) => {
+                console.error("Firebase: NO se puede crear Usuario: ", error);
+                this.snackBar.open('No se pudo crear el Usuario en nuestro Sistema. Por favor, intente de nuevo más tarde.', 'Ok', {
+                  panelClass: ['snackbar-accion-failure'],
+                  duration: CONSTANTES_UTIL.SNACKBAR_DURATION_ERROR,
+                });
+              }
+          );
+        }
+    ).catch(
       (error) => {
-        console.error("Firebase: NO se puede crear Usuario: ", error);
-        this.snackBar.open('No se pudo crear el Usuario en nuestro Sistema. Intente de nuevo más tarde.', 'Ok', {
+        console.error('RequestCredentialsComponent.solicitarCuenta() - Ocurrió un error en el registro:', error);
+        this.snackBar.open('No se pudo crear el Usuario en nuestro Sistema. Por favor, intente de nuevo más tarde.', 'Ok', {
           panelClass: ['snackbar-accion-failure'],
           duration: CONSTANTES_UTIL.SNACKBAR_DURATION_ERROR,
         });
       }
     );
+
   }
   
   generateCaptcha(){
@@ -213,7 +241,7 @@ export class RequestCredentialsComponent implements OnInit {
         ( data: IUser[] ) => {
           this.usuariosTodos = data;
         }, (error) => {
-          console.error("RequestCredentialsComponent - validarUnicoEmail() - ERROR", error);
+          console.error("RequestCredentialsComponent - loadU() - ERROR", error);
         }
     );
   }

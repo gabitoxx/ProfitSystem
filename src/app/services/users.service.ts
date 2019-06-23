@@ -107,4 +107,25 @@ export class UsersService {
 
    return array;
   }
+
+  /**
+   * Llamarlo desde una funcion async
+   * La variable que reciba este arreglo debe esperar a que termine: await
+   * @param userId 
+   */
+  public async getUsuarioByEmail(email:string){
+
+    var user: IUser = null;
+
+    await this.afDB.database
+        .ref('/users/')
+        .orderByChild("email")
+        .equalTo(email)
+        /* .limitToFirst(1) */
+        .on("child_added", function(snapshot) {
+            user = snapshot.val();
+          }
+        );
+    return user;
+  }
 }

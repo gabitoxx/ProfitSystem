@@ -14,11 +14,13 @@ import { TradingService } from 'src/app/services/trading.service';
 import { TotalDayService } from 'src/app/services/total-day.service';
 import { ITotalDia } from 'src/app/interfaces/ITotalDia';
 import { map } from 'rxjs/operators';
+import { SessionService } from 'src/app/services/session.service';
 
 @Component({
   selector: 'app-create-trading',
   templateUrl: './create-trading.component.html',
-  styleUrls: ['./create-trading.component.css']
+  styleUrls: ['./create-trading.component.css'],
+  providers: [SessionService],
 })
 export class CreateTradingComponent implements OnInit {
 
@@ -50,6 +52,8 @@ export class CreateTradingComponent implements OnInit {
   users: IUser[] = [];
   movimientos:ITotalDia[] = [];
   acumuladoDiaAnterior:ITotalDia = null;
+  admin: IUser = null;
+  adminId:string = '';
 
   /** Snackbars configurations */
   configError: MatSnackBarConfig;
@@ -71,7 +75,8 @@ export class CreateTradingComponent implements OnInit {
       private contractService: ContractService,
       private userService: UsersService,
       private tradingService: TradingService,
-      private totalDayService: TotalDayService){
+      private totalDayService: TotalDayService,
+      private session: SessionService){
 
     this.configError = {
       panelClass: ['snackbar-accion-failure'],
@@ -125,6 +130,14 @@ export class CreateTradingComponent implements OnInit {
     this.loadCuentas();
     this.loadAcumulados();
     
+    if ( !this.session.onExistItem(CONSTANTES_UTIL.key) ){
+      this.snackBar.open(CONSTANTES_UTIL.ERROR_NO_SESSIONSTORAGEKEY, 'Ok', this.configError);
+      this.router.navigate(["login"]);
+    }
+    
+    this.admin = this.session.onGetItemJSON(CONSTANTES_UTIL.key);
+    this.adminId = this.admin.id;
+  
   }
 
   goHome(){
@@ -313,7 +326,7 @@ export class CreateTradingComponent implements OnInit {
       fechaMillisecs: this.hoy,
       monto: this.debito,
       currency: this.currency,
-      adminId: "U_1558735692972" // XXX este admin logueado!!
+      adminId: this.adminId,
     }
 
     this.tradingService.createTrading( mov ).then(
@@ -342,12 +355,24 @@ export class CreateTradingComponent implements OnInit {
 
     if ( this.currency == CONSTANTES_UTIL.CURRENCY_DOLAR ){
       this.accountSelected.saldoUSD += this.debito;
+      /*
+       * VERIFICACION DE los Intereses Diarios
+       */
+      if ( this.accountSelected.interesDiarioUSD == 0.0 ){
+        this.accountSelected.interesDiarioUSD = this.calcularInteresDiario( CONSTANTES_UTIL.CURRENCY_DOLAR, this.accountSelected, this.contracts );
+      }
 
     } else if ( this.currency == CONSTANTES_UTIL.CURRENCY_EURO ){
       this.accountSelected.saldoEUR += this.debito;
+      if ( this.accountSelected.interesDiarioEUR == 0.0 ){
+        this.accountSelected.interesDiarioEUR = this.calcularInteresDiario( CONSTANTES_UTIL.CURRENCY_EURO, this.accountSelected, this.contracts );
+      }
 
     } else if ( this.currency == CONSTANTES_UTIL.CURRENCY_PESO_CO ){
       this.accountSelected.saldoCOP += this.debito;
+      if ( this.accountSelected.interesDiarioCOP == 0.0 ){
+        this.accountSelected.interesDiarioCOP = this.calcularInteresDiario( CONSTANTES_UTIL.CURRENCY_PESO_CO, this.accountSelected, this.contracts );
+      }
     }
     
     this.accountService.editAccount( this.accountSelected ).then(
@@ -362,6 +387,7 @@ export class CreateTradingComponent implements OnInit {
         }
     );
   }
+  
 
   /**
    * Busca si existe el Acumulado de THIS.FECHA => si SÏ lo obtiene y actualiza; si NO crearlo
@@ -407,11 +433,7 @@ export class CreateTradingComponent implements OnInit {
     const diaEUR = ( this.currency == CONSTANTES_UTIL.CURRENCY_EURO ) ? this.debito : 0;
     const diaCOP = ( this.currency == CONSTANTES_UTIL.CURRENCY_PESO_CO ) ? this.debito : 0;
 
-    // Tema de la Constante
-    const sumatoriaUSD = 0;  // xxx ? DUDAs del email del dia 28/05 a profitakers1@gmail.com
-    const sumatoriaEUR = 0;
-    const sumatoriaCOP = 0;
-
+    
     var idTotalDayAnterior = (this.acumuladoDiaAnterior != null) ? this.acumuladoDiaAnterior.id : '';
 
     // Nuevo acumulado
@@ -422,19 +444,20 @@ export class CreateTradingComponent implements OnInit {
       fecha: ValidatorUtils.getFechaFormato1Date( this.fecha ),
       fechaMillisecs: this.hoy,
       
-      adminId: "U_1558735692972", // XXX este admin logueado!!
+      adminId: this.adminId,
 
-      sumConstanteDiariaUSD: sumatoriaUSD,
-      sumConstanteDiariaEUR: sumatoriaEUR,
-      sumConstanteDiariaCOP: sumatoriaCOP,
+      // Tema de la Constante
+      sumConstanteDiariaUSD: this.accountSelected.interesDiarioUSD,
+      sumConstanteDiariaEUR: this.accountSelected.interesDiarioEUR,
+      sumConstanteDiariaCOP: this.accountSelected.interesDiarioCOP,
 
       totalAcumUSD: diaUSD,
       totalAcumEUR: diaEUR,
       totalAcumCOP: diaCOP,
       
-      saldoProfitUSD: (diaUSD - sumatoriaUSD) + (this.acumuladoDiaAnterior != null ? this.acumuladoDiaAnterior.saldoProfitUSD : 0),
-      saldoProfitEUR: (diaEUR - sumatoriaEUR) + (this.acumuladoDiaAnterior != null ? this.acumuladoDiaAnterior.saldoProfitEUR : 0),
-      saldoProfitCOP: (diaCOP - sumatoriaCOP) + (this.acumuladoDiaAnterior != null ? this.acumuladoDiaAnterior.saldoProfitCOP : 0),
+      saldoProfitUSD: (diaUSD - this.accountSelected.interesDiarioUSD) + (this.acumuladoDiaAnterior != null ? this.acumuladoDiaAnterior.saldoProfitUSD : 0),
+      saldoProfitEUR: (diaEUR - this.accountSelected.interesDiarioEUR) + (this.acumuladoDiaAnterior != null ? this.acumuladoDiaAnterior.saldoProfitEUR : 0),
+      saldoProfitCOP: (diaCOP - this.accountSelected.interesDiarioCOP) + (this.acumuladoDiaAnterior != null ? this.acumuladoDiaAnterior.saldoProfitCOP : 0),
     }
 
     this.totalDayService.createAcumDay( acum ).then(
@@ -467,19 +490,15 @@ export class CreateTradingComponent implements OnInit {
     acum.totalAcumCOP = diaCOP;
 
     // actualizar el tema de la constante diaria
-    const sumatoriaUSD = 0;  // xxx ? DUDAs del email del dia 28/05 a profitakers1@gmail.com
-    const sumatoriaEUR = 0;
-    const sumatoriaCOP = 0;
-
-    acum.sumConstanteDiariaUSD = sumatoriaUSD;
-    acum.sumConstanteDiariaEUR = sumatoriaEUR;
-    acum.sumConstanteDiariaCOP = sumatoriaCOP;
+    acum.sumConstanteDiariaUSD += this.accountSelected.interesDiarioUSD;
+    acum.sumConstanteDiariaEUR += this.accountSelected.interesDiarioEUR;
+    acum.sumConstanteDiariaCOP += this.accountSelected.interesDiarioCOP;
     
     // Acumulado Profit se actualiza; da Ganancia o Perdida
-    acum.saldoProfitUSD = diaUSD - sumatoriaUSD + ( this.acumuladoDiaAnterior != null ? this.acumuladoDiaAnterior.saldoProfitUSD : 0 );
-    acum.saldoProfitEUR = diaEUR - sumatoriaEUR + ( this.acumuladoDiaAnterior != null ? this.acumuladoDiaAnterior.saldoProfitEUR : 0 );
-    acum.saldoProfitCOP = diaCOP - sumatoriaCOP + ( this.acumuladoDiaAnterior != null ? this.acumuladoDiaAnterior.saldoProfitCOP : 0 );
-
+    acum.saldoProfitUSD = diaUSD - acum.sumConstanteDiariaUSD + ( this.acumuladoDiaAnterior != null ? this.acumuladoDiaAnterior.saldoProfitUSD : 0 );
+    acum.saldoProfitEUR = diaEUR - acum.sumConstanteDiariaEUR + ( this.acumuladoDiaAnterior != null ? this.acumuladoDiaAnterior.saldoProfitEUR : 0 );
+    acum.saldoProfitCOP = diaCOP - acum.sumConstanteDiariaCOP + ( this.acumuladoDiaAnterior != null ? this.acumuladoDiaAnterior.saldoProfitCOP : 0 );
+ 
     this.totalDayService.editAcumDay( acum ).then(
         () => {
           console.log("Se actualizó bien el acumulado del dia bajo el ID: " + acum.id);
@@ -494,4 +513,45 @@ export class CreateTradingComponent implements OnInit {
 
   }
 
+
+  /**
+   * Se ha de geenrar POR PRIMERA VEZ el valor de los INTERESES DIARIOS para ésta Cuenta
+   * @param currency  movimiento que se hizo
+   * @param cuenta    la cuenta afectada
+   * @param contratos existentes
+   */
+  calcularInteresDiario(currency: string, cuenta: IAccount, contratos: IContract[]): number {
+
+    let intDiario:number = 0.0;
+
+    var c:IContract = null;
+    var percentage:number = 0;
+    for ( var i = 0; i < contratos.length; i++ ){
+      if ( contratos[i].cuentaId == cuenta.id ){
+        c = contratos[i];
+
+        if ( percentage == 0 ){
+          /** para el primero, establece el primero que encuentra */
+          percentage = c.porcentaje;
+
+        } else if ( percentage > c.porcentaje ){
+          /** toma el porcentaje MÁS PEQUEÑO entre todos los Contratos */
+          percentage = c.porcentaje;
+        }
+      }
+    }
+
+    if ( currency == CONSTANTES_UTIL.CURRENCY_DOLAR ){
+      intDiario = (cuenta.saldoUSD * ( percentage / 100 )) / CONSTANTES_UTIL.DIVISOR_CONSTANTE_PRPM;
+
+    } else if ( currency == CONSTANTES_UTIL.CURRENCY_EURO ){
+      intDiario = (cuenta.saldoEUR * ( percentage / 100 )) / CONSTANTES_UTIL.DIVISOR_CONSTANTE_PRPM;
+
+    } else if ( currency == CONSTANTES_UTIL.CURRENCY_PESO_CO ){
+      intDiario = (cuenta.saldoCOP * ( percentage / 100 )) / CONSTANTES_UTIL.DIVISOR_CONSTANTE_PRPM;
+
+    }
+
+    return intDiario;
+  }
 }

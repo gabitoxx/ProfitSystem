@@ -87,6 +87,12 @@ mat-card-subtitle.subtitle-actions {
 .card-person-actions mat-card-actions button {
   background-color: #33dc17cc;
 }
+.card-person-actions mat-card-title {
+  font-size: 14px !important;
+}
+.card-person-actions mat-card-subtitle {
+  font-size: 12px !important;
+}
 
 .card-table-results {
   margin-top: 1px;
@@ -277,6 +283,10 @@ mat-toolbar {
 
 .font40 {
   font-size: 40px;
+}
+
+.font14 {
+  font-size: 14px !important;
 }
 
 .sideInfoMini {

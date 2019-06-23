@@ -171,8 +171,16 @@
       </b>
       Posterior a adjuntar su archivo, puede proceder a pulsar el siguiente boton.
       <br/><br/>
-      <button mat-raised-button (click)="crearPago()" color="accent"><b>Registrar Pago nuevo</b></button>
+      <button mat-raised-button (click)="crearPago()" color="accent"
+       [disabled]="bProcesandoPago == true">
+        <b>
+          Registrar Pago nuevo
+        </b>
+      </button>
       <br/>
+    </div>
+    <div class="col-sm-12 center">
+      <mat-spinner [style.display]="bProcesandoPago ? 'block' : 'none'"></mat-spinner>
     </div>
     <div class="col-sm-12 center">
       <br/>

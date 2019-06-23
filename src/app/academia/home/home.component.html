@@ -22,7 +22,7 @@
 
     <mat-card-content class="center">
       <img mat-card-image class="img-home-persone"
-       [src]="user != null ? user.avatarURL : 'assets/images/update_profile.png'" alt="Persona foto de Perfil">
+       [src]="user && user.avatarURL ? user.avatarURL : 'assets/images/update_profile.png'" alt="Persona foto de Perfil">
       <p>
         <b>Status:</b> {{ user.status }}
       </p>

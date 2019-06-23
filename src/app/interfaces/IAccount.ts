@@ -15,4 +15,9 @@ export interface IAccount {
   saldoEUR: number;
   saldoCOP: number;
 
+  /** intereses diarios seteados para esta Cuenta */
+  interesDiarioUSD: number;
+  interesDiarioEUR: number;
+  interesDiarioCOP: number;
+  
 }

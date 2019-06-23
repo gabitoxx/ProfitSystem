@@ -13,7 +13,11 @@ export interface IContract {
   porcentaje: number;         // Porcentaje Rentabilidad pactado mensual
   responsableId: string;      //  1 userId -> el Contrato solo puede tener UN Responsable 
 
-  // $ Constantes que debe descontarse todos los dias para los Clientes
+  /**
+   * $ Constantes que debe descontarse todos los dias para los Clientes
+   * 
+   * OJO: se usa los Intereses diarios a nivel de Cuenta, no de contrato
+   */
   constanteDeudaUSD: number;
   constanteDeudaEUR: number;
   constanteDeudaCOP: number;

@@ -50,9 +50,11 @@ export const CONSTANTES_UTIL = {
   ERROR_FIREBASE_GET_ENTITIES: 'Ocurrió un error con la Base de Datos. Intente nuevamente más tarde',
   ERROR_CAMBIOS_NO_GUARDADOS : 'No se guardaron los cambios. Ocurrió un error. Intente nuevamente más tarde',
   ERROR_PASSWORDS_NO_COINCIDEN: 'Las Contraseñas no coinciden, ambas deben ser iguales',
+  ERROR_NO_SESSIONSTORAGEKEY: 'Su sesión ha expirado. Favor hacer Login de nuevo',
+  
 
   /** SUCCESS: mensajes al usuario */
-  SUCCESS_USER_ACTIVATED: 'Usuario Activado correctamente',
+  SUCCESS_USER_ACTIVATED: 'Usuario Activado correctamente. Se le envió un email notificándole su activación, a la cuenta: ',
   SUCCESS_USER_DEACTIVATED: 'Usuario Inactivado (no podrá ingresar al Sistema)',
   SUCCESS_CAMBIOS_GUARDADOS : 'Cambios salvados satisfactoriamente',
   SUCCESS_ACCOUNT_ACTIVATED: 'Cuenta Activada correctamente',
@@ -81,4 +83,8 @@ export const CONSTANTES_UTIL = {
   MODAL_ANCHO_2: '850px',
   MODAL_ALTO_2: '650px',
   
+  /**
+   * Session Storage
+   */
+  key: 'invprfTkrslgg',
 }

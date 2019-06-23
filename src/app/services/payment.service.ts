@@ -50,7 +50,7 @@ export class PaymentService {
     return this.afDB.database.ref('/payments/' + pago.id).remove();
   }
 
-  public getXXX(userId:string){
+  public getAlgo(userId:string){
     return this.afDB.database.ref('/payments/').orderByKey().on("value", function(snapshot) {
          console.log(snapshot.key);
        });

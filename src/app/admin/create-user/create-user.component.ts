@@ -5,6 +5,8 @@ import { UsersService } from 'src/app/services/users.service';
 import { CONSTANTES_UTIL } from 'src/app/shared/_utils/constantes-util';
 import { ValidatorUtils } from 'src/app/shared/_utils/validator-utils';
 import { IUser } from 'src/app/interfaces/IUser';
+import { AuthService } from 'src/app/services/auth.service';
+import { LoginComponent } from 'src/app/login/login.component';
 
 
 
@@ -26,6 +28,7 @@ export class CreateUserComponent implements OnInit {
 
   /* formulario */
   usuario: IUser;
+  bProcesandoCreacion:boolean = false;
 
   /** validacion correo */
   usuariosTodos:IUser[] = [];
@@ -35,12 +38,14 @@ export class CreateUserComponent implements OnInit {
   /** snackbar styles */
   configError:   MatSnackBarConfig;
   configSuccess: MatSnackBarConfig;
-  
+  bError:boolean = false;
+  msgError:string = '';
 
   constructor(
       private router: Router,
       private userService: UsersService,
-      private snackBar: MatSnackBar){
+      private snackBar: MatSnackBar,
+      private authService: AuthService){
   
     this.configError = {
       panelClass: ['snackbar-accion-failure'],
@@ -82,7 +87,7 @@ export class CreateUserComponent implements OnInit {
       nombres:   ValidatorUtils.titleCase( this.nombre ),
       apellidos: ValidatorUtils.titleCase( this.apellido ),
       rol: rol,
-      email: this.email,
+      email: '',
       password: CONSTANTES_UTIL.DEFAULT_PASSWORD,
       telefono: this.telefono,
       ciudad: this.ciudad,
@@ -102,32 +107,69 @@ export class CreateUserComponent implements OnInit {
       fechaUltimoPago: 0,
       suscripcionActivo: ( rol == CONSTANTES_UTIL.ROL_ACADEMIA ) ? true : false,
       suscripcionFechaVence: 0,
+      fbId: ''
     }
     
-    this.userService.createUser(this.usuario).then(
-        () => {
-          console.log('usuario creado',this.usuario);
+    this.bProcesandoCreacion = true;
+    this.bError = false;
 
-          let snackBarRef = this.snackBar.open(
-            'Usuario creado. Puede verlo en la opción "Ver Usuarios"',
-            'Entendido', this.configSuccess
-          );
+    this.authService.registerWithEmail( this.email, CONSTANTES_UTIL.DEFAULT_PASSWORD )
+    .then(
+        (data) => {
+          console.log("fb.data", data);
 
-          snackBarRef.onAction().subscribe(
-            () => {
-              this.goHome();
-            }
+          /* Crear el user en BD interna */
+          this.usuario.fbId = data.user.uid;
+          this.usuario.email= data.user.email;
+
+          this.userService.createUser( this.usuario ).then(
+              () => {
+                console.log('usuario creado',this.usuario);
+
+                this.bProcesandoCreacion = false;
+
+                this.authService.sendPasswordResetEmail( this.usuario.email )
+                    .then(function() {
+
+                      /* Password reset email sent. 
+                      let snackBarRef = this.snackBar.open(
+                        'Usuario creado. Puede verlo en la opción "Ver Usuarios". Le fue enviado correo de Creación de Contraseña',
+                        'Entendido', this.configSuccess
+                      );
+                      snackBarRef.onAction().subscribe(
+                        () => { this.goHome(); });
+                      */
+                      this.bError = true;
+                      this.msgError = 'Usuario creado. Puede verlo en la opción "Ver Usuarios". Le fue enviado correo de Creación de Contraseña';
+
+                      // 6 segundos
+                      window.setTimeout(() => {
+                        this.goHome();
+                      }, 6000);
+
+                    }).catch( function(error) {
+                      /*
+                      this.snackBar.open(CONSTANTES_UTIL.ERROR_CAMBIOS_NO_GUARDADOS + ". No fue posible enviarle el correo al Usuario, a su cuenta " + this.usuario.email,
+                        'Lo intentaré luego', this.configError + 2000);
+                      */
+                      this.bError = true;
+                      this.msgError = CONSTANTES_UTIL.ERROR_CAMBIOS_NO_GUARDADOS + ". No fue posible enviarle el correo al Usuario, a su cuenta " + this.usuario.email;
+
+                      console.error(this.usuario.email, error);
+                    })
+                ;
+                
+              },
+              (error) => {
+                console.error("Firebase: NO se puede crear Usuario: ", error);
+                this.snackBar.open("Creación de Usuario fallida: " + CONSTANTES_UTIL.ERROR_CAMBIOS_NO_GUARDADOS, 'Ok', this.configError);
+              }
           );
-          
-          // 6 segundos
-          window.setTimeout(() => {
-            this.goHome();
-          }, 6000);
-        },
-        (error) => {
-          console.error("Firebase: NO se puede crear Usuario: ", error);
-          this.snackBar.open("Creación de Usuario fallida: " + CONSTANTES_UTIL.ERROR_CAMBIOS_NO_GUARDADOS, 'Ok', this.configError);
         }
+    ).catch(
+      (error) => {
+        console.error('RequestCredentialsComponent.solicitarCuenta() - Ocurrió un error en el registro:', error);
+      }
     );
   }
   
