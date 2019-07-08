@@ -95,6 +95,9 @@ export class ProfileComponent implements OnInit {
     this.userService.editUser( this.user ).then(
         () => {
           this.snackBar.open(CONSTANTES_UTIL.SUCCESS_CAMBIOS_GUARDADOS, 'Ok', this.configSuccess);
+
+          this.session.onSetItemJSON(CONSTANTES_UTIL.key, this.user);
+          
         },
         (error) => {
           this.snackBar.open(CONSTANTES_UTIL.ERROR_CAMBIOS_NO_GUARDADOS, 'X', this.configError);

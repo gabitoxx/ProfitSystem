@@ -19,6 +19,7 @@ import { HistorialPagosComponent } from './academia/historial-pagos/historial-pa
 import { PersonaComponent } from './admin/reportes/persona/persona.component';
 import { TradingsComponent } from './admin/tradings/tradings.component';
 import { MovimientosComponent } from './admin/reportes/movimientos/movimientos.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const appRoutes: Routes = [
   /*  { path: 'home', component: HomeComponent, canActivate: [AuthenticationGuard] }, */
@@ -29,34 +30,46 @@ const appRoutes: Routes = [
     /*
      * Academia
      */
-    { path: 'inversionistas/home', component: HomeComponent },
-    { path: 'inversionistas/perfil', component: PerfilComponent },
-    { path: 'inversionistas/pago/registrar', component: PagoComponent },
-    { path: 'inversionistas/historial/pagos', component: HistorialPagosComponent },
-    
+    { path: 'inversionistas', children: [
+        { path: 'home', component: HomeComponent },
+        { path: 'perfil', component: PerfilComponent },
+        { path: 'pago/registrar', component: PagoComponent },
+        { path: 'historial/pagos', component: HistorialPagosComponent },
+      ],  canActivate: [ AuthGuard ]
+    },
+
     /*
      * Administradores
      */
-    { path: 'admin/home', component: AdminHomeComponent },
-    { path: 'admin/profile', component: ProfileComponent },
-    { path: 'admin/createUser', component: CreateUserComponent },
-    { path: 'admin/users', component: UsersComponent },
-    { path: 'admin/createAccount', component: CreateAccountComponent },
-    { path: 'admin/accounts', component: AccountsComponent },
-    { path: 'admin/createTrading', component: CreateTradingComponent },
-    { path: 'admin/tradings', component: TradingsComponent },
-    { path: 'admin/createContract', component: CreateContractComponent },
-    { path: 'admin/contracts', component: ContractsComponent },
-    { path: 'admin/payments', component: PaymentsComponent },
-    /** Reportes */
-    { path: 'admin/reportes/persona', component: PersonaComponent },
-    { path: 'admin/reportes/movimientos', component: MovimientosComponent },
-    
+    { path: 'admin', children: [
+        { path: 'home', component: AdminHomeComponent },
+        { path: 'profile', component: ProfileComponent },
+        { path: 'createUser', component: CreateUserComponent },
+        { path: 'users', component: UsersComponent },
+        { path: 'createAccount', component: CreateAccountComponent },
+        { path: 'accounts', component: AccountsComponent },
+        { path: 'createTrading', component: CreateTradingComponent },
+        { path: 'tradings', component: TradingsComponent },
+        { path: 'createContract', component: CreateContractComponent },
+        { path: 'contracts', component: ContractsComponent },
+        { path: 'payments', component: PaymentsComponent },
+        /** Reportes */
+        { path: 'reportes/persona', component: PersonaComponent },
+        { path: 'reportes/movimientos', component: MovimientosComponent },
+      ],  canActivate: [ AuthGuard ]
+    },
+
+    /* Any other address */
+    { path: '**', pathMatch: 'full', redirectTo: 'login' },
+    { path: '**', component: LoginComponent }
   ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot( appRoutes ), /* encargado de leer las URLs del navegador, tambien si el usuario las escribe a mano */
+    RouterModule.forRoot( 
+      appRoutes,      /* encargado de leer las URLs del navegador, tambien si el usuario las escribe a mano */
+      {scrollPositionRestoration: 'enabled'}  /* ExtraOptions: Represents options to configure the router {esto es como hacer window.scroll(0, 0)} -> https://angular.io/api/router/ExtraOptions#scrollPositionRestoration */
+    ),
   ],
   exports: [
     RouterModule

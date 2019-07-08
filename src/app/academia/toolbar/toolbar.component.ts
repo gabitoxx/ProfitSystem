@@ -12,6 +12,9 @@ import { CONSTANTES_UTIL } from 'src/app/shared/_utils/constantes-util';
 })
 export class ToolbarComponent implements OnInit {
 
+  displayName:string = '';
+
+
   constructor(
       private router: Router,
       private authService: AuthService,
@@ -20,6 +23,10 @@ export class ToolbarComponent implements OnInit {
   }
 
   ngOnInit() {
+    if ( this.session.onExistItem(CONSTANTES_UTIL.key) ){
+      let user = this.session.onGetItemJSON(CONSTANTES_UTIL.key);
+      this.displayName = user.nombres + " " + user.apellidos;
+    }
   }
 
   actualizarPerfil(){

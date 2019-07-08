@@ -63,7 +63,7 @@ export class CreateContractComponent implements OnInit {
   contractName : string = '';
   day:  number = 30;
   
-  prpm: number = 0;
+  prpm: number = 20;
   bErrorPorcentaje:boolean = false;
   msgErrorPorcentaje:string = '';
 
@@ -372,7 +372,7 @@ export class CreateContractComponent implements OnInit {
 
 
   /**
-   * 
+   * Actualizar el disponible SOLO del Responsable
    * @param contratoId    contract.id
    * @param responsableID user.id
    * @param invests  Arreglo de inversores 
@@ -442,6 +442,11 @@ export class CreateContractComponent implements OnInit {
 
   }
 
+
+  /**
+   * El Responsable se actualizó en actualizarUsuarioContrato()
+   * Acá toca actualizar los disponibles de los otros Inversionistas
+   */
   restarDelDisponible = (invests: IInvestor[], responsableId: string, contratoId: string) => {
     
     var u:IUser;

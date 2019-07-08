@@ -52,6 +52,7 @@ import { TradingService } from './services/trading.service';
 import { PersonaComponent } from './admin/reportes/persona/persona.component';
 import { TradingsComponent } from './admin/tradings/tradings.component';
 import { MovimientosComponent } from './admin/reportes/movimientos/movimientos.component';
+import { AuthGuard } from './guards/auth.guard';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyBrD2fJ8540IMWI5p-FmL_7Mik_fvZnJns",
@@ -133,6 +134,7 @@ export const firebaseConfig = {
     PaymentService,
     TradingService,
     TotalDayService,
+    AuthGuard,
   ],
   bootstrap: [AppComponent]
 })
